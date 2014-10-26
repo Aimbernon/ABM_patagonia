@@ -30,6 +30,24 @@
 			    </variable>
 			  </variables>		
 		</dataType>
+<!-- new ************************************************************ -->
+		<dataType>
+			<name>indv_free</name>
+			<description>Structure to remember free member of the clan </description>
+			<variables>
+                          <variable>	
+				<type>int</type>
+				<name>id_list[100]</name>
+				<description>list of individual ids</description>
+			    </variable>
+			    <variable>
+				<type>int</type>
+				<name>ancestor_list[100]</name>
+				<description>list of ancestors</description>
+			    </variable>
+			  </variables>		
+		</dataType>
+<!-- **************************************************************** -->
 </dataTypes>
     </environment>
     <agents>
@@ -81,6 +99,11 @@
 		    <type>members_needs</type>
 		    <name>mneeds</name>
 		    <description>place for storing the needs of every clan member</description>
+		</variable>
+		<variable>
+		    <type>indv_free</type>
+		    <name>ifree</name>
+		    <description>place for storing the information of every free clan member</description>
 		</variable>			
             </memory>
             <functions>

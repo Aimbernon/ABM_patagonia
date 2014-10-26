@@ -68,7 +68,7 @@
 		<variable>
 		    <type>int</type>
 		    <name>ancestors[6]</name>
-		    <description> array witch information ancestors</description>
+		    <description> array with ancestors information</description>
 		</variable>
 <!-- new ********************************************************** -->
             </memory>
@@ -128,8 +128,8 @@
 		</function>
 <!-- new *************************************************** -->
 		<function>
-		    <name>match</name>
-		    <description></description>
+		    <name>freeIndv</name>
+		    <description>free indv send to clan their information </description>
 		    <currentState>03</currentState>
 	   	    <nextState>04</nextState>
 		    <condition>

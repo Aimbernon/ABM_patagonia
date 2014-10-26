@@ -98,14 +98,13 @@ int new_leader()
 // new -----------------------------------------------------
 int marriable_indv ()
 {
-	int *ances,id_indv;
-	//int_array aux_list;
-	//init_int_array(&aux_list);
+	int *ances,i=0;
 	START_ANCESTOR_MESSAGE_LOOP
-		ances = ancestor_message->ancest;
-		//add_int (&aux_list,ancestor_message->ancest);
-		id_indv= ancestor_message->indvID;
-		printf("my id is %d\n",ances[5]);
+		IFREE.ancestor_list[i] = ancestor_message->ancest;
+		IFREE.id_list[i]= ancestor_message->indvID;
+		//ances =IFREE.ancestor_list[i];
+		//printf("my id is %d\n",ances[2]);
+		i++;
 	FINISH_ANCESTOR_MESSAGE_LOOP
 	return 0;
 }

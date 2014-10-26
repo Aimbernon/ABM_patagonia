@@ -71,8 +71,6 @@ int getolder()
 			set_cal_needs( caln - 500 );
 			break;
 	}
-	//if (get_indvID() ==1 && get_cID() ==0)
-		//printf("soy %d edad %d casable %d\n", sex,age,marriable);
 	set_age(age);	
 	return 0;
 }
@@ -82,9 +80,9 @@ int idle_indv()
 	return 0;
 }
 
-int match ()
-{
-	if (get_indvID() ==1 && get_cID() ==0)
+int freeIndv ()
+{	
+	//if (get_indvID() ==1 && get_cID() ==0)
 		add_ancestor_message (get_ancestors(),get_cID(),get_indvID());
 	return 0;
 }
@@ -108,6 +106,6 @@ int survive()
 
 	if( !die ) add_leader_message( get_indvID(), get_cID(), get_lead(), get_sex(), get_age() );
 
-	return 0; 
+	return die; 
 }
 
