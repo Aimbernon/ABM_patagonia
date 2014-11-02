@@ -154,7 +154,7 @@
 			</not>
 		    </condition>
 		</function>
-<!-- new  *********************************************** -->
+<!--   *********************************************** -->
 		<function>
 		    <name>survive</name>
 		    <description>Depending on the age, calories gotten, pregnancy, and so on, the probability of survival is computed and according to that probability and a random value the survival of the individual determined</description> 
@@ -250,7 +250,7 @@
 	   <variables>
 		<variable>
 			<type>int</type>
-			<name>ancest</name>
+			<name>ancest[6]</name>
 		</variable>
 		<variable>
 			<type>int</type>
@@ -259,6 +259,10 @@
 		<variable>
 			<type>int</type>
 			<name>indvID</name>
+		</variable>
+		<variable>
+			<type>int</type>
+			<name>sex</name>
 		</variable>
 	   </variables>
 	</message>

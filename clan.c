@@ -98,14 +98,42 @@ int new_leader()
 // new -----------------------------------------------------
 int marriable_indv ()
 {
-	int *ances,i=0;
+	int i=0,j;
 	START_ANCESTOR_MESSAGE_LOOP
-		IFREE.ancestor_list[i] = ancestor_message->ancest;
+		for (j=0;j<6;j++)
+			IFREE.ancestor_list[i].col[j] = ancestor_message->ancest[j];
 		IFREE.id_list[i]= ancestor_message->indvID;
-		//ances =IFREE.ancestor_list[i];
-		//printf("my id is %d\n",ances[2]);
+		IFREE.sex_list[i] = ancestor_message->sex;
 		i++;
 	FINISH_ANCESTOR_MESSAGE_LOOP
+	return 0;
+}
+int macth ()
+{
+	int i,girls=0,female_list[100];
+	//look for female
+	for (i=0;i<100;i++)
+	{
+		if (get_cID() == 0)
+			printf ("%d\n",IFREE.ancestor_list[i].col[2]);
+		if (IFREE.sex_list[i] == 1)
+		{
+			female_list[girls] = IFREE.id_list[i];
+			girls++;
+		}
+	}
+	// ver si hay chicas disponibles
+	if (girls != 0)
+		//send females to other good clans
+		add_freeGirls_message (female_list,get_xcord(),get_ycord(),get_cID());
+
+	return 0;
+}
+int aux ()
+{
+	START_FREEGIRLS_MESSAGE_LOOP
+		// tratar mensaje
+	FINISH_FREEGIRLS_MESSAGE_LOOP
 	return 0;
 }
 //-----------------------------------------------------------

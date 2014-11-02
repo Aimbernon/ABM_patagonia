@@ -83,7 +83,7 @@ int idle_indv()
 int freeIndv ()
 {	
 	//if (get_indvID() ==1 && get_cID() ==0)
-		add_ancestor_message (get_ancestors(),get_cID(),get_indvID());
+		add_ancestor_message (get_ancestors(),get_cID(),get_indvID(),get_sex());
 	return 0;
 }
  
@@ -106,6 +106,6 @@ int survive()
 
 	if( !die ) add_leader_message( get_indvID(), get_cID(), get_lead(), get_sex(), get_age() );
 
-	return die; 
+	return 0; 
 }
 

@@ -32,6 +32,15 @@
 		</dataType>
 <!-- new ************************************************************ -->
 		<dataType>
+			<name>Matriz</name>
+			<description> </description>
+                        <variable>	
+				<type>int</type>
+				<name>col[6]</name>
+				<description></description>
+			</variable>
+		</dataType>
+		<dataType>
 			<name>indv_free</name>
 			<description>Structure to remember free member of the clan </description>
 			<variables>
@@ -41,9 +50,14 @@
 				<description>list of individual ids</description>
 			    </variable>
 			    <variable>
-				<type>int</type>
+				<type>Matriz</type>
 				<name>ancestor_list[100]</name>
 				<description>list of ancestors</description>
+			    </variable>
+			    <variable>
+				<type>int</type>
+				<name>sex_list[100]</name>
+				<description>list of individual sex</description>
 			    </variable>
 			  </variables>		
 		</dataType>
@@ -176,13 +190,36 @@
 		    <name>marriable_indv</name>
 		    <description>informacion de los individuos que estan en edad de casarse</description>
 		    <currentState>04</currentState>
-		    <nextState>end</nextState>
+		    <nextState>05</nextState>
 		    <input>
 		    	<messageName>ancestor</messageName>
 			<filter>
 				<lhs><value>a.cID</value></lhs>
 				<op>EQ</op>
 				<rhs><value>m.clanID</value></rhs>
+			</filter> 
+		    </input>
+		</function>
+		<function>
+		    <name>macth</name>
+		    <description>intencambio de mujeres entre clanes</description>
+		    <currentState>05</currentState>
+		    <nextState>06</nextState>
+		    <output>
+		    	<messageName>freeGirls</messageName> 
+		    </output>
+		</function>
+		<function>
+		    <name>aux</name>
+		    <description>recivo de mujeres casaderas de otros clanes</description>
+		    <currentState>06</currentState>
+		    <nextState>end</nextState>
+		    <input>
+		    	<messageName>freeGirls</messageName> 
+			<filter>
+				<lhs><value>a.cID</value></lhs>
+				<op>NEQ</op>
+				<rhs><value>m.id</value></rhs>
 			</filter> 
 		    </input>
 		</function>
@@ -238,6 +275,34 @@
                 </variable>
             </variables>
         </message>
+<!-- new ******************************************************** -->
+	<message>
+                <name>freeGirls</name>
+                <description>envio de lista de mujeres en edad de emparejarse</description>
+            <variables>
+              <variable>
+                    <type>int</type>
+                    <name>girls[100]</name>
+                    <description></description>
+                </variable>
+              <variable>
+                    <type>int</type>
+                    <name>x</name>
+                    <description></description>
+                </variable>
+              <variable>
+                    <type>int</type>
+                    <name>y</name>
+                    <description></description>
+                </variable>
+              <variable>
+                    <type>int</type>
+                    <name>id</name>
+                    <description></description>
+                </variable>	
+	    </variables>
+        </message>
+<!-- new ******************************************************** -->
     </messages>
 </xmodel>
 
