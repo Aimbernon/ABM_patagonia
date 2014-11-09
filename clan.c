@@ -96,11 +96,13 @@ int new_leader()
 	return 0;
 }
 // new -----------------------------------------------------
+/* Each clan gets information about their individuals marriageable age. 
+This information is stored in IFREE variable */
 int marriable_indv ()
 {
 	int i=0,j;
 	START_ANCESTOR_MESSAGE_LOOP
-		for (j=0;j<6;j++)
+		for (j=0;j<NANCESTORS;j++)
 			IFREE.ancestor_list[i].col[j] = ancestor_message->ancest[j];
 		IFREE.id_list[i]= ancestor_message->indvID;
 		IFREE.sex_list[i] = ancestor_message->sex;
@@ -108,14 +110,13 @@ int marriable_indv ()
 	FINISH_ANCESTOR_MESSAGE_LOOP
 	return 0;
 }
-int macth ()
+/*each clan seeks its females and sends it to others clans */
+int send_girls ()
 {
 	int i,girls=0,female_list[100];
 	//look for female
 	for (i=0;i<100;i++)
 	{
-		if (get_cID() == 0)
-			printf ("%d\n",IFREE.ancestor_list[i].col[2]);
 		if (IFREE.sex_list[i] == 1)
 		{
 			female_list[girls] = IFREE.id_list[i];
@@ -125,15 +126,31 @@ int macth ()
 	// ver si hay chicas disponibles
 	if (girls != 0)
 		//send females to other good clans
-		add_freeGirls_message (female_list,get_xcord(),get_ycord(),get_cID());
+		add_freeGirls_message (female_list,girls,get_cID());
 
 	return 0;
 }
-int aux ()
+int match ()
 {
+	int_array chicas;
+	int num_chicas[100], clanes[100],j=0,i;
+	init_int_array(&chicas);
 	START_FREEGIRLS_MESSAGE_LOOP
-		// tratar mensaje
+		for (i=0;i<100;i++){
+			if (freeGirls_message->girls[i]!=0)
+				add_int(&chicas,freeGirls_message->girls[i]);	
+		}
+		num_chicas[j] = freeGirls_message->num_chicas;
+		clanes [j] = freeGirls_message->clanID;
+		j++;
 	FINISH_FREEGIRLS_MESSAGE_LOOP
+	//proponer
+	/*for (i=0;i<100;i++)
+		if (IFREE.sex_list[i] ==0)
+			prop_list[j] = chicas.array[z];
+			if (clanes[j] != clanes[j+1])
+				enviar a clanes[j]*/
+	free_int_array(&chicas);
 	return 0;
 }
 //-----------------------------------------------------------

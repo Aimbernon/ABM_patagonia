@@ -70,6 +70,11 @@
 		    <name>ancestors[6]</name>
 		    <description> array with ancestors information</description>
 		</variable>
+		<variable>
+			<type>int</type>
+			<name>married</name>
+			<description>0 if i'm not married, 1 if i'm </description>
+		</variable>
 <!-- new ********************************************************** -->
             </memory>
             <functions>
@@ -133,9 +138,17 @@
 		    <currentState>03</currentState>
 	   	    <nextState>04</nextState>
 		    <condition>
+			<!-- <lhs> --> 
 			<lhs><value>a.marriable</value></lhs>
 			<op>EQ</op>
 			<rhs><value>1</value></rhs>
+			<!-- </lhs>
+			<op>AND</op>
+			<rhs>
+			<lhs><value>a.married</value></lhs>
+			<op>EQ</op>
+			<rhs><value>0</value></rhs>
+			</rhs> -->
 		    </condition>
 		    <output>
 			<messageName>ancestor</messageName>

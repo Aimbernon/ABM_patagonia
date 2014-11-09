@@ -1,6 +1,7 @@
 <states>
 <itno>0</itno>
 <environment>
+<nancestors>6</nancestors>
 </environment>
 <outputs>
 <output>
@@ -42,8 +43,8 @@
 		<patchid>0</patchid>
 		<sex>1</sex>
 		<age>1</age>
-		<marriable>0</marriable>
-		<ancestors>{0,1,2,3,4,5}</ancestors>
+		<marriable>1</marriable>
+		<ancestors>{0,1,25,3,4,5}</ancestors>
 	</xagent>
 <xagent>
 		<name>indv</name>

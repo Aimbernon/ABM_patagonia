@@ -8,7 +8,14 @@
         <functionFiles>
             <file>clan.c</file>
         </functionFiles>
-<dataTypes>
+	<constants>
+	    <variable>
+		<type>int</type>
+		<name>nancestors</name>
+		<description>Number of ancestors remembered by indv</description>
+	    </variable>
+	</constants>
+	<dataTypes>
 		<dataType>
 			<name>members_needs</name>
 			<description>Structure to remember how many calories each member of the clan needs to survive</description>
@@ -62,7 +69,7 @@
 			  </variables>		
 		</dataType>
 <!-- **************************************************************** -->
-</dataTypes>
+	</dataTypes>
     </environment>
     <agents>
         <xagent>
@@ -201,7 +208,7 @@
 		    </input>
 		</function>
 		<function>
-		    <name>macth</name>
+		    <name>send_girls</name>
 		    <description>intencambio de mujeres entre clanes</description>
 		    <currentState>05</currentState>
 		    <nextState>06</nextState>
@@ -210,7 +217,7 @@
 		    </output>
 		</function>
 		<function>
-		    <name>aux</name>
+		    <name>match</name>
 		    <description>recivo de mujeres casaderas de otros clanes</description>
 		    <currentState>06</currentState>
 		    <nextState>end</nextState>
@@ -219,7 +226,7 @@
 			<filter>
 				<lhs><value>a.cID</value></lhs>
 				<op>NEQ</op>
-				<rhs><value>m.id</value></rhs>
+				<rhs><value>m.clanID</value></rhs>
 			</filter> 
 		    </input>
 		</function>
@@ -287,17 +294,12 @@
                 </variable>
               <variable>
                     <type>int</type>
-                    <name>x</name>
+                    <name>num_chicas</name>
                     <description></description>
                 </variable>
               <variable>
                     <type>int</type>
-                    <name>y</name>
-                    <description></description>
-                </variable>
-              <variable>
-                    <type>int</type>
-                    <name>id</name>
+                    <name>clanID</name>
                     <description></description>
                 </variable>	
 	    </variables>
