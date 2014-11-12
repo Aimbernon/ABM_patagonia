@@ -98,12 +98,12 @@
 		</variable>
                 <variable>
                     <type>int</type>
-                    <name>xcord</name>
+                    <name>x</name>
                     <description>x coordinate of the current patch where the bulk of the clan is (maybe the leader is away hunting)</description>
                 </variable>
                 <variable>
                     <type>int</type>
-                    <name>ycord</name>
+                    <name>y</name>
                     <description>y coordinate of the current patch where the bulk of the clan is (maybe the leader is away hunting)</description>
                 </variable>
                 <variable>
@@ -213,7 +213,7 @@
 		    <currentState>05</currentState>
 		    <nextState>06</nextState>
 		    <output>
-		    	<messageName>freeGirls</messageName> 
+		    	<messageName>freeGirls</messageName>
 		    </output>
 		</function>
 		<function>
@@ -224,9 +224,7 @@
 		    <input>
 		    	<messageName>freeGirls</messageName> 
 			<filter>
-				<lhs><value>a.cID</value></lhs>
-				<op>NEQ</op>
-				<rhs><value>m.clanID</value></rhs>
+				<box2d>15.0</box2d>
 			</filter> 
 		    </input>
 		</function>
@@ -299,7 +297,22 @@
                 </variable>
               <variable>
                     <type>int</type>
+                    <name>y</name>
+                    <description></description>
+                </variable>
+              <variable>
+                    <type>int</type>
+                    <name>x</name>
+                    <description></description>
+                </variable>
+              <variable>
+                    <type>int</type>
                     <name>clanID</name>
+                    <description></description>
+                </variable>
+              <variable>
+                    <type>int</type>
+                    <name>lancestors[600]</name>
                     <description></description>
                 </variable>	
 	    </variables>

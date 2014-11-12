@@ -7,7 +7,7 @@
 /* posting individual information*/
 int clan_Information()
 {
-	int cal, nmem, i, ID=get_cID(), x=get_xcord(), y=get_ycord();
+	int cal, nmem, i, ID=get_cID(), x=get_x(), y=get_y();
 
 	for ( i = 0; i < 100; i++) MNEEDS.id_list[i] = MNEEDS.cal_list[i] = -1;
 
@@ -113,7 +113,7 @@ int marriable_indv ()
 /*each clan seeks its females and sends it to others clans */
 int send_girls ()
 {
-	int i,girls=0,female_list[100];
+	int i,j,girls=0,female_list[100],ancestor_list[100*NANCESTORS];
 	//look for female
 	for (i=0;i<100;i++)
 	{
@@ -121,36 +121,48 @@ int send_girls ()
 		{
 			female_list[girls] = IFREE.id_list[i];
 			girls++;
+			for (j=i*NANCESTORS;j<(NANCESTORS*i)+NANCESTORS;j++)
+				ancestor_list[j]=IFREE.ancestor_list[i].col[j];
 		}
 	}
 	// ver si hay chicas disponibles
 	if (girls != 0)
 		//send females to other good clans
-		add_freeGirls_message (female_list,girls,get_cID());
+		add_freeGirls_message (female_list,girls,get_y(),get_x(),get_cID(),ancestor_list);
 
 	return 0;
 }
 int match ()
 {
-	int_array chicas;
-	int num_chicas[100], clanes[100],j=0,i;
+	int_array chicas,ancestors;
+	int num_chicas[100], clanes[100],j=0,i,z;
 	init_int_array(&chicas);
+	init_int_array(&ancestors);
 	START_FREEGIRLS_MESSAGE_LOOP
+	if (freeGirls_message->clanID != get_cID()){
 		for (i=0;i<100;i++){
-			if (freeGirls_message->girls[i]!=0)
-				add_int(&chicas,freeGirls_message->girls[i]);	
+			if (freeGirls_message->girls[i]!=0){
+				add_int(&chicas,freeGirls_message->girls[i]);
+				for (z=i*NANCESTORS;z<(NANCESTORS*i)+NANCESTORS;z++)
+					add_int(&ancestors,freeGirls_message->lancestors[z]);
+			}
 		}
 		num_chicas[j] = freeGirls_message->num_chicas;
 		clanes [j] = freeGirls_message->clanID;
 		j++;
+	}
+		/*if (get_cID() == 4)
+			printf ("%d\n",freeGirls_message->girls[1]);*/
 	FINISH_FREEGIRLS_MESSAGE_LOOP
+	if (get_cID() == 4)
+		printf ("id chica %d  / n mensajes %d\n",ancestors.array[2],j);
+	free_int_array(&chicas);
 	//proponer
 	/*for (i=0;i<100;i++)
 		if (IFREE.sex_list[i] ==0)
 			prop_list[j] = chicas.array[z];
 			if (clanes[j] != clanes[j+1])
 				enviar a clanes[j]*/
-	free_int_array(&chicas);
 	return 0;
 }
 //-----------------------------------------------------------
