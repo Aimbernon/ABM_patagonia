@@ -82,8 +82,37 @@ int idle_indv()
 
 int freeIndv ()
 {	
-	//if (get_indvID() ==1 && get_cID() ==0)
-		add_ancestor_message (get_ancestors(),get_cID(),get_indvID(),get_sex());
+	add_ancestor_message (get_ancestors(),get_cID(),get_indvID(),get_sex());
+	return 0;
+}
+
+int casamiento_female()
+{
+	int  next_clan,husband,men=0;
+	START_MARRIAGE_MESSAGE_LOOP
+		next_clan = marriage_message->clanID;
+		husband = marriage_message->manID;
+		men++;
+	FINISH_MARRIAGE_MESSAGE_LOOP
+	if (men >0){
+		set_cID(next_clan);
+		set_married(1);
+		set_pareja(husband);
+	}
+	return 0;
+}
+
+int casamiento_male()
+{
+	int wife,men=0;
+	START_MARRIAGE_MESSAGE_LOOP
+		wife = marriage_message->girlID;
+		men++;
+	FINISH_MARRIAGE_MESSAGE_LOOP
+	if (men >0){
+		set_married(1);
+		set_pareja(wife);
+	}
 	return 0;
 }
  
@@ -106,6 +135,6 @@ int survive()
 
 	if( !die ) add_leader_message( get_indvID(), get_cID(), get_lead(), get_sex(), get_age() );
 
-	return 0; 
+	return die; 
 }
 

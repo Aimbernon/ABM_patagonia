@@ -100,44 +100,49 @@ int new_leader()
 This information is stored in IFREE variable */
 int marriable_indv ()
 {
-	int i=0,j;
+	int male=0,female=0,j,i;
 	START_ANCESTOR_MESSAGE_LOOP
-		for (j=0;j<NANCESTORS;j++)
-			IFREE.ancestor_list[i].col[j] = ancestor_message->ancest[j];
-		IFREE.id_list[i]= ancestor_message->indvID;
-		IFREE.sex_list[i] = ancestor_message->sex;
-		i++;
+		if (ancestor_message->sex == 0){ //case male
+			IFREE.male_list[male] = ancestor_message->indvID;
+			i=0;	
+			for (j=male*NANCESTORS;j<(NANCESTORS*male)+ NANCESTORS;j++){
+				IFREE.mancestor_list[j] = ancestor_message->ancest[i];
+				i++;
+			}
+			male++;
+		}
+		else {
+			if (ancestor_message->sex == 1){// case female
+				IFREE.female_list[female] = ancestor_message->indvID;	
+				i=0;
+				for (j=female*NANCESTORS;j<(NANCESTORS*female)+ NANCESTORS;j++){
+					IFREE.fancestor_list[j] = ancestor_message->ancest[i];
+					i++;
+				}
+				female++;
+			}
+		}
 	FINISH_ANCESTOR_MESSAGE_LOOP
+	IFREE.numMale = male;
+	IFREE.numFemale = female;
 	return 0;
 }
 /*each clan seeks its females and sends it to others clans */
 int send_girls ()
 {
-	int i,j,girls=0,female_list[100],ancestor_list[100*NANCESTORS];
-	//look for female
-	for (i=0;i<100;i++)
-	{
-		if (IFREE.sex_list[i] == 1)
-		{
-			female_list[girls] = IFREE.id_list[i];
-			girls++;
-			for (j=i*NANCESTORS;j<(NANCESTORS*i)+NANCESTORS;j++)
-				ancestor_list[j]=IFREE.ancestor_list[i].col[j];
-		}
-	}
-	// ver si hay chicas disponibles
-	if (girls != 0)
-		//send females to other good clans
-		add_freeGirls_message (female_list,girls,get_y(),get_x(),get_cID(),ancestor_list);
-
+	if (IFREE.numFemale !=0)
+		add_freeGirls_message (IFREE.female_list,IFREE.numFemale,get_y(),get_x(),get_cID(),IFREE.fancestor_list);
 	return 0;
 }
+/*recive las chicas disponibles para emparejarse de otros clanes y a partir de la compatibilidad
+se decide hacer propuestas de emparejamiento*/
 int match ()
 {
 	int_array chicas,ancestors;
-	int num_chicas[100], clanes[100],j=0,i,z;
+	int num_chicas[100], clanes[100],mensajes=0,i,z;
 	init_int_array(&chicas);
 	init_int_array(&ancestors);
+	//reciviendo informacion de las chicas de otros clanes
 	START_FREEGIRLS_MESSAGE_LOOP
 	if (freeGirls_message->clanID != get_cID()){
 		for (i=0;i<100;i++){
@@ -147,22 +152,91 @@ int match ()
 					add_int(&ancestors,freeGirls_message->lancestors[z]);
 			}
 		}
-		num_chicas[j] = freeGirls_message->num_chicas;
-		clanes [j] = freeGirls_message->clanID;
-		j++;
+		num_chicas[mensajes] = freeGirls_message->num_chicas;
+		clanes [mensajes] = freeGirls_message->clanID;
+		mensajes++;
 	}
-		/*if (get_cID() == 4)
-			printf ("%d\n",freeGirls_message->girls[1]);*/
 	FINISH_FREEGIRLS_MESSAGE_LOOP
-	if (get_cID() == 4)
-		printf ("id chica %d  / n mensajes %d\n",ancestors.array[2],j);
+	if (mensajes==0)
+		return 0;
+
+	//proponer emparejamiento
+	int emparejado,familia,man=0,g=0,ag=0,am=0,prop[100],count=0,clan,chica,id_man[100];
+	// por cada chico libre de mi clan miro si es compatible con cada chica, la primera chica
+	// compatible es la elegida
+	while (man<IFREE.numMale){
+		emparejado =0;
+		g=0;
+		clan =0;
+		while (clan< mensajes && emparejado ==0){
+			chica=0;
+			count=0;
+			while (chica <num_chicas[clan] && emparejado ==0){
+				familia =0;
+				ag=0;
+				// comprobacion de si son familiares
+				while (ag< NANCESTORS && familia ==0){
+					am=0;
+					while (am < NANCESTORS && familia ==0){
+						if (IFREE.mancestor_list[(man*NANCESTORS)+am] == ancestors.array[(g*NANCESTORS)+ag])
+							familia =1;
+						am++;
+					}
+					ag++;
+				}
+				if (familia == 0){
+					emparejado =1;
+					prop[count]=chicas.array[g];
+					id_man[count]=IFREE.male_list[man];
+					remove_int(&chicas,g);
+					count++;
+				}
+				g++;
+				chica++;
+			}
+			// enviar las propuesta a los clanes que pertenecen las chicas elegidas
+			if (count !=0)
+				add_propuesta_message (prop,id_man,get_cID(),clanes[clan],count);
+			clan++;
+		}
+		man++;
+	}
 	free_int_array(&chicas);
-	//proponer
-	/*for (i=0;i<100;i++)
-		if (IFREE.sex_list[i] ==0)
-			prop_list[j] = chicas.array[z];
-			if (clanes[j] != clanes[j+1])
-				enviar a clanes[j]*/
+	free_int_array(&ancestors);
+						
+	return 0;
+}
+/*Se asigna a cada clan la chica/s que han pedido, en caso de peticion doble, la preferencia la
+tiene el clan cuya peticion llegara antes */
+int aceptar_prop ()
+{
+	int i,encontrado,j;
+	int_array peticiones,pretendientes,clanes;
+	init_int_array(&peticiones);
+	init_int_array(&clanes);
+	init_int_array(&pretendientes);
+	START_PROPUESTA_MESSAGE_LOOP
+	for (i=0;i<propuesta_message->count;i++){
+		encontrado =0;
+		j=0;
+		while (j<peticiones.size && encontrado ==0){
+			if (propuesta_message->id_list[i] == peticiones.array[j])
+				encontrado =1;
+			j++;
+		}
+		if (encontrado ==0){
+			add_int(&peticiones,propuesta_message->id_list[i]);
+			add_int (&pretendientes,propuesta_message->id_man[i]);
+			add_int (&clanes,propuesta_message->oclanID);
+		}
+	}
+	FINISH_PROPUESTA_MESSAGE_LOOP
+	for (i=0;i<peticiones.size;i++)
+		add_marriage_message(peticiones.array[i],clanes.array[i],pretendientes.array[i],get_cID());
+
+	free_int_array(&peticiones);
+	free_int_array(&clanes);
+	free_int_array(&pretendientes);
 	return 0;
 }
 //-----------------------------------------------------------

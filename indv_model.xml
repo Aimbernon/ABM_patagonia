@@ -75,6 +75,11 @@
 			<name>married</name>
 			<description>0 if i'm not married, 1 if i'm </description>
 		</variable>
+		<variable>
+			<type>int</type>
+			<name>pareja</name>
+			<description>id de la pareja , sino -1 </description>
+		</variable>
 <!-- new ********************************************************** -->
             </memory>
             <functions>
@@ -138,17 +143,17 @@
 		    <currentState>03</currentState>
 	   	    <nextState>04</nextState>
 		    <condition>
-			<!-- <lhs> --> 
+			<lhs>
 			<lhs><value>a.marriable</value></lhs>
 			<op>EQ</op>
 			<rhs><value>1</value></rhs>
-			<!-- </lhs>
+			</lhs>
 			<op>AND</op>
 			<rhs>
 			<lhs><value>a.married</value></lhs>
 			<op>EQ</op>
 			<rhs><value>0</value></rhs>
-			</rhs> -->
+			</rhs>
 		    </condition>
 		    <output>
 			<messageName>ancestor</messageName>
@@ -158,7 +163,7 @@
 		    <name>idle</name>
 		    <description></description>
 		    <currentState>03</currentState>
-	   	    <nextState>04</nextState>
+	   	    <nextState>05</nextState>
 		    <condition>
 			<not>
 			<lhs><value>a.marriable</value></lhs>
@@ -167,11 +172,65 @@
 			</not>
 		    </condition>
 		</function>
+		<function>
+		    <name>casamiento_female</name>
+		    <description>guigiu</description>
+		    <currentState>04</currentState>
+	   	    <nextState>05</nextState>
+		    <condition>
+			<lhs><value>a.sex</value></lhs>
+			<op>EQ</op>
+			<rhs><value>1</value></rhs>
+		    </condition>
+		    <input>
+		    	<messageName>marriage</messageName> 
+			<filter>
+				<lhs>
+					<lhs><value>a.indvID</value></lhs>
+					<op>EQ</op>
+					<rhs><value>m.girlID</value></rhs>
+				</lhs>
+				<op>AND</op>
+				<rhs>
+					<lhs><value>a.cID</value></lhs>
+					<op>EQ</op>
+					<rhs><value>m.oclanID</value></rhs>
+				</rhs>
+			</filter> 
+		    </input>
+		</function>
+		<function>
+		    <name>casamiento_male</name>
+		    <description>guigiu</description>
+		    <currentState>04</currentState>
+	   	    <nextState>05</nextState>
+		    <condition>
+			<lhs><value>a.sex</value></lhs>
+			<op>EQ</op>
+			<rhs><value>0</value></rhs>
+		    </condition>
+		    <input>
+		    	<messageName>marriage</messageName> 
+			<filter>
+				<lhs>
+					<lhs><value>a.indvID</value></lhs>
+					<op>EQ</op>
+					<rhs><value>m.manID</value></rhs>
+				</lhs>
+				<op>AND</op>
+				<rhs>
+					<lhs><value>a.cID</value></lhs>
+					<op>EQ</op>
+					<rhs><value>m.clanID</value></rhs>
+				</rhs>
+			</filter> 
+		    </input>
+		</function>
 <!--   *********************************************** -->
 		<function>
 		    <name>survive</name>
 		    <description>Depending on the age, calories gotten, pregnancy, and so on, the probability of survival is computed and according to that probability and a random value the survival of the individual determined</description> 
-		    <currentState>04</currentState>
+		    <currentState>05</currentState>
 		    <nextState>end</nextState>
 		    <outputs>
 			<output>

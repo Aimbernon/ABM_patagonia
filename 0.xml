@@ -44,7 +44,7 @@
 		<sex>1</sex>
 		<age>1</age>
 		<marriable>1</marriable>
-		<ancestors>{0,1,25,3,4,5}</ancestors>
+		<ancestors>{50,1,25,3,4,5}</ancestors>
 	</xagent>
 <xagent>
 		<name>indv</name>
@@ -54,7 +54,8 @@
 		<patchid>0</patchid>
 		<sex>0</sex>
 		<age>1</age>
-		<marriable>0</marriable>
+		<marriable>1</marriable>
+		<ancestors>{19,8,7,6,9,945}</ancestors>
 	</xagent>
 <xagent>
 		<name>indv</name>
@@ -585,7 +586,8 @@
 		<patchid>0</patchid>
 		<sex>0</sex>
 		<age>36</age>
-		<marriable>0</marriable>
+		<marriable>1</marriable>
+		<ancestors>{19,8,7,6,9,945}</ancestors>
 	</xagent>
 <xagent>
 		<name>indv</name>
@@ -787,6 +789,7 @@
                 <sex>1</sex>
                 <age>240</age>
 		<marriable>1</marriable>
+		<ancestors>{99,98,97,96,95,94}</ancestors>
         </xagent>
 <xagent>
                 <name>indv</name>
@@ -7352,8 +7355,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>1</px>
-                <py>0</py>
+                <x>1</x>
+                <y>0</y>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7363,8 +7366,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>4</px>
-                <py>0</py>
+                <x>4</x>
+                <y>0</y>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7374,8 +7377,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>12</px>
-                <py>0</py>
+                <x>12</x>
+                <y>0</y>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7385,8 +7388,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>0</px>
-                <py>14</py>
+                <x>0</x>
+                <y>14</y>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7396,8 +7399,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>13</px>
-                <py>14</py>
+                <x>13</x>
+                <y>14</y>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7407,8 +7410,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>14</px>
-                <py>14</py>
+                <x>14</x>
+                <y>14</y>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7418,8 +7421,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>14</px>
-                <py>2</py>
+                <x>14</x>
+                <y>2</y>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7429,8 +7432,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>14</px>
-                <py>10</py>
+                <x>14</x>
+                <y>10</y>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7440,8 +7443,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>0</px>
-                <py>1</py>
+                <x>0</x>
+                <y>1</y>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7451,8 +7454,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>0</px>
-                <py>8</py>
+                <x>0</x>
+                <y>8</y>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7462,8 +7465,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>0</px>
-                <py>13</py>
+                <x>0</x>
+                <y>13</y>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7473,8 +7476,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>1</px>
-                <py>3</py>
+                <x>1</x>
+                <y>3</y>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7484,8 +7487,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>1</px>
-                <py>8</py>
+                <x>1</x>
+                <y>8</y>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7495,8 +7498,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>1</px>
-                <py>11</py>
+                <x>1</x>
+                <y>11</y>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7506,8 +7509,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>2</px>
-                <py>1</py>
+                <x>2</x>
+                <y>1</y>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7517,8 +7520,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>3</px>
-                <py>1</py>
+                <x>3</x>
+                <y>1</y>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7528,8 +7531,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>4</px>
-                <py>1</py>
+                <x>4</x>
+                <y>1</y>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7539,8 +7542,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>5</px>
-                <py>1</py>
+                <x>5</x>
+                <y>1</y>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7550,8 +7553,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>6</px>
-                <py>1</py>
+                <x>6</x>
+                <y>1</y>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7561,8 +7564,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>7</px>
-                <py>1</py>
+                <x>7</x>
+                <y>1</y>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7572,8 +7575,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>8</px>
-                <py>1</py>
+                <x>8</x>
+                <y>1</y>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7583,8 +7586,8 @@
                 <cal_stored>0</cal_stored>
                 <tcalories>0</tcalories>
                 <leaderID>0</leaderID>
-                <px>9</px>
-                <py>1</py>
+                <x>9</x>
+                <y>1</y>
 	</xagent>
 <xagent>
 		<name>patch</name>
