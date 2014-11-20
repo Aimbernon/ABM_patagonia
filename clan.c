@@ -18,6 +18,7 @@ int clan_Information()
 		MNEEDS.cal_list[i] = information_message->cal;
 		MNEEDS.age[i] = information_message->age;
 		cal += information_message->cal;
+		TAKENID[information_message->id] =1;
 		i++;
 		if ((information_message->age > 12) && (information_message->age < 45) && !(information_message->pregnant)) nmem++;
 	FINISH_INFORMATION_MESSAGE_LOOP
@@ -159,7 +160,6 @@ int match ()
 	FINISH_FREEGIRLS_MESSAGE_LOOP
 	if (mensajes==0)
 		return 0;
-
 	//proponer emparejamiento
 	int emparejado,familia,man=0,g=0,ag=0,am=0,prop[100],count=0,clan,chica,id_man[100];
 	// por cada chico libre de mi clan miro si es compatible con cada chica, la primera chica
@@ -210,8 +210,9 @@ int match ()
 tiene el clan cuya peticion llegara antes */
 int aceptar_prop ()
 {
-	int i,encontrado,j;
+	int i,encontrado,j,id_free=-2 ;
 	int_array peticiones,pretendientes,clanes;
+
 	init_int_array(&peticiones);
 	init_int_array(&clanes);
 	init_int_array(&pretendientes);
@@ -231,13 +232,51 @@ int aceptar_prop ()
 		}
 	}
 	FINISH_PROPUESTA_MESSAGE_LOOP
-	for (i=0;i<peticiones.size;i++)
-		add_marriage_message(peticiones.array[i],clanes.array[i],pretendientes.array[i],get_cID());
-
+	j=0;
+	for (i=0;i<peticiones.size;i++){
+		encontrado =0;
+		// busqueda de nuevos ids para las chicas que cambian de clan
+		while (j<100 && encontrado ==0){
+			if (TAKENID[j]==0){
+				TAKENID[j]=1;
+				id_free =j;
+				encontrado =1;
+			}
+			j++;
+		}
+		add_marriage_message(peticiones.array[i],clanes.array[i],pretendientes.array[i],get_cID(),id_free);
+	}
+	//free memory
 	free_int_array(&peticiones);
 	free_int_array(&clanes);
 	free_int_array(&pretendientes);
 	return 0;
+}
+// busca un nuevo identificador libre y se lo envia al nuevo individuo
+int repartir_id ()
+{
+	int id_free =0, encontrado =0,i=0, peticiones=0;
+	int_array solicitantesID;
+	init_int_array (&solicitantesID);
+	START_PETICIONID_MESSAGE_LOOP
+		add_int (&solicitantesID,peticionID_message->id);
+		peticiones ++;
+	FINISH_PETICIONID_MESSAGE_LOOP
+	if (peticiones ==0)
+		return 0;
+	for (i=0;i<solicitantesID.size;i++){		
+		encontrado =0;
+		while (id_free <100 && encontrado ==0){
+			if (TAKENID[id_free]==0){
+				TAKENID[id_free]=1;
+				add_respuestaID_message (id_free,solicitantesID.array[i],get_cID());
+				encontrado =1;
+			}
+			id_free++;
+		}
+	}
+	free_int_array(&solicitantesID);
+	return 0;	
 }
 //-----------------------------------------------------------
 

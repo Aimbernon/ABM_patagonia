@@ -8,6 +8,13 @@
         <functionFiles>
             <file>indv.c</file>
         </functionFiles>
+	<constants>
+	    <variable>
+		<type>int</type>
+		<name>propegnant</name>
+		<description>probabilidad de embarazo</description>
+	    </variable>
+	</constants>
     </environment>
     <agents>
         <xagent>
@@ -79,6 +86,21 @@
 			<type>int</type>
 			<name>pareja</name>
 			<description>id de la pareja , sino -1 </description>
+		</variable>
+		<variable>
+			<type>int</type>
+			<name>embarazable</name>
+			<description>si es 1 cumple con: casada + no embarazada + fertil, sino 0 </description>
+		</variable>
+		<variable>
+			<type>int</type>
+			<name>month</name>
+			<description>contador de mes para embarazos</description>
+		</variable>
+		<variable>
+			<type>int</type>
+			<name>motherID</name>
+			<description>id de la madre </description>
 		</variable>
 <!-- new ********************************************************** -->
             </memory>
@@ -166,15 +188,23 @@
 	   	    <nextState>05</nextState>
 		    <condition>
 			<not>
+			<lhs>
 			<lhs><value>a.marriable</value></lhs>
 			<op>EQ</op>
 			<rhs><value>1</value></rhs>
+			</lhs>
+			<op>AND</op>
+			<rhs>
+			<lhs><value>a.married</value></lhs>
+			<op>EQ</op>
+			<rhs><value>0</value></rhs>
+			</rhs>
 			</not>
 		    </condition>
 		</function>
 		<function>
 		    <name>casamiento_female</name>
-		    <description>guigiu</description>
+		    <description>chica recive los datos de su pareja</description>
 		    <currentState>04</currentState>
 	   	    <nextState>05</nextState>
 		    <condition>
@@ -201,7 +231,7 @@
 		</function>
 		<function>
 		    <name>casamiento_male</name>
-		    <description>guigiu</description>
+		    <description>hombre recive los datos de su pareja</description>
 		    <currentState>04</currentState>
 	   	    <nextState>05</nextState>
 		    <condition>
@@ -226,11 +256,84 @@
 			</filter> 
 		    </input>
 		</function>
+		<function>
+		    <name>pregnancy</name>
+		    <description>comprobacion si la mujer esta embarazada</description> 
+		    <currentState>05</currentState>
+		    <nextState>08</nextState>
+		    <condition>
+			<lhs><value>a.embarazable</value></lhs>
+			<op>EQ</op>
+			<rhs><value>1</value></rhs>
+		    </condition>
+		</function>
+		<function>
+		    <name>idle</name>
+		    <description></description>
+		    <currentState>05</currentState>
+	   	    <nextState>06</nextState>
+		    <condition>
+			<not>
+			<lhs><value>a.embarazable</value></lhs>
+			<op>EQ</op>
+			<rhs><value>1</value></rhs>
+			</not>
+		    </condition>
+		</function>
+		<function>
+		    <name>child_inf</name>
+		    <description>peticion de un id disponible</description>
+		    <currentState>06</currentState>
+	   	    <nextState>07</nextState>
+		    <condition>
+			<lhs><value>a.month</value></lhs>
+			<op>EQ</op>
+			<rhs><value>9</value></rhs>
+		    </condition>
+		    <outputs>
+			<output><messageName>peticionID</messageName></output>
+		    </outputs>
+		</function>
+		<function>
+		    <name>idle</name>
+		    <description></description>
+		    <currentState>06</currentState>
+	   	    <nextState>08</nextState>
+		    <condition>
+			<not>
+			<lhs><value>a.month</value></lhs>
+			<op>EQ</op>
+			<rhs><value>9</value></rhs>
+			</not>
+		    </condition>
+		</function>
+		<function>
+		    <name>birth</name>
+		    <description>creacion del nuevo individuo por parte de la madre</description>
+		    <currentState>07</currentState>
+	   	    <nextState>08</nextState>
+		    <input>
+			<messageName>respuestaID</messageName>
+			<filter>
+				<lhs>
+					<lhs><value>a.indvID</value></lhs>
+					<op>EQ</op>
+					<rhs><value>m.indvID</value></rhs>
+				</lhs>
+				<op>AND</op>
+				<rhs>
+					<lhs><value>a.cID</value></lhs>
+					<op>EQ</op>
+					<rhs><value>m.clanID</value></rhs>
+				</rhs>
+			</filter> 
+		    </input>
+		</function>			
 <!--   *********************************************** -->
 		<function>
 		    <name>survive</name>
 		    <description>Depending on the age, calories gotten, pregnancy, and so on, the probability of survival is computed and according to that probability and a random value the survival of the individual determined</description> 
-		    <currentState>05</currentState>
+		    <currentState>08</currentState>
 		    <nextState>end</nextState>
 		    <outputs>
 			<output>
@@ -335,6 +438,20 @@
 		<variable>
 			<type>int</type>
 			<name>sex</name>
+		</variable>
+	   </variables>
+	</message>
+	<message>
+	   <name>peticionID</name>
+	   <description>la madre notifica al padre el nacimiento de su hijo</description>
+	   <variables>
+		<variable>
+			<type>int</type>
+			<name>clanID</name>
+		</variable>
+		<variable>
+			<type>int</type>
+			<name>id</name>
 		</variable>
 	   </variables>
 	</message>
