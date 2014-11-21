@@ -16,16 +16,6 @@
 </output>
 </outputs>
 <agents>
-	<xagent>
-		<name>indv</name>
-		<indvID>0</indvID>
-		<cID>0</cID>
-		<icalories>0</icalories>
-		<patchid>0</patchid>
-		<sex>0</sex>
-		<age>1</age>
-		<marriable>0</marriable>
-	</xagent>
 <xagent>
 		<name>indv</name>
 		<indvID>0</indvID>
@@ -46,6 +36,7 @@
 		<age>1</age>
 		<marriable>1</marriable>
 		<ancestors>{50,1,25,3,4,5}</ancestors>
+		<ancestorsClan>{0,0,0,0,0,0}</ancestorsClan>
 	</xagent>
 <xagent>
 		<name>indv</name>
@@ -56,7 +47,8 @@
 		<sex>0</sex>
 		<age>1</age>
 		<marriable>1</marriable>
-		<ancestors>{19,8,7,6,9,945}</ancestors>
+		<ancestors>{19,8,7,6,9,94}</ancestors>
+		<ancestorsClan>{0,0,0,0,0,0}</ancestorsClan>
 	</xagent>
 <xagent>
 		<name>indv</name>
@@ -67,6 +59,8 @@
 		<sex>0</sex>
 		<age>1</age>
 		<marriable>0</marriable>
+		<ancestors>{19,8,7,6,9,94}</ancestors>
+		<ancestorsClan>{0,0,0,0,0,0}</ancestorsClan>
 	</xagent>
 <xagent>
 		<name>indv</name>
@@ -589,6 +583,7 @@
 		<age>36</age>
 		<marriable>1</marriable>
 		<ancestors>{19,8,7,6,9,945}</ancestors>
+		<ancestorsClan>{1,1,1,1,1,1}</ancestorsClan>
 	</xagent>
 <xagent>
 		<name>indv</name>
@@ -791,6 +786,7 @@
                 <age>240</age>
 		<marriable>1</marriable>
 		<ancestors>{99,98,97,96,95,94}</ancestors>
+		<ancestorsClan>{1,1,1,1,1,1}</ancestorsClan>
         </xagent>
 <xagent>
                 <name>indv</name>
@@ -7358,6 +7354,7 @@
                 <leaderID>0</leaderID>
                 <x>1</x>
                 <y>0</y>
+		<indexID>50</indexID>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7369,6 +7366,7 @@
                 <leaderID>0</leaderID>
                 <x>4</x>
                 <y>0</y>
+		<indexID>50</indexID>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -7380,6 +7378,7 @@
                 <leaderID>0</leaderID>
                 <x>12</x>
                 <y>0</y>
+		<indexID>50</indexID>
 	</xagent>
 <xagent>
 		<name>clan</name>

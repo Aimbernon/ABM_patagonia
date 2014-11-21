@@ -62,11 +62,16 @@
 				<name>fancestor_list[600]</name>
 				<description>list of ancestors</description>
 			    </variable>
-			    <!--<variable>
+			    <variable>
 				<type>int</type>
-				<name>sex_list[100]</name>
+				<name>mancestorClan_list[600]</name>
 				<description>list of individual sex</description>
-			    </variable>-->
+			    </variable>
+			    <variable>
+				<type>int</type>
+				<name>fancestorClan_list[600]</name>
+				<description>list of individual sex</description>
+			    </variable>
 			    <variable>
 				<type>int</type>
 				<name>numMale</name>
@@ -137,11 +142,16 @@
 		    <name>ifree</name>
 		    <description>place for storing the information of every free clan member</description>
 		</variable>
-		<variable>
+		<!--<variable>
 		    <type>int</type>
 		    <name>takenID[100]</name>
 		    <description>id ocupados del clan</description>
-		</variable>			
+		</variable>-->
+		<variable>
+		    <type>int</type>
+		    <name>indexID</name>
+		    <description> a partir de ese id los demas estan libres </description>
+		</variable>		
             </memory>
             <functions>
                 <function>
@@ -246,6 +256,25 @@
 		    </input>
 		    <outputs>
 			<output>
+			<messageName>confirProp</messageName>
+			</output>
+		    </outputs>			
+		</function>
+		<function>
+		    <name>recive_conf</name>
+		    <description>recibe confirmacion de la propuesta y envia la informacion a los individuos</description>
+		    <currentState>07</currentState>
+		    <nextState>08</nextState>
+		    <input>
+		    	<messageName>confirProp</messageName> 
+			<filter>
+				<lhs><value>a.cID</value></lhs>
+				<op>EQ</op>
+				<rhs><value>m.clanID</value></rhs>
+			</filter> 
+		    </input>
+		    <outputs>
+			<output>
 			<messageName>marriage</messageName>
 			</output>
 		    </outputs>			
@@ -253,8 +282,8 @@
 		<function>
 		    <name>repartir_id</name>
 		    <description>obtencion de un nuevo id</description>
-		    <currentState>07</currentState>
-		    <nextState>08</nextState>
+		    <currentState>08</currentState>
+		    <nextState>09</nextState>
 		    <input>
 		    	<messageName>peticionID</messageName> 
 			<filter>
@@ -272,7 +301,7 @@
 		<function>
 		    <name>new_leader</name>
 		    <description>Some individuals may die, maybe the leader, so after this step all survivors send a message to the clan in order to decide if there should be a new leader... it can be because the leader has died, but also because the leader is too old and a new male becomes the leader</description>
-		    <currentState>08</currentState>
+		    <currentState>09</currentState>
 		    <nextState>end</nextState>
 		    <inputs>
 			<input>
@@ -371,6 +400,11 @@
                     <type>int</type>
                     <name>lancestors[600]</name>
                     <description></description>
+                </variable>
+              <variable>
+                    <type>int</type>
+                    <name>lancestorsClan[600]</name>
+                    <description></description>
                 </variable>	
 	    </variables>
         </message>
@@ -402,6 +436,32 @@
                     <type>int</type>
                     <name>count</name>
                     <description>cantidad</description>
+                </variable>
+            </variables>
+        </message>
+ 	<message>
+                <name>confirProp</name>
+                <description>envia al clan las propuestas que ha aceptado </description>
+            <variables>
+              <variable>
+                    <type>int</type>
+                    <name>girlID</name>
+                    <description>id chica</description>
+                </variable>
+		<variable>
+                    <type>int</type>
+                    <name>clanID</name>
+                    <description>clan destino del individuo</description>
+                </variable>
+               <variable>
+                    <type>int</type>
+                    <name>manID</name>
+                    <description>id pareja</description>
+                </variable>
+               <variable>
+                    <type>int</type>
+                    <name>oclanID</name>
+                    <description>clan actual</description>
                 </variable>
             </variables>
         </message>

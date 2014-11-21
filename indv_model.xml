@@ -78,6 +78,11 @@
 		    <description> array with ancestors information</description>
 		</variable>
 		<variable>
+		    <type>int</type>
+		    <name>ancestorsClan[6]</name>
+		    <description> array with ancestors information</description>
+		</variable>
+		<variable>
 			<type>int</type>
 			<name>married</name>
 			<description>0 if i'm not married, 1 if i'm </description>
@@ -101,6 +106,11 @@
 			<type>int</type>
 			<name>motherID</name>
 			<description>id de la madre </description>
+		</variable>
+		<variable>
+			<type>int</type>
+			<name>husband_info[4]</name>
+			<description>informacion de la familia del marido </description>
 		</variable>
 <!-- new ********************************************************** -->
             </memory>
@@ -233,7 +243,7 @@
 		    <name>casamiento_male</name>
 		    <description>hombre recive los datos de su pareja</description>
 		    <currentState>04</currentState>
-	   	    <nextState>05</nextState>
+	   	    <nextState>06</nextState>
 		    <condition>
 			<lhs><value>a.sex</value></lhs>
 			<op>EQ</op>
@@ -255,12 +265,55 @@
 				</rhs>
 			</filter> 
 		    </input>
+		    <output>
+			<messageName>family</messageName>
+		     </output>
+		</function>
+		<function>
+		    <name>info_husband</name>
+		    <description>la chica recive los ancestros de su marido nesesarios en caso de embarazo</description> 
+		    <currentState>05</currentState>
+		    <nextState>06</nextState>
+		    <condition>
+			<lhs><value>a.married</value></lhs>
+			<op>EQ</op>
+			<rhs><value>1</value></rhs>
+		    </condition>
+		    <input>
+		    	<messageName>family</messageName> 
+			<filter>
+				<lhs>
+					<lhs><value>a.indvID</value></lhs>
+					<op>EQ</op>
+					<rhs><value>m.wife</value></rhs>
+				</lhs>
+				<op>AND</op>
+				<rhs>
+					<lhs><value>a.cID</value></lhs>
+					<op>EQ</op>
+					<rhs><value>m.clanID</value></rhs>
+				</rhs>
+			</filter> 
+		    </input>
+		</function>
+		<function>
+		    <name>idle</name>
+		    <description></description>
+		    <currentState>05</currentState>
+	   	    <nextState>06</nextState>
+		    <condition>
+			<not>
+			<lhs><value>a.married</value></lhs>
+			<op>EQ</op>
+			<rhs><value>1</value></rhs>
+			</not>
+		    </condition>
 		</function>
 		<function>
 		    <name>pregnancy</name>
 		    <description>comprobacion si la mujer esta embarazada</description> 
-		    <currentState>05</currentState>
-		    <nextState>08</nextState>
+		    <currentState>06</currentState>
+		    <nextState>09</nextState>
 		    <condition>
 			<lhs><value>a.embarazable</value></lhs>
 			<op>EQ</op>
@@ -270,8 +323,8 @@
 		<function>
 		    <name>idle</name>
 		    <description></description>
-		    <currentState>05</currentState>
-	   	    <nextState>06</nextState>
+		    <currentState>06</currentState>
+	   	    <nextState>07</nextState>
 		    <condition>
 			<not>
 			<lhs><value>a.embarazable</value></lhs>
@@ -283,8 +336,8 @@
 		<function>
 		    <name>child_inf</name>
 		    <description>peticion de un id disponible</description>
-		    <currentState>06</currentState>
-	   	    <nextState>07</nextState>
+		    <currentState>07</currentState>
+	   	    <nextState>08</nextState>
 		    <condition>
 			<lhs><value>a.month</value></lhs>
 			<op>EQ</op>
@@ -297,8 +350,8 @@
 		<function>
 		    <name>idle</name>
 		    <description></description>
-		    <currentState>06</currentState>
-	   	    <nextState>08</nextState>
+		    <currentState>07</currentState>
+	   	    <nextState>09</nextState>
 		    <condition>
 			<not>
 			<lhs><value>a.month</value></lhs>
@@ -310,8 +363,8 @@
 		<function>
 		    <name>birth</name>
 		    <description>creacion del nuevo individuo por parte de la madre</description>
-		    <currentState>07</currentState>
-	   	    <nextState>08</nextState>
+		    <currentState>08</currentState>
+	   	    <nextState>09</nextState>
 		    <input>
 			<messageName>respuestaID</messageName>
 			<filter>
@@ -333,7 +386,7 @@
 		<function>
 		    <name>survive</name>
 		    <description>Depending on the age, calories gotten, pregnancy, and so on, the probability of survival is computed and according to that probability and a random value the survival of the individual determined</description> 
-		    <currentState>08</currentState>
+		    <currentState>09</currentState>
 		    <nextState>end</nextState>
 		    <outputs>
 			<output>
@@ -429,6 +482,10 @@
 		</variable>
 		<variable>
 			<type>int</type>
+			<name>ancestClan[6]</name>
+		</variable>
+		<variable>
+			<type>int</type>
 			<name>clanID</name>
 		</variable>
 		<variable>
@@ -452,6 +509,28 @@
 		<variable>
 			<type>int</type>
 			<name>id</name>
+		</variable>
+	   </variables>
+	</message>
+	<message>
+	   <name>family</name>
+	   <description>el marido envia a su mujer la parte de sus ancestros para el hijo</description>
+	   <variables>
+		<variable>
+			<type>int</type>
+			<name>wife</name>
+		</variable>
+		<variable>
+			<type>int</type>
+			<name>clanID</name>
+		</variable>
+		<variable>
+			<type>int</type>
+			<name>husband</name>
+		</variable>
+		<variable>
+			<type>int</type>
+			<name>info[4]</name>
 		</variable>
 	   </variables>
 	</message>

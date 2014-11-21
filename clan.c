@@ -18,7 +18,7 @@ int clan_Information()
 		MNEEDS.cal_list[i] = information_message->cal;
 		MNEEDS.age[i] = information_message->age;
 		cal += information_message->cal;
-		TAKENID[information_message->id] =1;
+		//TAKENID[information_message->id] =1;
 		i++;
 		if ((information_message->age > 12) && (information_message->age < 45) && !(information_message->pregnant)) nmem++;
 	FINISH_INFORMATION_MESSAGE_LOOP
@@ -108,6 +108,7 @@ int marriable_indv ()
 			i=0;	
 			for (j=male*NANCESTORS;j<(NANCESTORS*male)+ NANCESTORS;j++){
 				IFREE.mancestor_list[j] = ancestor_message->ancest[i];
+				IFREE.mancestorClan_list[j] = ancestor_message->ancestClan[i];
 				i++;
 			}
 			male++;
@@ -118,6 +119,7 @@ int marriable_indv ()
 				i=0;
 				for (j=female*NANCESTORS;j<(NANCESTORS*female)+ NANCESTORS;j++){
 					IFREE.fancestor_list[j] = ancestor_message->ancest[i];
+					IFREE.fancestorClan_list[j] = ancestor_message->ancestClan[i];
 					i++;
 				}
 				female++;
@@ -132,25 +134,28 @@ int marriable_indv ()
 int send_girls ()
 {
 	if (IFREE.numFemale !=0)
-		add_freeGirls_message (IFREE.female_list,IFREE.numFemale,get_y(),get_x(),get_cID(),IFREE.fancestor_list);
+		add_freeGirls_message (IFREE.female_list,IFREE.numFemale,get_y(),get_x(),get_cID(),IFREE.fancestor_list,IFREE.fancestorClan_list);
 	return 0;
 }
 /*recive las chicas disponibles para emparejarse de otros clanes y a partir de la compatibilidad
 se decide hacer propuestas de emparejamiento*/
 int match ()
 {
-	int_array chicas,ancestors;
+	int_array chicas,ancestors,ancestorsClan;
 	int num_chicas[100], clanes[100],mensajes=0,i,z;
 	init_int_array(&chicas);
 	init_int_array(&ancestors);
+	init_int_array(&ancestorsClan);
 	//reciviendo informacion de las chicas de otros clanes
 	START_FREEGIRLS_MESSAGE_LOOP
 	if (freeGirls_message->clanID != get_cID()){
 		for (i=0;i<100;i++){
 			if (freeGirls_message->girls[i]!=0){
 				add_int(&chicas,freeGirls_message->girls[i]);
-				for (z=i*NANCESTORS;z<(NANCESTORS*i)+NANCESTORS;z++)
+				for (z=i*NANCESTORS;z<(NANCESTORS*i)+NANCESTORS;z++){
 					add_int(&ancestors,freeGirls_message->lancestors[z]);
+					add_int(&ancestorsClan,freeGirls_message->lancestorsClan[z]);
+				}
 			}
 		}
 		num_chicas[mensajes] = freeGirls_message->num_chicas;
@@ -160,6 +165,7 @@ int match ()
 	FINISH_FREEGIRLS_MESSAGE_LOOP
 	if (mensajes==0)
 		return 0;
+
 	//proponer emparejamiento
 	int emparejado,familia,man=0,g=0,ag=0,am=0,prop[100],count=0,clan,chica,id_man[100];
 	// por cada chico libre de mi clan miro si es compatible con cada chica, la primera chica
@@ -178,7 +184,7 @@ int match ()
 				while (ag< NANCESTORS && familia ==0){
 					am=0;
 					while (am < NANCESTORS && familia ==0){
-						if (IFREE.mancestor_list[(man*NANCESTORS)+am] == ancestors.array[(g*NANCESTORS)+ag])
+						if (IFREE.mancestor_list[(man*NANCESTORS)+am] == ancestors.array[(g*NANCESTORS)+ag] && IFREE.mancestorClan_list[(man*NANCESTORS)+am] == ancestorsClan.array[(g*NANCESTORS)+ag])
 							familia =1;
 						am++;
 					}
@@ -203,6 +209,7 @@ int match ()
 	}
 	free_int_array(&chicas);
 	free_int_array(&ancestors);
+	free_int_array(&ancestorsClan);
 						
 	return 0;
 }
@@ -210,7 +217,7 @@ int match ()
 tiene el clan cuya peticion llegara antes */
 int aceptar_prop ()
 {
-	int i,encontrado,j,id_free=-2 ;
+	int i,encontrado,j;
 	int_array peticiones,pretendientes,clanes;
 
 	init_int_array(&peticiones);
@@ -234,17 +241,7 @@ int aceptar_prop ()
 	FINISH_PROPUESTA_MESSAGE_LOOP
 	j=0;
 	for (i=0;i<peticiones.size;i++){
-		encontrado =0;
-		// busqueda de nuevos ids para las chicas que cambian de clan
-		while (j<100 && encontrado ==0){
-			if (TAKENID[j]==0){
-				TAKENID[j]=1;
-				id_free =j;
-				encontrado =1;
-			}
-			j++;
-		}
-		add_marriage_message(peticiones.array[i],clanes.array[i],pretendientes.array[i],get_cID(),id_free);
+		add_confirProp_message(peticiones.array[i],clanes.array[i],pretendientes.array[i],get_cID());
 	}
 	//free memory
 	free_int_array(&peticiones);
@@ -252,10 +249,24 @@ int aceptar_prop ()
 	free_int_array(&pretendientes);
 	return 0;
 }
+int recive_conf ()
+{
+	int wife, husband, clanID,nextID;
+	nextID= get_indexID();
+	START_CONFIRPROP_MESSAGE_LOOP
+		wife = confirProp_message->girlID;
+		husband = confirProp_message->manID;
+		clanID = confirProp_message->oclanID;
+		add_marriage_message(wife,get_cID(),husband,clanID,nextID);
+		nextID ++;
+	FINISH_CONFIRPROP_MESSAGE_LOOP
+	set_indexID(nextID);
+	return 0;
+}
 // busca un nuevo identificador libre y se lo envia al nuevo individuo
 int repartir_id ()
 {
-	int id_free =0, encontrado =0,i=0, peticiones=0;
+	int id_free =0,i=0, peticiones=0;
 	int_array solicitantesID;
 	init_int_array (&solicitantesID);
 	START_PETICIONID_MESSAGE_LOOP
@@ -264,17 +275,12 @@ int repartir_id ()
 	FINISH_PETICIONID_MESSAGE_LOOP
 	if (peticiones ==0)
 		return 0;
+	id_free = get_indexID();
 	for (i=0;i<solicitantesID.size;i++){		
-		encontrado =0;
-		while (id_free <100 && encontrado ==0){
-			if (TAKENID[id_free]==0){
-				TAKENID[id_free]=1;
-				add_respuestaID_message (id_free,solicitantesID.array[i],get_cID());
-				encontrado =1;
-			}
-			id_free++;
-		}
+		add_respuestaID_message (id_free,solicitantesID.array[i],get_cID());
+		id_free ++;
 	}
+	set_indexID(id_free);
 	free_int_array(&solicitantesID);
 	return 0;	
 }

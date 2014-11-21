@@ -6,10 +6,8 @@
 int indvInformation()
 {
 	int cal=get_cal_needs(), ID=get_indvID(), ageX=get_age(), cIDX=get_cID(), pregX=get_pregnant();
-	/*if (get_cID() ==1 && ID ==1 && get_pregnant ()== 1)
-		printf("mi pareja es %d\n",get_pareja());*/
-	if (get_indvID ()== 99)
-		printf("life my 1 anc is %d\n",get_ancestors()[0]);
+
+
 	set_icalories(cal);
         add_information_message(ID,cIDX,cal,ageX,pregX);
         return 0;
@@ -91,7 +89,7 @@ int idle_indv()
 // el clan les busque pareja
 int freeIndv ()
 {	
-	add_ancestor_message (get_ancestors(),get_cID(),get_indvID(),get_sex());
+	add_ancestor_message (get_ancestors(),get_ancestorsClan(),get_cID(),get_indvID(),get_sex());
 	return 0;
 }
 // la chica recibe los datos del hombre con el que ha sido emparejada
@@ -116,7 +114,8 @@ int casamiento_female()
 	}
 	return 0;
 }
-// el hombre recive los datos de la chica con el que ha sido emparejado
+// el hombre recive los datos de la chica con la que ha sido emparejado y envia a su esposa
+// su parte de ancestros para un futuro hijo
 int casamiento_male()
 {
 	int wife,message=0;
@@ -127,7 +126,20 @@ int casamiento_male()
 	if (message >0){
 		set_married(1);
 		set_pareja(wife);
+		int info[4] = {get_ancestors()[0],get_ancestors()[1],get_ancestorsClan()[0],get_ancestorsClan()[1]};
+		add_family_message (wife,get_cID(),get_indvID(),info);
 	}
+	return 0;
+}
+
+int info_husband ()
+{
+	START_FAMILY_MESSAGE_LOOP
+		HUSBAND_INFO[0] = family_message->info[0];
+		HUSBAND_INFO[1] = family_message->info[1];
+		HUSBAND_INFO[2] = family_message->info[2];
+		HUSBAND_INFO[3] = family_message->info[3];
+	FINISH_FAMILY_MESSAGE_LOOP
 	return 0;
 }
 // funcion donde la chica casada y fertil, comprueba si esta embarazada 
@@ -152,15 +164,17 @@ int child_inf ()
 // creacion del nuevo individuo
 int birth ()
 {
-	int ancestors[6], id = -3,i;
+	int id = -3, aux[2];
 	// se recive del clan un id libre para el hijo
 	START_RESPUESTAID_MESSAGE_LOOP
 		id = respuestaID_message->freeID;
 	FINISH_RESPUESTAID_MESSAGE_LOOP
 	// se crea el array ancestros que tendra el hijo
-	for (i=0;i<NANCESTORS/2;i++)
-		ancestors[i] = get_ancestors()[i];
-	add_indv_agent (id,get_cID(),0,0,0,1,1,0,0,0,ancestors,0,0,0,0,get_indvID());
+	/*for (i=0;i<NANCESTORS/2;i++)
+		ancestors[i] = get_ancestors()[i];*/
+	int ancestors[6] = {get_pareja(),get_indvID(),get_husband_info()[0],get_husband_info()[1],get_ancestors()[0],get_ancestors()[1]};
+	int ancestorsClan[6] ={get_cID(),get_cID(),get_husband_info()[2],get_husband_info()[3]};
+	add_indv_agent (id,get_cID(),0,0,0,1,1,0,0,0,ancestors,ancestorsClan,0,0,0,0,get_indvID(),aux);
 	//actualizacion del estado de la chica una vez acabado el embarazo
 	set_pregnant (0);
 	set_month (0);
