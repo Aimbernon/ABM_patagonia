@@ -3,5 +3,5 @@
     <model><file>indv_model.xml</file><enabled>true</enabled></model>
     <model><file>clan_model.xml</file><enabled>true</enabled></model>
     <model><file>patch_model.xml</file><enabled>true</enabled></model>
-</models
-
+    <model><file>manada_guanacos_model.xml</file><enabled>true</enabled></model>
+</models>

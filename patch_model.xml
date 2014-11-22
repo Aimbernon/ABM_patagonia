@@ -59,6 +59,11 @@
                     <name>season</name>
                     <description>current season, initially it must be wet season</description>
                  </variable>
+                 <variable>
+                    <type>int</type>
+                    <name>adultos</name>
+                    <description>numero de guanacos adultos</description>
+                 </variable>
                </memory>
             <functions>
                 <function>
@@ -97,7 +102,8 @@
                     </outputs>
                 </function>
 		<function>
-		    <name>regenerate</name>
+		    <!--
+            <name>regenerate</name>
 		    <description>patch generates some new calories each week</description>
 		    <currentState>2</currentState>
 		    <nextState>3</nextState>
@@ -107,8 +113,29 @@
 				<phase>6</phase>
 			</time>
 		    </condition>
+            -->
+            <name>regenerate</name>
+                <description>calorias aportadas por los guanacos</description>
+                <currentState>2</currentState>
+                <nextState>3</nextState>
+                <inputs>
+                    <input>
+                        <messageName>adultospatch</messageName>
+                        <filter><lhs>
+                            <lhs><value>a.xcord</value></lhs>
+                            <op>EQ</op>
+                            <rhs><value>m.xcord</value></rhs>
+                        </lhs>
+                            <op>AND</op>
+                        <rhs>
+                            <lhs><value>a.ycord</value></lhs>
+                            <op>EQ</op>
+                            <rhs><value>m.ycord</value></rhs>
+                        </rhs></filter>
+                    </input>
+                </inputs>
 		</function>
-	        <function>
+	        <!--<function>
 		    <name>idle_patch</name>
            <description>the days the patch does not generate new calories this function should be executed instead of regenerate
            </description>
@@ -122,18 +149,34 @@
 				</time>
                       </not>
 		    </condition>
-		</function>
+		</function>-->
                <function>
 		    <name>snregenerate</name>
-		    <description>status of new regenaration based on reposition rate</description>
+		    <description>reproduccion de guanacos</description>
 		    <currentState>3</currentState>
 		    <nextState>end</nextState>
 		    <condition>
 			<time>
-                           <period>season</period>
-                           <phase>6</phase>
+                           <period>yearly</period>
+                           <phase>0</phase>
 			</time>
 		    </condition>
+        <inputs>
+                    <input>
+                        <messageName>reproduccionguanacos</messageName>
+                        <filter><lhs>
+                            <lhs><value>a.xcord</value></lhs>
+                            <op>EQ</op>
+                            <rhs><value>m.xcord</value></rhs>
+                        </lhs>
+                            <op>AND</op>
+                        <rhs>
+                            <lhs><value>a.ycord</value></lhs>
+                            <op>EQ</op>
+                            <rhs><value>m.ycord</value></rhs>
+                        </rhs></filter>
+                    </input>
+        </inputs>
   		   </function>
              <function>
 		    <name>idle_patch</name>
@@ -144,8 +187,8 @@
 		    <condition>
 			<not>
 			   <time>	
-                              <period>season</period>
-                              <phase>6</phase>
+                              <period>yearly</period>
+                              <phase>0</phase>
 			    </time>
 			</not>
 		    </condition>
@@ -156,4 +199,3 @@
 <messages>
 </messages>
 </xmodel>
-

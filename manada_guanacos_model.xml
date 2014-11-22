@@ -1,0 +1,198 @@
+<xmodel version="2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation='http://flame.ac.uk/schema/xmml_v2.xsd'>
+	<name>guanacos</name>
+    <version>1</version>
+    <description>modelo de las manadas o familias de guanacos</description>
+	<environment>
+		<constants>
+			<variable>
+				<type>int</type>
+				<name>max_manada</name>
+				<description>numero maximo de guanacos por manada</description>
+			</variable>
+			<variable>
+				<type>int</type>
+				<name>max_familia</name>
+				<description>numero maximo de guanacos por familia</description>
+			</variable>
+			<variable>
+				<type>int</type>
+				<name>cal_adulto</name>
+				<description>numero de calorias dadas por cada guanaco adulto</description>
+			</variable>
+		</constants>
+		<functionFiles>
+			<file>guanacos.c</file>
+		</functionFiles>
+		<timeUnits>
+			<timeUnit>
+				<name>dias_por_patch</name>
+				<unit>iteration</unit>
+				<period>10</period>
+			</timeUnit>
+		</timeUnits>
+		<dataTypes>
+		</dataTypes>		
+	</environment>
+	<agents>
+		<xagent>
+			<name>manada_guanacos</name>
+			<description>agente manada de guanacos</description>
+			<memory>
+				<variable>
+					<type>int</type>
+					<name>id</name>
+					<description>Identificador de la manada</description>
+				</variable>
+				<variable>
+					<type>int</type>
+					<name>familia</name>
+					<description>Identificador si es manada(=0) o si es familia (!=0)</description>
+				</variable>
+				<variable>
+					<type>int</type>
+					<name>xcord</name>
+					<description>Coordenada x de la manada</description>
+				</variable>
+				<variable>
+					<type>int</type>
+					<name>ycord</name>
+					<description>Coordenada y de la manada</description>
+				</variable>
+				<variable>
+					<type>int</type>
+					<name>count</name>
+					<description>Numero de guanacos de la manada</description>
+				</variable>
+				<variable>
+					<type>int</type>
+					<name>calorias</name>
+					<description>Numero de calorias que proporciona la manada</description>
+				</variable>
+				<variable>
+					<type>int</type>
+					<name>adultos</name>
+					<description>Numero de adultos que contiene la manada</description>
+				</variable>
+			</memory>
+			<functions>
+				<function>
+					<name>manadaInfo</name>
+					<description>informacion de la manada</description>
+					<currentState>start</currentState>
+					<nextState>1</nextState>
+				</function>
+				<function>
+					<name>manada_idle</name>
+					<description>no se hace nada</description>
+					<currentState>1</currentState>
+					<nextState>2</nextState>
+					<condition><not>
+						<time>
+							<period>dias_por_patch</period>
+							<phase>0</phase>
+					</time></not></condition>
+				</function>
+				<function>
+					<name>move</name>
+					<description>Calculamos el movimiento de la manada (depende de la estación)</description>
+					<currentState>1</currentState>
+					<nextState>2</nextState>
+					<condition>
+						<time>
+							<period>dias_por_patch</period>
+							<phase>0</phase>
+						</time>
+					</condition>
+					<outputs>
+						<output>
+							<messageName>adultospatch</messageName>
+						</output>
+					</outputs>
+				</function>
+				<function>
+					<name>reproduccion</name>
+					<description>los guanacos dentro del patch crean nuevas manadas</description>
+					<currentState>2</currentState>
+					<nextState>end</nextState>
+					<condition>
+						<time>
+							<period>yearly</period>
+							<phase>0</phase>
+						</time>
+					</condition>
+					<outputs>
+						<output>
+							<messageName>reproduccionguanacos</messageName>
+						</output>
+					</outputs>
+				</function>
+				<function>
+					<name>manada_idle2</name>
+					<description>la manada no hace nada</description>
+					<currentState>2</currentState>
+					<nextState>end</nextState>
+					<condition>
+						<not><time>
+							<period>yearly</period>
+							<phase>0</phase>
+						</time></not>
+					</condition>
+				</function>
+			</functions>
+		</xagent>
+	</agents>
+	<messages>
+		<message>
+			<name>adultospatch</name>
+			<description>manda los adultos que hay en el patch</description>
+			<variables>
+				<variable>
+					<type>int</type>
+					<name>xcord</name>
+					<description>posicion x de la manada de guanacos</description>
+				</variable>
+				<variable>
+					<type>int</type>
+					<name>ycord</name>
+					<description>posicion y de la manada de guanacos</description>
+				</variable>
+				<variable>
+					<type>int</type>
+					<name>adultos</name>
+					<description>adultos de la manada de guanacos</description>
+				</variable>
+				<variable>
+					<type>int</type>
+					<name>sentido</name>
+					<description>indica si se van o llegan al patch(0 se van, 1 llegan)</description>
+				</variable>
+			</variables>
+		</message>
+		<message>
+			<name>reproduccionguanacos</name>
+			<description>manda los guanacos a reproducirse</description>
+			<variables>
+				<variable>
+					<type>int</type>
+					<name>xcord</name>
+					<description>posicion x de la manada de guanacos</description>
+				</variable>
+				<variable>
+					<type>int</type>
+					<name>ycord</name>
+					<description>posicion y de la manada de guanacos</description>
+				</variable>
+				<variable>
+					<type>int</type>
+					<name>count</name>
+					<description>numero de guanacos (incluido crias)</description>
+				</variable>
+				<variable>
+					<type>int</type>
+					<name>familia</name>
+					<description>indica si son familias o no(0 no son, 1 son familia)</description>
+				</variable>
+			</variables>
+		</message>
+	</messages>
+</xmodel>
