@@ -302,7 +302,7 @@
 		    <name>new_leader</name>
 		    <description>Some individuals may die, maybe the leader, so after this step all survivors send a message to the clan in order to decide if there should be a new leader... it can be because the leader has died, but also because the leader is too old and a new male becomes the leader</description>
 		    <currentState>09</currentState>
-		    <nextState>end</nextState>
+		    <nextState>10</nextState>
 		    <inputs>
 			<input>
 			    <messageName>leader</messageName>
@@ -313,6 +313,25 @@
 			    </filter>	
 			</input>
 		    </inputs>
+		</function>
+		<function>
+		    <name>again_marriable</name>
+		    <description>cer</description>
+		    <currentState>10</currentState>
+		    <nextState>end</nextState>
+		    <inputs>
+			<input>
+			    <messageName>widow</messageName>
+			    <filter>
+                                <lhs><value>a.cID</value></lhs>
+                                <op>EQ</op>
+                                <rhs><value>m.clanID</value></rhs>
+			    </filter>	
+			</input>
+		    </inputs>
+		    <output>
+			<messageName>lmarriage</messageName>
+		    </output>
 		</function>
 <!-- **************************************************************** -->
             </functions>
@@ -513,6 +532,37 @@
                <variable>
                     <type>int</type>
                     <name>clanID</name>
+                    <description></description>
+                </variable>
+            </variables>
+        </message>
+	<message>
+                <name>lmarriage</name>
+                <description> </description>
+            <variables>
+              <variable>
+                    <type>int</type>
+                    <name>manID</name>
+                    <description></description>
+                </variable>
+		<variable>
+                    <type>int</type>
+                    <name>girlID</name>
+                    <description></description>
+                </variable>
+               <variable>
+                    <type>int</type>
+                    <name>clanID</name>
+                    <description></description>
+                </variable>
+               <variable>
+                    <type>int</type>
+                    <name>mancestorsID[2]</name>
+                    <description></description>
+                </variable>
+              <variable>
+                    <type>int</type>
+                    <name>mancestorsCID[2]</name>
                     <description></description>
                 </variable>
             </variables>

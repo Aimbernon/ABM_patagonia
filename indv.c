@@ -170,11 +170,9 @@ int birth ()
 		id = respuestaID_message->freeID;
 	FINISH_RESPUESTAID_MESSAGE_LOOP
 	// se crea el array ancestros que tendra el hijo
-	/*for (i=0;i<NANCESTORS/2;i++)
-		ancestors[i] = get_ancestors()[i];*/
 	int ancestors[6] = {get_pareja(),get_indvID(),get_husband_info()[0],get_husband_info()[1],get_ancestors()[0],get_ancestors()[1]};
 	int ancestorsClan[6] ={get_cID(),get_cID(),get_husband_info()[2],get_husband_info()[3]};
-	add_indv_agent (id,get_cID(),0,0,0,1,1,0,0,0,ancestors,ancestorsClan,0,0,0,0,get_indvID(),aux);
+	add_indv_agent (id,get_cID(),0,0,0,1,1,0,0,0,ancestors,ancestorsClan,0,0,0,0,get_indvID(),aux,0);
 	//actualizacion del estado de la chica una vez acabado el embarazo
 	set_pregnant (0);
 	set_month (0);
@@ -183,7 +181,7 @@ int birth ()
 }
 
 int survive()
-{
+{	
 	int die, age = get_age(), sex = get_sex(), cal = get_icalories();
 	float p = 0.001;
 
@@ -200,6 +198,52 @@ int survive()
         die = ((1.0*rand())/(RAND_MAX+1.0)) < p;
 
 	if( !die ) add_leader_message( get_indvID(), get_cID(), get_lead(), get_sex(), get_age() );
+	//mirar si tiene pareja para avisarla que he muerto
+	if (die !=0)
+	{
+		if (get_married() == 1)
+			add_death_message (get_pareja(),get_cID());
+	}
 	return 0; 
+}
+
+int update_status ()
+{
+	START_DEATH_MESSAGE_LOOP
+		if (get_sex()==1)
+		{
+			set_widow (1);
+			set_embarazable(0);
+		}
+		else
+			set_married(0);
+		set_pareja (-1);
+	FINISH_DEATH_MESSAGE_LOOP
+	return 0;
+}
+
+int husband_request () //entrada solo viudas
+{
+	//pedir al clan una pareja local
+	add_widow_message (get_ancestors(),get_ancestorsClan(),get_cID(),get_indvID());
+	return 0;
+}
+int local_marriage ()
+{
+	START_LMARRIAGE_MESSAGE_LOOP
+		if (get_sex()==1){//female case
+			set_embarazable(1);
+			set_pareja(lmarriage_message->manID);
+			HUSBAND_INFO[0] = lmarriage_message->mancestorsID[0];
+			HUSBAND_INFO[1] = lmarriage_message->mancestorsID[1];
+			HUSBAND_INFO[2] = lmarriage_message->mancestorsCID[2];
+			HUSBAND_INFO[3] = lmarriage_message->mancestorsCID[3];
+		}
+		else
+			set_pareja(lmarriage_message->girlID);
+		set_married(1);
+
+	FINISH_LMARRIAGE_MESSAGE_LOOP
+	return 0;
 }
 

@@ -112,6 +112,11 @@
 			<name>husband_info[4]</name>
 			<description>informacion de la familia del marido </description>
 		</variable>
+		<variable>
+			<type>int</type>
+			<name>widow</name>
+			<description>indicador para la mujer que vuelva a casarse con alguien de su clan </description>
+		</variable>
 <!-- new ********************************************************** -->
             </memory>
             <functions>
@@ -175,7 +180,7 @@
 		    <currentState>03</currentState>
 	   	    <nextState>04</nextState>
 		    <condition>
-			<lhs>
+			<lhs><lhs>
 			<lhs><value>a.marriable</value></lhs>
 			<op>EQ</op>
 			<rhs><value>1</value></rhs>
@@ -183,6 +188,12 @@
 			<op>AND</op>
 			<rhs>
 			<lhs><value>a.married</value></lhs>
+			<op>EQ</op>
+			<rhs><value>0</value></rhs>
+			</rhs></lhs>
+			<op>AND</op>
+			<rhs>
+			<lhs><value>a.widow</value></lhs>
 			<op>EQ</op>
 			<rhs><value>0</value></rhs>
 			</rhs>
@@ -195,10 +206,10 @@
 		    <name>idle</name>
 		    <description></description>
 		    <currentState>03</currentState>
-	   	    <nextState>05</nextState>
+	   	    <nextState>06</nextState>
 		    <condition>
 			<not>
-			<lhs>
+			<lhs><lhs>
 			<lhs><value>a.marriable</value></lhs>
 			<op>EQ</op>
 			<rhs><value>1</value></rhs>
@@ -206,6 +217,12 @@
 			<op>AND</op>
 			<rhs>
 			<lhs><value>a.married</value></lhs>
+			<op>EQ</op>
+			<rhs><value>0</value></rhs>
+			</rhs></lhs>
+			<op>AND</op>
+			<rhs>
+			<lhs><value>a.widow</value></lhs>
 			<op>EQ</op>
 			<rhs><value>0</value></rhs>
 			</rhs>
@@ -387,12 +404,112 @@
 		    <name>survive</name>
 		    <description>Depending on the age, calories gotten, pregnancy, and so on, the probability of survival is computed and according to that probability and a random value the survival of the individual determined</description> 
 		    <currentState>09</currentState>
-		    <nextState>end</nextState>
+		    <nextState>10</nextState>
 		    <outputs>
 			<output>
 				<messageName>leader</messageName>
 			</output>
+			<output>
+				<messageName>death</messageName>
+			</output>
 		    </outputs>
+		</function>
+		<function>
+		    <name>update_status</name>
+		    <description>indv receives a notification if their couple is death </description> 
+		    <currentState>10</currentState>
+		    <nextState>11</nextState>
+		    <input>
+			<messageName>death</messageName>
+			<filter>
+				<lhs>
+					<lhs><value>a.indvID</value></lhs>
+					<op>EQ</op>
+					<rhs><value>m.parejaID</value></rhs>
+				</lhs>
+				<op>AND</op>
+				<rhs>
+					<lhs><value>a.cID</value></lhs>
+					<op>EQ</op>
+					<rhs><value>m.clanID</value></rhs>
+				</rhs>
+			</filter> 
+		    </input>
+		</function>
+		<function>
+		    <name>husband_request</name>
+		    <description>girl send husband request to their clan </description> 
+		    <currentState>11</currentState>
+		    <nextState>12</nextState>
+ 		    <condition>
+			<lhs><value>a.widow</value></lhs>
+			<op>EQ</op>
+			<rhs><value>1</value></rhs>
+		    </condition>
+		    <output>
+			<messageName>widow</messageName>
+		    </output>
+		</function>
+		<function>
+		    <name>idle</name>
+		    <description></description>
+		    <currentState>11</currentState>
+	   	    <nextState>12</nextState>
+		    <condition>
+			<not>
+			<lhs><value>a.widow</value></lhs>
+			<op>EQ</op>
+			<rhs><value>1</value></rhs>
+			</not>
+		    </condition>
+		</function>
+		<function>
+		    <name>local_marriage</name>
+		    <description>Se comprueba si hay casamiento local </description> 
+		    <currentState>12</currentState>
+		    <nextState>end</nextState>
+ 		    <condition>
+			<lhs><value>a.married</value></lhs>
+			<op>EQ</op>
+			<rhs><value>0</value></rhs>
+		    </condition>
+		    <input>
+			<messageName>lmarriage</messageName>
+			<filter>
+				<lhs>
+					<lhs><!-- ya seas la chica -->
+					<lhs><value>a.indvID</value></lhs>
+					<op>EQ</op>
+					<rhs><value>m.girlID</value></rhs>
+					</lhs>
+					<op>OR</op>
+					<rhs><!-- como el chico, recives el mensaje -->
+					<lhs><value>a.indvID</value></lhs>
+					<op>EQ</op>
+					<rhs><value>m.manID</value></rhs>
+					</rhs>
+				</lhs>
+				<op>AND</op>
+				<rhs>
+					<lhs><value>a.cID</value></lhs>
+					<op>EQ</op>
+					<rhs><value>m.clanID</value></rhs>
+				</rhs>
+			</filter>  
+		    </input>
+		</function>
+		<function>
+		    <name>idle</name>
+		    <description></description>
+		    <currentState>12</currentState>
+	   	    <nextState>end</nextState>
+		    <condition>
+			<not>
+			<lhs><value>a.married</value></lhs>
+			<op>EQ</op>
+			<rhs><value>0</value></rhs>
+			</not>
+		    </condition>
 		</function>
             </functions>
         </xagent>
@@ -531,6 +648,42 @@
 		<variable>
 			<type>int</type>
 			<name>info[4]</name>
+		</variable>
+	   </variables>
+	</message>
+	<message>
+	   <name>death</name>
+	   <description>el fallecido notifica a su pareja que vuelve a estar libre</description>
+	   <variables>
+		<variable>
+			<type>int</type>
+			<name>parejaID</name>
+		</variable>
+		<variable>
+			<type>int</type>
+			<name>clanID</name>
+		</variable>
+	   </variables>
+	</message>
+	<message>
+	   <name>widow</name>
+	   <description>ju</description>
+	   <variables>
+		<variable>
+			<type>int</type>
+			<name>ancestors[6]</name>
+		</variable>
+		<variable>
+			<type>int</type>
+			<name>Cancestors[6]</name>
+		</variable>
+		<variable>
+			<type>int</type>
+			<name>clanID</name>
+		</variable>
+		<variable>
+			<type>int</type>
+			<name>indvID</name>
 		</variable>
 	   </variables>
 	</message>

@@ -165,7 +165,6 @@ int match ()
 	FINISH_FREEGIRLS_MESSAGE_LOOP
 	if (mensajes==0)
 		return 0;
-
 	//proponer emparejamiento
 	int emparejado,familia,man=0,g=0,ag=0,am=0,prop[100],count=0,clan,chica,id_man[100];
 	// por cada chico libre de mi clan miro si es compatible con cada chica, la primera chica
@@ -283,6 +282,53 @@ int repartir_id ()
 	set_indexID(id_free);
 	free_int_array(&solicitantesID);
 	return 0;	
+}
+//busca parejas a las chicas que han quedado viudas
+int again_marriable ()
+{
+	int i,messages=0,n=0,find =0,familia,ag,am;
+	int_array id,ancestors,Cancestors;
+	init_int_array (&id);
+	init_int_array (&ancestors);
+	init_int_array (&Cancestors);
+
+	START_WIDOW_MESSAGE_LOOP
+		add_int (&id,widow_message->indvID);
+		for (i=0;i<NANCESTORS;i++)
+		{
+			add_int (&ancestors,widow_message->ancestors[i]);
+			add_int (&Cancestors,widow_message->Cancestors[i]);
+		}
+		messages ++;
+	FINISH_WIDOW_MESSAGE_LOOP
+	//si hay chicos y ha recivido viudas se intenta emparejarla
+	if (messages >0){
+		while (find < messages && n< IFREE.numMale)
+		{
+			// comprobacion de si son familiares
+			familia=0;
+			ag=0;
+			while (ag< NANCESTORS && familia ==0){
+				am=0;
+				while (am < NANCESTORS && familia ==0){
+					if (IFREE.mancestor_list[(n*NANCESTORS)+am] == ancestors.array[(find*NANCESTORS)+ag] && IFREE.mancestorClan_list[(n*NANCESTORS)+am] == Cancestors.array[(find*NANCESTORS)+ag])
+						familia =1;
+					am++;
+				}
+				ag++;
+			}
+			//si no son familia se envia el mensaje de casamiento
+			if (familia ==0){
+				add_lmarriage_message (IFREE.male_list[n],id.array[find],get_cID(),IFREE.mancestor_list+n*6,IFREE.mancestorClan_list+n*6);
+				find ++;
+			}
+			n ++;
+		}
+	}
+	free_int_array(&id);
+	free_int_array(&ancestors);
+	free_int_array(&Cancestors);
+	return 0;
 }
 //-----------------------------------------------------------
 
