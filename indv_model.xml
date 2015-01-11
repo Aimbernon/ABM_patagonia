@@ -467,7 +467,7 @@
 		    <name>local_marriage</name>
 		    <description>Se comprueba si hay casamiento local </description> 
 		    <currentState>12</currentState>
-		    <nextState>end</nextState>
+		    <nextState>13</nextState>
  		    <condition>
 			<lhs><value>a.married</value></lhs>
 			<op>EQ</op>
@@ -502,7 +502,7 @@
 		    <name>idle</name>
 		    <description></description>
 		    <currentState>12</currentState>
-	   	    <nextState>end</nextState>
+	   	    <nextState>13</nextState>
 		    <condition>
 			<not>
 			<lhs><value>a.married</value></lhs>
@@ -510,6 +510,23 @@
 			<rhs><value>0</value></rhs>
 			</not>
 		    </condition>
+		</function>
+		<function>
+		    <name>dividir_info</name>
+		    <description>Envia informacion al clan cuando comienza la division del clan</description>
+		    <currentState>13</currentState>
+	   	    <nextState>end</nextState>
+		    <input>
+			<messageName>warningDivide</messageName>
+			<filter>
+				<lhs><value>a.cID</value></lhs>
+				<op>EQ</op>
+				<rhs><value>m.clanID</value></rhs>
+			</filter> 
+		    </input>
+		    <output>
+			<messageName>informationDivide</messageName>
+		    </output>
 		</function>
             </functions>
         </xagent>
@@ -684,6 +701,36 @@
 		<variable>
 			<type>int</type>
 			<name>indvID</name>
+		</variable>
+	   </variables>
+	</message>
+	<message>
+	   <name>informationDivide</name>
+	   <description>informacion nesesaria del indv para la division del clan</description>
+	   <variables>
+		<variable>
+			<type>int</type>
+			<name>clanID</name>
+		</variable>
+		<variable>
+			<type>int</type>
+			<name>indvID</name>
+		</variable>
+		<variable>
+			<type>int</type>
+			<name>parejaID</name>
+		</variable>
+		<variable>
+			<type>int</type>
+			<name>sex</name>
+		</variable>
+		<variable>
+			<type>int</type>
+			<name>momID</name>
+		</variable>
+		<variable>
+			<type>int</type>
+			<name>age</name>
 		</variable>
 	   </variables>
 	</message>

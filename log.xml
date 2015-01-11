@@ -1,0 +1,10 @@
+<model_run>
+<codetype>parallel</codetype>
+<nodes>1</nodes>
+<!-- <time> unit: milliseconds -->
+<!-- <time> timer resolution: 1.00e-03 ms)-->
+<!-- <time> timer overhead: ~0.00e+00 ms)-->
+<iteration><no>1</no><time>0</time></iteration>
+<!-- <totaltime> unit: seconds -->
+<totaltime>0.000</totaltime>
+</model_run>

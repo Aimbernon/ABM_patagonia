@@ -14,6 +14,21 @@
 		<name>nancestors</name>
 		<description>Number of ancestors remembered by indv</description>
 	    </variable>
+	    <variable>
+		<type>int</type>
+		<name>learn</name>
+		<description>probabilidad de aprender palabras nuevas</description>
+	    </variable>
+	    <variable>
+		<type>int</type>
+		<name>forget</name>
+		<description>probabilidad de olvidar palabras</description>
+	    </variable>
+	    <variable>
+		<type>int</type>
+		<name>lang_threshold</name>
+		<description>umbral de coincidencia entre dos genes linguisticos</description>
+	    </variable>
 	</constants>
 	<dataTypes>
 		<dataType>
@@ -142,16 +157,21 @@
 		    <name>ifree</name>
 		    <description>place for storing the information of every free clan member</description>
 		</variable>
-		<!--<variable>
-		    <type>int</type>
-		    <name>takenID[100]</name>
-		    <description>id ocupados del clan</description>
-		</variable>-->
 		<variable>
 		    <type>int</type>
 		    <name>indexID</name>
 		    <description> a partir de ese id los demas estan libres </description>
-		</variable>		
+		</variable>
+		<variable>
+		    <type>int</type>
+		    <name>members</name>
+		    <description> numero actual de miembros del clan </description>
+		</variable>
+		<variable>
+		    <type>int</type>
+		    <name>linguistics[100]</name>
+		    <description> muestra de la linguistica del clan </description>
+		</variable>	
             </memory>
             <functions>
                 <function>
@@ -316,9 +336,9 @@
 		</function>
 		<function>
 		    <name>again_marriable</name>
-		    <description>cer</description>
+		    <description>recibe peticiones de las mujeres que su marido a muerto y las intenta emparejar con un hombre del clan</description>
 		    <currentState>10</currentState>
-		    <nextState>end</nextState>
+		    <nextState>11</nextState>
 		    <inputs>
 			<input>
 			    <messageName>widow</messageName>
@@ -332,6 +352,80 @@
 		    <output>
 			<messageName>lmarriage</messageName>
 		    </output>
+		</function>
+		<function>
+		    <name>dividir_clan</name>
+		    <description>Al superar la capacidad maxima de indv, el clan se divide</description>
+		    <currentState>11</currentState>
+		    <nextState>12</nextState>
+		    <condition>
+			<lhs><value>a.members</value></lhs>
+			<op>GEQ</op>
+			<rhs><value>10</value></rhs>
+		    </condition>
+		    <output>
+			<messageName>warningDivide</messageName>
+		    </output>
+		</function>
+		<function>
+		    <name>idle</name>
+		    <description></description>
+		    <currentState>11</currentState>
+	   	    <nextState>13</nextState>
+		    <condition>
+			<not>
+			<lhs><value>a.members</value></lhs>
+			<op>GEQ</op>
+			<rhs><value>10</value></rhs>
+			</not>
+		    </condition>
+		</function>
+		<function>
+		    <name>creacion_clan</name>
+		    <description>selecciona los individuos y crea el nuevo clan</description>
+		    <currentState>12</currentState>
+		    <nextState>13</nextState>
+		    <input>
+			<messageName>informationDivide</messageName>
+			<filter>
+				<lhs><value>a.cID</value></lhs>
+				<op>EQ</op>
+				<rhs><value>m.clanID</value></rhs>
+			</filter>
+			<sort>
+				<key>age</key>
+				<order>descend</order>
+			</sort>
+		    </input>
+		    <!--<output>
+			<messageName>transfer</messageName>
+		    </output>-->
+		</function>
+		<function>
+		    <name>vocabulary_review</name>
+		    <description>modifica aleatoriamente el gen linguistico del clan</description>
+		    <currentState>13</currentState>
+		    <nextState>end</nextState>
+		    <condition>
+			<time>
+				<period>yearly</period>
+				<phase>348</phase>
+			</time>
+		    </condition>
+		</function>
+		<function>
+		    <name>idle</name>
+		    <description></description>
+		    <currentState>13</currentState>
+		    <nextState>end</nextState>
+		    <condition>
+			<not>
+			<time>
+				<period>yearly</period>
+				<phase>348</phase>
+			</time>
+			</not>
+		    </condition>
 		</function>
 <!-- **************************************************************** -->
             </functions>
@@ -424,7 +518,12 @@
                     <type>int</type>
                     <name>lancestorsClan[600]</name>
                     <description></description>
-                </variable>	
+                </variable>
+              <variable>
+                    <type>int</type>
+                    <name>linguistic[100]</name>
+                    <description></description>
+                </variable>
 	    </variables>
         </message>
         <message>
@@ -481,6 +580,11 @@
                     <type>int</type>
                     <name>oclanID</name>
                     <description>clan actual</description>
+                </variable>
+               <variable>
+                    <type>int</type>
+                    <name>linguistic[100]</name>
+                    <description>gen linguistico del clan origen</description>
                 </variable>
             </variables>
         </message>
@@ -567,6 +671,38 @@
                 </variable>
             </variables>
         </message>
+	<message>
+                <name>warningDivide</name>
+                <description> aviso de separacion del clan a sus miembros</description>
+            <variables>
+              <variable>
+                    <type>int</type>
+                    <name>clanID</name>
+                    <description>id del clan</description>
+                </variable>
+            </variables>
+        </message>
+	<!--<message>
+                <name>transfer</name>
+                <description> notificacion a los indv de cual es su nuevo clan</description>
+            <variables>
+              <variable>
+                    <type>int</type>
+                    <name>clanID</name>
+                    <description>id del clan actual</description>
+                </variable>
+              <variable>
+                    <type>int</type>
+                    <name>newID</name>
+                    <description>id del nuevo clan</description>
+                </variable>
+              <variable>
+                    <type>int</type>
+                    <name>indvID</name>
+                    <description>id del individuo</description>
+                </variable>
+            </variables>
+        </message>-->
 <!-- new ******************************************************** -->
     </messages>
 </xmodel>

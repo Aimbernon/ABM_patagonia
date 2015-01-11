@@ -7,7 +7,6 @@ int indvInformation()
 {
 	int cal=get_cal_needs(), ID=get_indvID(), ageX=get_age(), cIDX=get_cID(), pregX=get_pregnant();
 
-
 	set_icalories(cal);
         add_information_message(ID,cIDX,cal,ageX,pregX);
         return 0;
@@ -72,7 +71,7 @@ int getolder()
 			set_cal_needs( caln - 500 );
 			break;
 	}
-	// se comprueba si hace 9 meses desde que esta embarazada la chica
+	// se contabiliza los meses de embarazo que lleva la chica
 	if (get_pregnant () ==1 ){
 		month ++;
 		set_month (month);
@@ -242,8 +241,15 @@ int local_marriage ()
 		else
 			set_pareja(lmarriage_message->girlID);
 		set_married(1);
-
 	FINISH_LMARRIAGE_MESSAGE_LOOP
+	return 0;
+}
+int dividir_info ()
+{
+	int mom = get_ancestors()[1];
+	START_WARNINGDIVIDE_MESSAGE_LOOP
+		add_informationDivide_message(get_cID(),get_indvID(),get_pareja(),get_sex(),mom,get_age());
+	FINISH_WARNINGDIVIDE_MESSAGE_LOOP
 	return 0;
 }
 
