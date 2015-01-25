@@ -48,6 +48,12 @@
 /** \def LANG_THRESHOLD
  * \brief Provide access to environment variables in uppercase. */
 #define LANG_THRESHOLD (FLAME_get_environment_variable_lang_threshold())
+/** \def GENOMA
+ * \brief Provide access to environment variables in uppercase. */
+#define GENOMA (FLAME_get_environment_variable_genoma())
+/** \def RECORD_SIZE
+ * \brief Provide access to environment variables in uppercase. */
+#define RECORD_SIZE (FLAME_get_environment_variable_record_size())
 /** \def MAX_MANADA
  * \brief Provide access to environment variables in uppercase. */
 #define MAX_MANADA (FLAME_get_environment_variable_max_manada())
@@ -57,6 +63,12 @@
 /** \def CAL_ADULTO
  * \brief Provide access to environment variables in uppercase. */
 #define CAL_ADULTO (FLAME_get_environment_variable_cal_adulto())
+/** \def SURVIVECHANCEADULT
+ * \brief Provide access to environment variables in uppercase. */
+#define SURVIVECHANCEADULT (FLAME_get_environment_variable_surviveChanceAdult())
+/** \def SURVIVECHANCECHILD
+ * \brief Provide access to environment variables in uppercase. */
+#define SURVIVECHANCECHILD (FLAME_get_environment_variable_surviveChanceChild())
 /** \def ARRAY_BLOCK_SIZE
  * \brief The block size to allocate to dynamic arrays. */
 #define ARRAY_BLOCK_SIZE 10
@@ -175,6 +187,30 @@
 /** \def FINISH_WARNINGDIVIDE_MESSAGE_LOOP
  * \brief Finish of loop to process warningDivide messages. */
 #define FINISH_WARNINGDIVIDE_MESSAGE_LOOP }
+/** \def START_TRANSFER_MESSAGE_LOOP
+ * \brief Start of loop to process transfer messages. */
+#define START_TRANSFER_MESSAGE_LOOP  for(transfer_message = get_first_transfer_message(); transfer_message != NULL; transfer_message = get_next_transfer_message(transfer_message)) {
+/** \def FINISH_TRANSFER_MESSAGE_LOOP
+ * \brief Finish of loop to process transfer messages. */
+#define FINISH_TRANSFER_MESSAGE_LOOP }
+/** \def START_CLANMOVE_MESSAGE_LOOP
+ * \brief Start of loop to process clanmove messages. */
+#define START_CLANMOVE_MESSAGE_LOOP  for(clanmove_message = get_first_clanmove_message(); clanmove_message != NULL; clanmove_message = get_next_clanmove_message(clanmove_message)) {
+/** \def FINISH_CLANMOVE_MESSAGE_LOOP
+ * \brief Finish of loop to process clanmove messages. */
+#define FINISH_CLANMOVE_MESSAGE_LOOP }
+/** \def START_CLANSPATCH_MESSAGE_LOOP
+ * \brief Start of loop to process clanspatch messages. */
+#define START_CLANSPATCH_MESSAGE_LOOP  for(clanspatch_message = get_first_clanspatch_message(); clanspatch_message != NULL; clanspatch_message = get_next_clanspatch_message(clanspatch_message)) {
+/** \def FINISH_CLANSPATCH_MESSAGE_LOOP
+ * \brief Finish of loop to process clanspatch messages. */
+#define FINISH_CLANSPATCH_MESSAGE_LOOP }
+/** \def START_GUANACOSPATCH_MESSAGE_LOOP
+ * \brief Start of loop to process guanacospatch messages. */
+#define START_GUANACOSPATCH_MESSAGE_LOOP  for(guanacospatch_message = get_first_guanacospatch_message(); guanacospatch_message != NULL; guanacospatch_message = get_next_guanacospatch_message(guanacospatch_message)) {
+/** \def FINISH_GUANACOSPATCH_MESSAGE_LOOP
+ * \brief Finish of loop to process guanacospatch messages. */
+#define FINISH_GUANACOSPATCH_MESSAGE_LOOP }
 /** \def START_ADULTOSPATCH_MESSAGE_LOOP
  * \brief Start of loop to process adultospatch messages. */
 #define START_ADULTOSPATCH_MESSAGE_LOOP  for(adultospatch_message = get_first_adultospatch_message(); adultospatch_message != NULL; adultospatch_message = get_next_adultospatch_message(adultospatch_message)) {
@@ -311,10 +347,10 @@ struct indv_free
 {
 	int male_list[100];	/**< Datatype memory variable male_list of type int. */
 	int female_list[100];	/**< Datatype memory variable female_list of type int. */
-	int mancestor_list[600];	/**< Datatype memory variable mancestor_list of type int. */
-	int fancestor_list[600];	/**< Datatype memory variable fancestor_list of type int. */
-	int mancestorClan_list[600];	/**< Datatype memory variable mancestorClan_list of type int. */
-	int fancestorClan_list[600];	/**< Datatype memory variable fancestorClan_list of type int. */
+	int mancestor_list[700];	/**< Datatype memory variable mancestor_list of type int. */
+	int fancestor_list[700];	/**< Datatype memory variable fancestor_list of type int. */
+	int mancestorClan_list[700];	/**< Datatype memory variable mancestorClan_list of type int. */
+	int fancestorClan_list[700];	/**< Datatype memory variable fancestorClan_list of type int. */
 	int numMale;	/**< Datatype memory variable numMale of type int. */
 	int numFemale;	/**< Datatype memory variable numFemale of type int. */
 };
@@ -354,8 +390,8 @@ struct xmachine_memory_indv
 	int pregnant;	/**< X-machine memory variable pregnant of type int. */
 	int lead;	/**< X-machine memory variable lead of type int. */
 	int marriable;	/**< X-machine memory variable marriable of type int. */
-	int ancestors[6];	/**< X-machine memory variable ancestors of type int. */
-	int ancestorsClan[6];	/**< X-machine memory variable ancestorsClan of type int. */
+	int ancestors[7];	/**< X-machine memory variable ancestors of type int. */
+	int ancestorsClan[7];	/**< X-machine memory variable ancestorsClan of type int. */
 	int married;	/**< X-machine memory variable married of type int. */
 	int pareja;	/**< X-machine memory variable pareja of type int. */
 	int embarazable;	/**< X-machine memory variable embarazable of type int. */
@@ -404,6 +440,10 @@ struct xmachine_memory_clan
 	int indexID;	/**< X-machine memory variable indexID of type int. */
 	int members;	/**< X-machine memory variable members of type int. */
 	int linguistics[100];	/**< X-machine memory variable linguistics of type int. */
+	int exchange_record[10];	/**< X-machine memory variable exchange_record of type int. */
+	int irecord;	/**< X-machine memory variable irecord of type int. */
+	int targetX;	/**< X-machine memory variable targetX of type int. */
+	int targetY;	/**< X-machine memory variable targetY of type int. */
 };
 
 /** \struct xmachine_memory_clan_holder
@@ -434,14 +474,16 @@ struct xmachine_memory_patch
 {
 	int patchID;	/**< X-machine memory variable patchID of type int. */
 	int pcalories;	/**< X-machine memory variable pcalories of type int. */
+	int gcalories;	/**< X-machine memory variable gcalories of type int. */
 	float repo;	/**< X-machine memory variable repo of type float. */
 	int tpatch;	/**< X-machine memory variable tpatch of type int. */
-	int xcord;	/**< X-machine memory variable xcord of type int. */
-	int ycord;	/**< X-machine memory variable ycord of type int. */
+	int x;	/**< X-machine memory variable x of type int. */
+	int y;	/**< X-machine memory variable y of type int. */
 	float repows;	/**< X-machine memory variable repows of type float. */
 	float repods;	/**< X-machine memory variable repods of type float. */
 	int season;	/**< X-machine memory variable season of type int. */
 	int adultos;	/**< X-machine memory variable adultos of type int. */
+	int pclans;	/**< X-machine memory variable pclans of type int. */
 };
 
 /** \struct xmachine_memory_patch_holder
@@ -470,13 +512,15 @@ struct xmachine_memory_patch_state
  */
 struct xmachine_memory_manada_guanacos
 {
-	int id;	/**< X-machine memory variable id of type int. */
 	int familia;	/**< X-machine memory variable familia of type int. */
-	int xcord;	/**< X-machine memory variable xcord of type int. */
-	int ycord;	/**< X-machine memory variable ycord of type int. */
+	int x;	/**< X-machine memory variable x of type int. */
+	int y;	/**< X-machine memory variable y of type int. */
+	int targetX;	/**< X-machine memory variable targetX of type int. */
+	int targetY;	/**< X-machine memory variable targetY of type int. */
 	int count;	/**< X-machine memory variable count of type int. */
 	int calorias;	/**< X-machine memory variable calorias of type int. */
 	int adultos;	/**< X-machine memory variable adultos of type int. */
+	int season;	/**< X-machine memory variable season of type int. */
 };
 
 /** \struct xmachine_memory_manada_guanacos_holder
@@ -565,8 +609,8 @@ void* FLAME_m_ancestor_composite_params;
  */
 struct m_ancestor
 {
-	int ancest[6];	/**< Message memory variable ancest of type int. */
-	int ancestClan[6];	/**< Message memory variable ancestClan of type int. */
+	int ancest[7];	/**< Message memory variable ancest of type int. */
+	int ancestClan[7];	/**< Message memory variable ancestClan of type int. */
 	int clanID;	/**< Message memory variable clanID of type int. */
 	int indvID;	/**< Message memory variable indvID of type int. */
 	int sex;	/**< Message memory variable sex of type int. */
@@ -622,8 +666,8 @@ void* FLAME_m_widow_composite_params;
  */
 struct m_widow
 {
-	int ancestors[6];	/**< Message memory variable ancestors of type int. */
-	int Cancestors[6];	/**< Message memory variable Cancestors of type int. */
+	int ancestors[7];	/**< Message memory variable ancestors of type int. */
+	int Cancestors[7];	/**< Message memory variable Cancestors of type int. */
 	int clanID;	/**< Message memory variable clanID of type int. */
 	int indvID;	/**< Message memory variable indvID of type int. */
 };
@@ -688,8 +732,8 @@ struct m_freeGirls
 	int y;	/**< Message memory variable y of type int. */
 	int x;	/**< Message memory variable x of type int. */
 	int clanID;	/**< Message memory variable clanID of type int. */
-	int lancestors[600];	/**< Message memory variable lancestors of type int. */
-	int lancestorsClan[600];	/**< Message memory variable lancestorsClan of type int. */
+	int lancestors[700];	/**< Message memory variable lancestors of type int. */
+	int lancestorsClan[700];	/**< Message memory variable lancestorsClan of type int. */
 	int linguistic[100];	/**< Message memory variable linguistic of type int. */
 };
 
@@ -702,11 +746,10 @@ void* FLAME_m_propuesta_composite_params;
  */
 struct m_propuesta
 {
-	int id_list[100];	/**< Message memory variable id_list of type int. */
-	int id_man[100];	/**< Message memory variable id_man of type int. */
+	int id_list;	/**< Message memory variable id_list of type int. */
+	int id_man;	/**< Message memory variable id_man of type int. */
 	int oclanID;	/**< Message memory variable oclanID of type int. */
 	int dclanID;	/**< Message memory variable dclanID of type int. */
-	int count;	/**< Message memory variable count of type int. */
 };
 
 /** \var void* FLAME_m_confirProp_composite_params\n
@@ -783,6 +826,63 @@ struct m_warningDivide
 	int clanID;	/**< Message memory variable clanID of type int. */
 };
 
+/** \var void* FLAME_m_transfer_composite_params\n
+ * \brief Pointer to message sync agent composite params */
+void* FLAME_m_transfer_composite_params;
+
+/** \struct m_transfer
+ * \brief Holds message of type transfer_message.
+ */
+struct m_transfer
+{
+	int clanID;	/**< Message memory variable clanID of type int. */
+	int newID;	/**< Message memory variable newID of type int. */
+	int indvID;	/**< Message memory variable indvID of type int. */
+};
+
+/** \var void* FLAME_m_clanmove_composite_params\n
+ * \brief Pointer to message sync agent composite params */
+void* FLAME_m_clanmove_composite_params;
+
+/** \struct m_clanmove
+ * \brief Holds message of type clanmove_message.
+ */
+struct m_clanmove
+{
+	int x;	/**< Message memory variable x of type int. */
+	int y;	/**< Message memory variable y of type int. */
+	int sentido;	/**< Message memory variable sentido of type int. */
+};
+
+/** \var void* FLAME_m_clanspatch_composite_params\n
+ * \brief Pointer to message sync agent composite params */
+void* FLAME_m_clanspatch_composite_params;
+
+/** \struct m_clanspatch
+ * \brief Holds message of type clanspatch_message.
+ */
+struct m_clanspatch
+{
+	int x;	/**< Message memory variable x of type int. */
+	int y;	/**< Message memory variable y of type int. */
+	int pclans;	/**< Message memory variable pclans of type int. */
+};
+
+/** \var void* FLAME_m_guanacospatch_composite_params\n
+ * \brief Pointer to message sync agent composite params */
+void* FLAME_m_guanacospatch_composite_params;
+
+/** \struct m_guanacospatch
+ * \brief Holds message of type guanacospatch_message.
+ */
+struct m_guanacospatch
+{
+	int x;	/**< Message memory variable x of type int. */
+	int y;	/**< Message memory variable y of type int. */
+	int adultos;	/**< Message memory variable adultos of type int. */
+	int season;	/**< Message memory variable season of type int. */
+};
+
 /** \var void* FLAME_m_adultospatch_composite_params\n
  * \brief Pointer to message sync agent composite params */
 void* FLAME_m_adultospatch_composite_params;
@@ -792,8 +892,8 @@ void* FLAME_m_adultospatch_composite_params;
  */
 struct m_adultospatch
 {
-	int xcord;	/**< Message memory variable xcord of type int. */
-	int ycord;	/**< Message memory variable ycord of type int. */
+	int x;	/**< Message memory variable x of type int. */
+	int y;	/**< Message memory variable y of type int. */
 	int adultos;	/**< Message memory variable adultos of type int. */
 	int sentido;	/**< Message memory variable sentido of type int. */
 };
@@ -807,8 +907,8 @@ void* FLAME_m_reproduccionguanacos_composite_params;
  */
 struct m_reproduccionguanacos
 {
-	int xcord;	/**< Message memory variable xcord of type int. */
-	int ycord;	/**< Message memory variable ycord of type int. */
+	int x;	/**< Message memory variable x of type int. */
+	int y;	/**< Message memory variable y of type int. */
 	int count;	/**< Message memory variable count of type int. */
 	int familia;	/**< Message memory variable familia of type int. */
 };
@@ -955,6 +1055,26 @@ typedef struct m_lmarriage m_lmarriage;
  */
 typedef struct m_warningDivide m_warningDivide;
 
+/** \typedef m_transfer m_transfer
+ * \brief Typedef for m_transfer struct.
+ */
+typedef struct m_transfer m_transfer;
+
+/** \typedef m_clanmove m_clanmove
+ * \brief Typedef for m_clanmove struct.
+ */
+typedef struct m_clanmove m_clanmove;
+
+/** \typedef m_clanspatch m_clanspatch
+ * \brief Typedef for m_clanspatch struct.
+ */
+typedef struct m_clanspatch m_clanspatch;
+
+/** \typedef m_guanacospatch m_guanacospatch
+ * \brief Typedef for m_guanacospatch struct.
+ */
+typedef struct m_guanacospatch m_guanacospatch;
+
 /** \typedef m_adultospatch m_adultospatch
  * \brief Typedef for m_adultospatch struct.
  */
@@ -1004,6 +1124,10 @@ struct node_information
 	struct m_respuestaID * respuestaID_messages;	/**< Pointer to respuestaID message list. */
 	struct m_lmarriage * lmarriage_messages;	/**< Pointer to lmarriage message list. */
 	struct m_warningDivide * warningDivide_messages;	/**< Pointer to warningDivide message list. */
+	struct m_transfer * transfer_messages;	/**< Pointer to transfer message list. */
+	struct m_clanmove * clanmove_messages;	/**< Pointer to clanmove message list. */
+	struct m_clanspatch * clanspatch_messages;	/**< Pointer to clanspatch message list. */
+	struct m_guanacospatch * guanacospatch_messages;	/**< Pointer to guanacospatch message list. */
 	struct m_adultospatch * adultospatch_messages;	/**< Pointer to adultospatch message list. */
 	struct m_reproduccionguanacos * reproduccionguanacos_messages;	/**< Pointer to reproduccionguanacos message list. */
 	int information_message_no;	/**< Number of information messages in list to send. */
@@ -1024,6 +1148,10 @@ struct node_information
 	int respuestaID_message_no;	/**< Number of respuestaID messages in list to send. */
 	int lmarriage_message_no;	/**< Number of lmarriage messages in list to send. */
 	int warningDivide_message_no;	/**< Number of warningDivide messages in list to send. */
+	int transfer_message_no;	/**< Number of transfer messages in list to send. */
+	int clanmove_message_no;	/**< Number of clanmove messages in list to send. */
+	int clanspatch_message_no;	/**< Number of clanspatch messages in list to send. */
+	int guanacospatch_message_no;	/**< Number of guanacospatch messages in list to send. */
 	int adultospatch_message_no;	/**< Number of adultospatch messages in list to send. */
 	int reproduccionguanacos_message_no;	/**< Number of reproduccionguanacos messages in list to send. */
 	struct xmachine * indv_agents;	/**< Pointer to indv agent list. */
@@ -1074,6 +1202,12 @@ int FLAME_environment_variable_forget;
 /** \var int lang_threshold
 * \brief A constant variable from the environment. */
 int FLAME_environment_variable_lang_threshold;
+/** \var int genoma
+* \brief A constant variable from the environment. */
+int FLAME_environment_variable_genoma;
+/** \var int record_size
+* \brief A constant variable from the environment. */
+int FLAME_environment_variable_record_size;
 /** \var int max_manada
 * \brief A constant variable from the environment. */
 int FLAME_environment_variable_max_manada;
@@ -1083,6 +1217,12 @@ int FLAME_environment_variable_max_familia;
 /** \var int cal_adulto
 * \brief A constant variable from the environment. */
 int FLAME_environment_variable_cal_adulto;
+/** \var int surviveChanceAdult
+* \brief A constant variable from the environment. */
+int FLAME_environment_variable_surviveChanceAdult;
+/** \var int surviveChanceChild
+* \brief A constant variable from the environment. */
+int FLAME_environment_variable_surviveChanceChild;
 /** \var xmachine * temp_xmachine
 * \brief Pointer to xmachine to initialise linked list. */
 xmachine * temp_xmachine;
@@ -1141,6 +1281,18 @@ m_lmarriage * temp_lmarriage_message;
 /** \var m_warningDivide * temp_warningDivide_message
 * \brief Pointer to m_warningDivide to initialise linked list. */
 m_warningDivide * temp_warningDivide_message;
+/** \var m_transfer * temp_transfer_message
+* \brief Pointer to m_transfer to initialise linked list. */
+m_transfer * temp_transfer_message;
+/** \var m_clanmove * temp_clanmove_message
+* \brief Pointer to m_clanmove to initialise linked list. */
+m_clanmove * temp_clanmove_message;
+/** \var m_clanspatch * temp_clanspatch_message
+* \brief Pointer to m_clanspatch to initialise linked list. */
+m_clanspatch * temp_clanspatch_message;
+/** \var m_guanacospatch * temp_guanacospatch_message
+* \brief Pointer to m_guanacospatch to initialise linked list. */
+m_guanacospatch * temp_guanacospatch_message;
 /** \var m_adultospatch * temp_adultospatch_message
 * \brief Pointer to m_adultospatch to initialise linked list. */
 m_adultospatch * temp_adultospatch_message;
@@ -1176,6 +1328,9 @@ xmachine_memory_indv_state * current_xmachine_indv_next_state; /* New agents add
 /* Pointer to list of indv agents in state end state */
 //xmachine_memory_indv * temp_xmachine_indv_end;
 xmachine_memory_indv_state * indv_end_state;
+/* Pointer to list of indv agents in state 14 state */
+//xmachine_memory_indv * temp_xmachine_indv_14;
+xmachine_memory_indv_state * indv_14_state;
 /* Pointer to list of indv agents in state 13 state */
 //xmachine_memory_indv * temp_xmachine_indv_13;
 xmachine_memory_indv_state * indv_13_state;
@@ -1226,6 +1381,9 @@ xmachine_memory_clan_state * current_xmachine_clan_next_state; /* New agents add
 /* Pointer to list of clan agents in state end state */
 //xmachine_memory_clan * temp_xmachine_clan_end;
 xmachine_memory_clan_state * clan_end_state;
+/* Pointer to list of clan agents in state 14 state */
+//xmachine_memory_clan * temp_xmachine_clan_14;
+xmachine_memory_clan_state * clan_14_state;
 /* Pointer to list of clan agents in state 13 state */
 //xmachine_memory_clan * temp_xmachine_clan_13;
 xmachine_memory_clan_state * clan_13_state;
@@ -1276,6 +1434,18 @@ xmachine_memory_patch_state * current_xmachine_patch_next_state; /* New agents a
 /* Pointer to list of patch agents in state end state */
 //xmachine_memory_patch * temp_xmachine_patch_end;
 xmachine_memory_patch_state * patch_end_state;
+/* Pointer to list of patch agents in state 7 state */
+//xmachine_memory_patch * temp_xmachine_patch_7;
+xmachine_memory_patch_state * patch_7_state;
+/* Pointer to list of patch agents in state 6 state */
+//xmachine_memory_patch * temp_xmachine_patch_6;
+xmachine_memory_patch_state * patch_6_state;
+/* Pointer to list of patch agents in state 5 state */
+//xmachine_memory_patch * temp_xmachine_patch_5;
+xmachine_memory_patch_state * patch_5_state;
+/* Pointer to list of patch agents in state 4 state */
+//xmachine_memory_patch * temp_xmachine_patch_4;
+xmachine_memory_patch_state * patch_4_state;
 /* Pointer to list of patch agents in state 3 state */
 //xmachine_memory_patch * temp_xmachine_patch_3;
 xmachine_memory_patch_state * patch_3_state;
@@ -1296,6 +1466,9 @@ xmachine_memory_manada_guanacos_state * current_xmachine_manada_guanacos_next_st
 /* Pointer to list of manada_guanacos agents in state end state */
 //xmachine_memory_manada_guanacos * temp_xmachine_manada_guanacos_end;
 xmachine_memory_manada_guanacos_state * manada_guanacos_end_state;
+/* Pointer to list of manada_guanacos agents in state 3 state */
+//xmachine_memory_manada_guanacos * temp_xmachine_manada_guanacos_3;
+xmachine_memory_manada_guanacos_state * manada_guanacos_3_state;
 /* Pointer to list of manada_guanacos agents in state 2 state */
 //xmachine_memory_manada_guanacos * temp_xmachine_manada_guanacos_2;
 xmachine_memory_manada_guanacos_state * manada_guanacos_2_state;
@@ -1362,6 +1535,18 @@ MBt_Iterator i_lmarriage;
 MBt_Board b_warningDivide;
 MBt_Iterator i_warningDivide;
 
+MBt_Board b_transfer;
+MBt_Iterator i_transfer;
+
+MBt_Board b_clanmove;
+MBt_Iterator i_clanmove;
+
+MBt_Board b_clanspatch;
+MBt_Iterator i_clanspatch;
+
+MBt_Board b_guanacospatch;
+MBt_Iterator i_guanacospatch;
+
 MBt_Board b_adultospatch;
 MBt_Iterator i_adultospatch;
 
@@ -1423,6 +1608,18 @@ m_lmarriage * lmarriage_message;
 /** \var m_warningDivide * warningDivide_message
 * \brief Pointer to message struct for looping through warningDivide message list */
 m_warningDivide * warningDivide_message;
+/** \var m_transfer * transfer_message
+* \brief Pointer to message struct for looping through transfer message list */
+m_transfer * transfer_message;
+/** \var m_clanmove * clanmove_message
+* \brief Pointer to message struct for looping through clanmove message list */
+m_clanmove * clanmove_message;
+/** \var m_clanspatch * clanspatch_message
+* \brief Pointer to message struct for looping through clanspatch message list */
+m_clanspatch * clanspatch_message;
+/** \var m_guanacospatch * guanacospatch_message
+* \brief Pointer to message struct for looping through guanacospatch message list */
+m_guanacospatch * guanacospatch_message;
 /** \var m_adultospatch * adultospatch_message
 * \brief Pointer to message struct for looping through adultospatch message list */
 m_adultospatch * adultospatch_message;
@@ -1534,6 +1731,22 @@ MPI_Datatype spacePartitionType;
 /** \var MPI_Datatype messagewarningDivideType
 * \brief MPI ", warningDivide message */
 /* MPI_Datatype messagewarningDivideType; */
+
+/** \var MPI_Datatype messagetransferType
+* \brief MPI ", transfer message */
+/* MPI_Datatype messagetransferType; */
+
+/** \var MPI_Datatype messageclanmoveType
+* \brief MPI ", clanmove message */
+/* MPI_Datatype messageclanmoveType; */
+
+/** \var MPI_Datatype messageclanspatchType
+* \brief MPI ", clanspatch message */
+/* MPI_Datatype messageclanspatchType; */
+
+/** \var MPI_Datatype messageguanacospatchType
+* \brief MPI ", guanacospatch message */
+/* MPI_Datatype messageguanacospatchType; */
 
 /** \var MPI_Datatype messageadultospatchType
 * \brief MPI ", adultospatch message */
@@ -1693,7 +1906,7 @@ xmachine_memory_clan * init_clan_agent();
 void free_clan_agent(xmachine_memory_clan_holder * tmp, xmachine_memory_clan_state * state);
 void transition_clan_agent(xmachine_memory_clan_holder * tmp, xmachine_memory_clan_state * from_state, xmachine_memory_clan_state * to_state);
 void add_clan_agent_internal(xmachine_memory_clan * agent, xmachine_memory_clan_state * state);
-void add_clan_agent(int cID, int cal_need, int cal_got, int cal_stored, int x, int y, int tcalories, int leaderID, members_needs mneeds, indv_free ifree, int indexID, int members, int linguistics[]);
+void add_clan_agent(int cID, int cal_need, int cal_got, int cal_stored, int x, int y, int tcalories, int leaderID, members_needs mneeds, indv_free ifree, int indexID, int members, int linguistics[], int exchange_record[], int irecord, int targetX, int targetY);
 void unittest_init_clan_agent();
 void unittest_free_clan_agent();
 xmachine_memory_patch_state * init_patch_state();
@@ -1701,7 +1914,7 @@ xmachine_memory_patch * init_patch_agent();
 void free_patch_agent(xmachine_memory_patch_holder * tmp, xmachine_memory_patch_state * state);
 void transition_patch_agent(xmachine_memory_patch_holder * tmp, xmachine_memory_patch_state * from_state, xmachine_memory_patch_state * to_state);
 void add_patch_agent_internal(xmachine_memory_patch * agent, xmachine_memory_patch_state * state);
-void add_patch_agent(int patchID, int pcalories, float repo, int tpatch, int xcord, int ycord, float repows, float repods, int season, int adultos);
+void add_patch_agent(int patchID, int pcalories, int gcalories, float repo, int tpatch, int x, int y, float repows, float repods, int season, int adultos, int pclans);
 void unittest_init_patch_agent();
 void unittest_free_patch_agent();
 xmachine_memory_manada_guanacos_state * init_manada_guanacos_state();
@@ -1709,7 +1922,7 @@ xmachine_memory_manada_guanacos * init_manada_guanacos_agent();
 void free_manada_guanacos_agent(xmachine_memory_manada_guanacos_holder * tmp, xmachine_memory_manada_guanacos_state * state);
 void transition_manada_guanacos_agent(xmachine_memory_manada_guanacos_holder * tmp, xmachine_memory_manada_guanacos_state * from_state, xmachine_memory_manada_guanacos_state * to_state);
 void add_manada_guanacos_agent_internal(xmachine_memory_manada_guanacos * agent, xmachine_memory_manada_guanacos_state * state);
-void add_manada_guanacos_agent(int id, int familia, int xcord, int ycord, int count, int calorias, int adultos);
+void add_manada_guanacos_agent(int familia, int x, int y, int targetX, int targetY, int count, int calorias, int adultos, int season);
 void unittest_init_manada_guanacos_agent();
 void unittest_free_manada_guanacos_agent();
 
@@ -1785,7 +1998,7 @@ m_freeGirls * get_first_freeGirls_message(void);
 m_freeGirls * get_next_freeGirls_message(m_freeGirls * current);
 void freefreeGirlsmessages(void);
 
-void add_propuesta_message(int id_list[], int id_man[], int oclanID, int dclanID, int count);
+void add_propuesta_message(int id_list, int id_man, int oclanID, int dclanID);
 m_propuesta * add_propuesta_message_internal(void);
 m_propuesta * get_first_propuesta_message(void);
 m_propuesta * get_next_propuesta_message(m_propuesta * current);
@@ -1821,13 +2034,37 @@ m_warningDivide * get_first_warningDivide_message(void);
 m_warningDivide * get_next_warningDivide_message(m_warningDivide * current);
 void freewarningDividemessages(void);
 
-void add_adultospatch_message(int xcord, int ycord, int adultos, int sentido);
+void add_transfer_message(int clanID, int newID, int indvID);
+m_transfer * add_transfer_message_internal(void);
+m_transfer * get_first_transfer_message(void);
+m_transfer * get_next_transfer_message(m_transfer * current);
+void freetransfermessages(void);
+
+void add_clanmove_message(int x, int y, int sentido);
+m_clanmove * add_clanmove_message_internal(void);
+m_clanmove * get_first_clanmove_message(void);
+m_clanmove * get_next_clanmove_message(m_clanmove * current);
+void freeclanmovemessages(void);
+
+void add_clanspatch_message(int x, int y, int pclans);
+m_clanspatch * add_clanspatch_message_internal(void);
+m_clanspatch * get_first_clanspatch_message(void);
+m_clanspatch * get_next_clanspatch_message(m_clanspatch * current);
+void freeclanspatchmessages(void);
+
+void add_guanacospatch_message(int x, int y, int adultos, int season);
+m_guanacospatch * add_guanacospatch_message_internal(void);
+m_guanacospatch * get_first_guanacospatch_message(void);
+m_guanacospatch * get_next_guanacospatch_message(m_guanacospatch * current);
+void freeguanacospatchmessages(void);
+
+void add_adultospatch_message(int x, int y, int adultos, int sentido);
 m_adultospatch * add_adultospatch_message_internal(void);
 m_adultospatch * get_first_adultospatch_message(void);
 m_adultospatch * get_next_adultospatch_message(m_adultospatch * current);
 void freeadultospatchmessages(void);
 
-void add_reproduccionguanacos_message(int xcord, int ycord, int count, int familia);
+void add_reproduccionguanacos_message(int x, int y, int count, int familia);
 m_reproduccionguanacos * add_reproduccionguanacos_message_internal(void);
 m_reproduccionguanacos * get_first_reproduccionguanacos_message(void);
 m_reproduccionguanacos * get_next_reproduccionguanacos_message(m_reproduccionguanacos * current);
@@ -1890,16 +2127,21 @@ int get_indexID();
 void set_members(int members);
 int get_members();
 int * get_linguistics();
+int * get_exchange_record();
+void set_irecord(int irecord);
+int get_irecord();
+void set_targetX(int targetX);
+int get_targetX();
+void set_targetY(int targetY);
+int get_targetY();
 void set_pcalories(int pcalories);
 int get_pcalories();
+void set_gcalories(int gcalories);
+int get_gcalories();
 void set_repo(float repo);
 float get_repo();
 void set_tpatch(int tpatch);
 int get_tpatch();
-void set_xcord(int xcord);
-int get_xcord();
-void set_ycord(int ycord);
-int get_ycord();
 void set_repows(float repows);
 float get_repows();
 void set_repods(float repods);
@@ -1908,8 +2150,8 @@ void set_season(int season);
 int get_season();
 void set_adultos(int adultos);
 int get_adultos();
-void set_id(int id);
-int get_id();
+void set_pclans(int pclans);
+int get_pclans();
 void set_familia(int familia);
 int get_familia();
 void set_count(int count);
@@ -2000,6 +2242,22 @@ m_warningDivide * get_next_message_warningDivide_in_range(m_warningDivide * curr
 
 
 
+m_transfer * get_next_message_transfer_in_range(m_transfer * current);
+
+
+
+m_clanmove * get_next_message_clanmove_in_range(m_clanmove * current);
+
+
+
+m_clanspatch * get_next_message_clanspatch_in_range(m_clanspatch * current);
+double clanspatch_message_extract_x(void *msg_ptr);
+double clanspatch_message_extract_y(void *msg_ptr);
+
+m_guanacospatch * get_next_message_guanacospatch_in_range(m_guanacospatch * current);
+double guanacospatch_message_extract_x(void *msg_ptr);
+double guanacospatch_message_extract_y(void *msg_ptr);
+
 m_adultospatch * get_next_message_adultospatch_in_range(m_adultospatch * current);
 
 
@@ -2016,9 +2274,13 @@ int FLAME_get_environment_variable_nancestors();
 int FLAME_get_environment_variable_learn();
 int FLAME_get_environment_variable_forget();
 int FLAME_get_environment_variable_lang_threshold();
+int FLAME_get_environment_variable_genoma();
+int FLAME_get_environment_variable_record_size();
 int FLAME_get_environment_variable_max_manada();
 int FLAME_get_environment_variable_max_familia();
 int FLAME_get_environment_variable_cal_adulto();
+int FLAME_get_environment_variable_surviveChanceAdult();
+int FLAME_get_environment_variable_surviveChanceChild();
 
 
 /* rules.c */
@@ -2072,55 +2334,84 @@ int FLAME_filter_indv_local_marriage_12_13_lmarriage(const void *msg, const void
 
 int FLAME_condition_indv_idle_12_13(xmachine_memory_indv *a);
 int dividir_info(void);
-int FLAME_filter_indv_dividir_info_13_end_warningDivide(const void *msg, const void *params);
+int FLAME_filter_indv_dividir_info_13_14_warningDivide(const void *msg, const void *params);
+int dividir_transfer(void);
+int FLAME_filter_indv_dividir_transfer_14_end_transfer(const void *msg, const void *params);
 int clan_Information(void);
 int FLAME_filter_clan_clan_Information_start_01_information(const void *msg, const void *params);
 int clan_extract_calories(void);
 int FLAME_filter_clan_clan_extract_calories_01_02_clangetcalories(const void *msg, const void *params);
 int distribute_calories(void);
+int move_clan(void);
+int FLAME_condition_clan_move_clan_03_04(xmachine_memory_clan *a);
+int FLAME_filter_clan_move_clan_03_04_guanacospatch(const void *msg, const void *params);
+
+int FLAME_condition_clan_idle_03_04(xmachine_memory_clan *a);
 int marriable_indv(void);
-int FLAME_filter_clan_marriable_indv_03_04_ancestor(const void *msg, const void *params);
+int FLAME_filter_clan_marriable_indv_04_05_ancestor(const void *msg, const void *params);
 int send_girls(void);
 int match(void);
-int FLAME_filter_clan_match_05_06_freeGirls(const void *msg, const void *params);
+int FLAME_filter_clan_match_06_07_freeGirls(const void *msg, const void *params);
 int aceptar_prop(void);
-int FLAME_filter_clan_aceptar_prop_06_07_propuesta(const void *msg, const void *params);
+int FLAME_filter_clan_aceptar_prop_07_08_propuesta(const void *msg, const void *params);
 int recive_conf(void);
-int FLAME_filter_clan_recive_conf_07_08_confirProp(const void *msg, const void *params);
+int FLAME_filter_clan_recive_conf_08_09_confirProp(const void *msg, const void *params);
 int repartir_id(void);
-int FLAME_filter_clan_repartir_id_08_09_peticionID(const void *msg, const void *params);
+int FLAME_filter_clan_repartir_id_09_10_peticionID(const void *msg, const void *params);
 int new_leader(void);
-int FLAME_filter_clan_new_leader_09_10_leader(const void *msg, const void *params);
+int FLAME_filter_clan_new_leader_10_11_leader(const void *msg, const void *params);
 int again_marriable(void);
-int FLAME_filter_clan_again_marriable_10_11_widow(const void *msg, const void *params);
+int FLAME_filter_clan_again_marriable_11_12_widow(const void *msg, const void *params);
 int dividir_clan(void);
-int FLAME_condition_clan_dividir_clan_11_12(xmachine_memory_clan *a);
+int FLAME_condition_clan_dividir_clan_12_13(xmachine_memory_clan *a);
 
-int FLAME_condition_clan_idle_11_13(xmachine_memory_clan *a);
+int FLAME_condition_clan_idle_12_14(xmachine_memory_clan *a);
 int creacion_clan(void);
-int FLAME_filter_clan_creacion_clan_12_13_informationDivide(const void *msg, const void *params);
-int FLAME_sort_clan_creacion_clan_12_13_informationDivide();
+int FLAME_filter_clan_creacion_clan_13_14_informationDivide(const void *msg, const void *params);
+int FLAME_sort_clan_creacion_clan_13_14_informationDivide();
 int vocabulary_review(void);
-int FLAME_condition_clan_vocabulary_review_13_end(xmachine_memory_clan *a);
+int FLAME_condition_clan_vocabulary_review_14_end(xmachine_memory_clan *a);
 
-int FLAME_condition_clan_idle_13_end(xmachine_memory_clan *a);
+int FLAME_condition_clan_idle_14_end(xmachine_memory_clan *a);
 int patchtype(void);
-int patchcalories(void);
-int FLAME_filter_patch_patchcalories_1_2_clan_info(const void *msg, const void *params);
-int regenerate(void);
-int FLAME_filter_patch_regenerate_2_3_adultospatch(const void *msg, const void *params);
-int snregenerate(void);
-int FLAME_condition_patch_snregenerate_3_end(xmachine_memory_patch *a);
-int FLAME_filter_patch_snregenerate_3_end_reproduccionguanacos(const void *msg, const void *params);
+int FLAME_condition_patch_patchtype_start_1(xmachine_memory_patch *a);
+int infoClansInPatch(void);
+int FLAME_condition_patch_infoClansInPatch_start_1(xmachine_memory_patch *a);
 int idle_patch(void);
-int FLAME_condition_patch_idle_patch_3_end(xmachine_memory_patch *a);
+int FLAME_condition_patch_idle_patch_1_2(xmachine_memory_patch *a);
+int infoGuanacosPatch(void);
+int FLAME_condition_patch_infoGuanacosPatch_1_2(xmachine_memory_patch *a);
+int patchcalories(void);
+int FLAME_filter_patch_patchcalories_2_3_clan_info(const void *msg, const void *params);
+int regenerate(void);
+int FLAME_condition_patch_regenerate_3_4(xmachine_memory_patch *a);
+int idle_patch(void);
+int FLAME_condition_patch_idle_patch_3_4(xmachine_memory_patch *a);
+int snregenerate(void);
+int FLAME_condition_patch_snregenerate_4_5(xmachine_memory_patch *a);
+int idle_patch(void);
+int FLAME_condition_patch_idle_patch_4_5(xmachine_memory_patch *a);
+int guanacos_move(void);
+int FLAME_filter_patch_guanacos_move_5_6_adultospatch(const void *msg, const void *params);
+int clans_move(void);
+int FLAME_filter_patch_clans_move_6_7_clanmove(const void *msg, const void *params);
+int reproduccion_guanacos(void);
+int FLAME_condition_patch_reproduccion_guanacos_7_end(xmachine_memory_patch *a);
+int FLAME_filter_patch_reproduccion_guanacos_7_end_reproduccionguanacos(const void *msg, const void *params);
+int idle_patch(void);
+int FLAME_condition_patch_idle_patch_7_end(xmachine_memory_patch *a);
 int manadaInfo(void);
+int FLAME_condition_manada_guanacos_manadaInfo_start_1(xmachine_memory_manada_guanacos *a);
+int seasonSwitch(void);
+int FLAME_condition_manada_guanacos_seasonSwitch_start_1(xmachine_memory_manada_guanacos *a);
 int manada_idle(void);
 int FLAME_condition_manada_guanacos_manada_idle_1_2(xmachine_memory_manada_guanacos *a);
 int move(void);
 int FLAME_condition_manada_guanacos_move_1_2(xmachine_memory_manada_guanacos *a);
+int FLAME_filter_manada_guanacos_move_1_2_clanspatch(const void *msg, const void *params);
 int reproduccion(void);
-int FLAME_condition_manada_guanacos_reproduccion_2_end(xmachine_memory_manada_guanacos *a);
+int FLAME_condition_manada_guanacos_reproduccion_2_3(xmachine_memory_manada_guanacos *a);
 int manada_idle2(void);
-int FLAME_condition_manada_guanacos_manada_idle2_2_end(xmachine_memory_manada_guanacos *a);
+int FLAME_condition_manada_guanacos_manada_idle2_2_3(xmachine_memory_manada_guanacos *a);
+int surviveGuanacos(void);
 #endif

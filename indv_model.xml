@@ -66,7 +66,6 @@
 		    <name>lead</name>
 		    <description>0 if I am not the leader, 1 if I am</description>
 		</variable>
-<!-- new ************************************************************ -->
 		<variable>
 		    <type>int</type>
 		    <name>marriable</name>
@@ -74,12 +73,12 @@
 		</variable>
 		<variable>
 		    <type>int</type>
-		    <name>ancestors[6]</name>
+		    <name>ancestors[7]</name>
 		    <description> array with ancestors information</description>
 		</variable>
 		<variable>
 		    <type>int</type>
-		    <name>ancestorsClan[6]</name>
+		    <name>ancestorsClan[7]</name>
 		    <description> array with ancestors information</description>
 		</variable>
 		<variable>
@@ -117,7 +116,16 @@
 			<name>widow</name>
 			<description>indicador para la mujer que vuelva a casarse con alguien de su clan </description>
 		</variable>
-<!-- new ********************************************************** -->
+		<!--<variable>
+			<type>int</type>
+			<name>hunterSkill[4]</name>
+			<description>Habilidad de cazar con una determinada arma </description>
+		</variable>
+		<variable>
+			<type>int</type>
+			<name>produceSkill[4]</name>
+			<description>Habilidad de producir una determinada arma </description>
+		</variable>-->
             </memory>
             <functions>
                 <function>
@@ -173,7 +181,6 @@
 			</not>
                     </condition>
 		</function>
-<!-- new *************************************************** -->
 		<function>
 		    <name>freeIndv</name>
 		    <description>free indv send to clan their information </description>
@@ -399,7 +406,6 @@
 			</filter> 
 		    </input>
 		</function>			
-<!--   *********************************************** -->
 		<function>
 		    <name>survive</name>
 		    <description>Depending on the age, calories gotten, pregnancy, and so on, the probability of survival is computed and according to that probability and a random value the survival of the individual determined</description> 
@@ -515,7 +521,7 @@
 		    <name>dividir_info</name>
 		    <description>Envia informacion al clan cuando comienza la division del clan</description>
 		    <currentState>13</currentState>
-	   	    <nextState>end</nextState>
+	   	    <nextState>14</nextState>
 		    <input>
 			<messageName>warningDivide</messageName>
 			<filter>
@@ -527,6 +533,28 @@
 		    <output>
 			<messageName>informationDivide</messageName>
 		    </output>
+		</function>
+		<function>
+		    <name>dividir_transfer</name>
+		    <description>Los individuos elegidos, se cambian al nuevo clan</description>
+		    <currentState>14</currentState>
+	   	    <nextState>end</nextState>
+		    <input>
+			<messageName>transfer</messageName>
+			<filter>
+				<lhs>
+				<lhs><value>a.cID</value></lhs>
+				<op>EQ</op>
+				<rhs><value>m.clanID</value></rhs>
+				</lhs>
+				<op>AND</op>
+				<rhs>
+				<lhs><value>a.indvID</value></lhs>
+				<op>EQ</op>
+				<rhs><value>m.indvID</value></rhs>
+				</rhs>
+			</filter> 
+		    </input>
 		</function>
             </functions>
         </xagent>
@@ -612,11 +640,11 @@
 	   <variables>
 		<variable>
 			<type>int</type>
-			<name>ancest[6]</name>
+			<name>ancest[7]</name>
 		</variable>
 		<variable>
 			<type>int</type>
-			<name>ancestClan[6]</name>
+			<name>ancestClan[7]</name>
 		</variable>
 		<variable>
 			<type>int</type>
@@ -684,15 +712,15 @@
 	</message>
 	<message>
 	   <name>widow</name>
-	   <description>ju</description>
+	   <description>se pide una pareja al clan para la mujer viuda</description>
 	   <variables>
 		<variable>
 			<type>int</type>
-			<name>ancestors[6]</name>
+			<name>ancestors[7]</name>
 		</variable>
 		<variable>
 			<type>int</type>
-			<name>Cancestors[6]</name>
+			<name>Cancestors[7]</name>
 		</variable>
 		<variable>
 			<type>int</type>
@@ -734,7 +762,6 @@
 		</variable>
 	   </variables>
 	</message>
-<!-- ************************************************ -->
     </messages>
 </xmodel>
 

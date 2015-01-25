@@ -1,13 +1,20 @@
 #include <math.h>
+#include <time.h>
 #include "commons.h"
 #include "header.h"
 #include "clan_agent_header.h"
 
+struct guanacosAround {
+	int x;
+	int y;
+	int guanacos;
+};
 
 /* posting individual information*/
 int clan_Information()
 {
-	int cal, nmem, i, ID=get_cID(), x=get_x(), y=get_y();
+	int cal, nmem, i, x=get_x(), y=get_y();
+	double ID=get_cID();
 
 	for ( i = 0; i < 100; i++) MNEEDS.id_list[i] = MNEEDS.cal_list[i] = -1;
 
@@ -24,6 +31,7 @@ int clan_Information()
 	set_cal_need(cal);
 	set_members(i);
         add_clan_info_message(x, y, ID, nmem, cal + get_tcalories() - get_cal_stored() );
+
         return 0;
 }
 
@@ -141,14 +149,16 @@ int send_girls ()
 se decide hacer propuestas de emparejamiento*/
 int match ()
 {
-	int_array chicas,ancestors,ancestorsClan;
-	int num_chicas[100], clanes[100],mensajes=0,i,z,equal =0;
+	int_array chicas,ancestors,ancestorsClan,clanes;
+	int num_chicas[100],mensajes=0,i,z,equal =0;
 	init_int_array(&chicas);
 	init_int_array(&ancestors);
 	init_int_array(&ancestorsClan);
+	init_int_array(&clanes);
 	//reciviendo informacion de las chicas de otros clanes
 	START_FREEGIRLS_MESSAGE_LOOP
 	if (freeGirls_message->clanID != get_cID()){
+		//mirar si se "entienden" los dos clanes
 		for (i=0;i<100;i++)
 			if (get_linguistics()[i] == freeGirls_message->linguistic[i])
 				equal ++;
@@ -157,6 +167,7 @@ int match ()
 			for (i=0;i<100;i++){
 				if (freeGirls_message->girls[i]!=0){
 					add_int(&chicas,freeGirls_message->girls[i]);
+					add_int(&clanes,freeGirls_message->clanID);
 					for (z=i*NANCESTORS;z<(NANCESTORS*i)+NANCESTORS;z++){
 						add_int(&ancestors,freeGirls_message->lancestors[z]);
 						add_int(&ancestorsClan,freeGirls_message->lancestorsClan[z]);
@@ -164,89 +175,100 @@ int match ()
 				}
 			}
 			num_chicas[mensajes] = freeGirls_message->num_chicas;
-			clanes [mensajes] = freeGirls_message->clanID;
 			mensajes++;
 		}
 	}
 	FINISH_FREEGIRLS_MESSAGE_LOOP
 	if (mensajes==0)
 		return 0;
+
 	//proponer emparejamiento
-	int emparejado,familia,man=0,g=0,ag=0,am=0,prop[100],count=0,clan,chica,id_man[100];
+	int emparejado,familia,iman=0,ichica=0,ag=0,am=0;
 	// por cada chico libre de mi clan miro si es compatible con cada chica, la primera chica
 	// compatible es la elegida
-	while (man<IFREE.numMale){
+	while (iman<IFREE.numMale && chicas.size >0){
 		emparejado =0;
-		g=0;
-		clan =0;
-		while (clan< mensajes && emparejado ==0){
-			chica=0;
-			count=0;
-			while (chica <num_chicas[clan] && emparejado ==0){
-				familia =0;
-				ag=0;
-				// comprobacion de si son familiares
-				while (ag< NANCESTORS && familia ==0){
-					am=0;
-					while (am < NANCESTORS && familia ==0){
-						if (IFREE.mancestor_list[(man*NANCESTORS)+am] == ancestors.array[(g*NANCESTORS)+ag] && IFREE.mancestorClan_list[(man*NANCESTORS)+am] == ancestorsClan.array[(g*NANCESTORS)+ag])
-							familia =1;
-						am++;
-					}
-					ag++;
+		ichica =0;
+		while (ichica < chicas.size && emparejado == 0){
+			familia =0;
+			ag=0;
+			// comprobacion de si son familiares
+			while (ag< NANCESTORS && familia ==0){
+				am=0;
+				while (am < NANCESTORS && familia ==0){
+					if (IFREE.mancestor_list[(iman*NANCESTORS)+am] == ancestors.array[(ichica*NANCESTORS)+ag] 
+					&& IFREE.mancestorClan_list[(iman*NANCESTORS)+am] == ancestorsClan.array[(ichica*NANCESTORS)+ag])
+						familia =1;
+					am++;
 				}
-				if (familia == 0){
-					emparejado =1;
-					prop[count]=chicas.array[g];
-					id_man[count]=IFREE.male_list[man];
-					remove_int(&chicas,g);
-					count++;
-				}
-				g++;
-				chica++;
+				ag++;
 			}
-			// enviar las propuesta a los clanes que pertenecen las chicas elegidas
-			if (count !=0)
-				add_propuesta_message (prop,id_man,get_cID(),clanes[clan],count);
-			clan++;
+			//en caso de no ser familia, se formaliza la propuesta
+			if (familia == 0){
+				emparejado =1;
+				add_propuesta_message (chicas.array[ichica],IFREE.male_list[iman],get_cID(),clanes.array[ichica]);
+				remove_int(&chicas,ichica);
+				remove_int (&clanes,ichica);
+				for (i =0; i<NANCESTORS;i++)
+					remove_int (&ancestors,(ichica*NANCESTORS)+i);
+					remove_int (&ancestorsClan,(ichica*NANCESTORS)+i);
+				IFREE.male_list[iman]=-1;
+			}
+			ichica++;
 		}
-		man++;
+		iman++;
 	}
 	free_int_array(&chicas);
 	free_int_array(&ancestors);
 	free_int_array(&ancestorsClan);
+	free_int_array(&clanes);
 						
 	return 0;
+}
+//No estado: funcion que trata el buffer circular de las chicas que comparto con otros clanes
+void update_record (int clanID)
+{
+	int i,irecord = get_irecord();
+		// En el caso de que el clan no este referenciado ya en el buffer, se añade
+		for (i =0; i<RECORD_SIZE; i++)
+		{
+			if (clanID != get_exchange_record()[i]){
+				EXCHANGE_RECORD[get_irecord()]= clanID;
+				irecord ++;
+				if (irecord ==RECORD_SIZE)
+					irecord =0;
+				set_irecord(irecord); 
+			}
+		}
 }
 /*Se asigna a cada clan la chica/s que han pedido, en caso de peticion doble, la preferencia la
 tiene el clan cuya peticion llegara antes */
 int aceptar_prop ()
 {
-	int i,encontrado,j;
+	int j,i,encontrado;
 	int_array peticiones,pretendientes,clanes;
 
 	init_int_array(&peticiones);
 	init_int_array(&clanes);
 	init_int_array(&pretendientes);
 	START_PROPUESTA_MESSAGE_LOOP
-	for (i=0;i<propuesta_message->count;i++){
 		encontrado =0;
 		j=0;
 		while (j<peticiones.size && encontrado ==0){
-			if (propuesta_message->id_list[i] == peticiones.array[j])
+			if (propuesta_message->id_list == peticiones.array[j])
 				encontrado =1;
 			j++;
 		}
 		if (encontrado ==0){
-			add_int(&peticiones,propuesta_message->id_list[i]);
-			add_int (&pretendientes,propuesta_message->id_man[i]);
+			add_int(&peticiones,propuesta_message->id_list);
+			add_int (&pretendientes,propuesta_message->id_man);
 			add_int (&clanes,propuesta_message->oclanID);
 		}
-	}
 	FINISH_PROPUESTA_MESSAGE_LOOP
-	j=0;
+	//se envia la confirmacion al clan que pertenece el chico
 	for (i=0;i<peticiones.size;i++){
 		add_confirProp_message(peticiones.array[i],clanes.array[i],pretendientes.array[i],get_cID(),get_linguistics());
+		update_record (clanes.array[i]);
 	}
 	//free memory
 	free_int_array(&peticiones);
@@ -258,19 +280,22 @@ int recive_conf ()
 {
 	int wife, husband, clanID,nextID,random,i;
 	nextID= get_indexID();
+
 	START_CONFIRPROP_MESSAGE_LOOP
 		wife = confirProp_message->girlID;
 		husband = confirProp_message->manID;
 		clanID = confirProp_message->oclanID;
 		add_marriage_message(wife,get_cID(),husband,clanID,nextID);
 		nextID ++;
-		for (i=0;i<100;i++)
+		//Modificación del genoma linguistico al llegar una chica al clan
+		for (i=0;i<GENOMA;i++)
 			if (get_linguistics()[i] == 0 && confirProp_message->linguistic[i] ==1)
 			{
 				random = rand () % 2;
 				if (random > 0)
 					LINGUISTICS[i]=1;
 			}
+		update_record (clanID);
 	FINISH_CONFIRPROP_MESSAGE_LOOP
 	set_indexID(nextID);
 	return 0;
@@ -288,7 +313,7 @@ int repartir_id ()
 	if (peticiones ==0)
 		return 0;
 	id_free = get_indexID();
-	for (i=0;i<solicitantesID.size;i++){		
+	for (i=0;i<solicitantesID.size;i++){
 		add_respuestaID_message (id_free,solicitantesID.array[i],get_cID());
 		id_free ++;
 	}
@@ -314,26 +339,29 @@ int again_marriable ()
 		}
 		messages ++;
 	FINISH_WIDOW_MESSAGE_LOOP
-	//si hay chicos y ha recivido viudas se intenta emparejarla
+	//si hay chicos y ha recibido viudas se intenta emparejarla
 	if (messages >0){
 		while (find < messages && n< IFREE.numMale)
 		{
-			// comprobacion de si son familiares
-			familia=0;
-			ag=0;
-			while (ag< NANCESTORS && familia ==0){
-				am=0;
-				while (am < NANCESTORS && familia ==0){
-					if (IFREE.mancestor_list[(n*NANCESTORS)+am] == ancestors.array[(find*NANCESTORS)+ag] && IFREE.mancestorClan_list[(n*NANCESTORS)+am] == Cancestors.array[(find*NANCESTORS)+ag])
-						familia =1;
-					am++;
+			if (IFREE.male_list[n] != -1){
+				// comprobacion de si son familiares
+				familia=0;
+				ag=0;
+				while (ag< NANCESTORS && familia ==0){
+					am=0;
+					while (am < NANCESTORS && familia ==0){
+						if (IFREE.mancestor_list[(n*NANCESTORS)+am] == ancestors.array[(find*NANCESTORS)+ag] 
+						&& IFREE.mancestorClan_list[(n*NANCESTORS)+am] == Cancestors.array[(find*NANCESTORS)+ag])
+							familia =1;
+						am++;
+					}
+					ag++;
 				}
-				ag++;
-			}
-			//si no son familia se envia el mensaje de casamiento
-			if (familia ==0){
-				add_lmarriage_message (IFREE.male_list[n],id.array[find],get_cID(),IFREE.mancestor_list+n*6,IFREE.mancestorClan_list+n*6);
-				find ++;
+				//si no son familia se envia el mensaje de casamiento
+				if (familia ==0){
+					add_lmarriage_message (IFREE.male_list[n],id.array[find],get_cID(),IFREE.mancestor_list+n*6,IFREE.mancestorClan_list+n*6);
+					find ++;
+				}
 			}
 			n ++;
 		}
@@ -349,6 +377,8 @@ int dividir_clan ()
 	add_warningDivide_message(get_cID());
 	return 0;
 }
+//El clan al llegar a la capacidad maxima, divide sus miembros segun las regla:
+//el hijo dependiente sigue a la madre y la esposa sigue al marrido
 int creacion_clan ()
 {
 	int i,capacidad,actual,pareja=-1,sex, mom,find,members;
@@ -367,6 +397,7 @@ int creacion_clan ()
 	//Mientras la capacidad del clan no supere un cierto limite, se añaden mas personas al
 	// nuevo clan
 	members = get_members();
+
 	while (new_clan.size <5)
 	{
 		//se trata el primer individuo de la lista 
@@ -420,9 +451,14 @@ int creacion_clan ()
 			}
 		}	
 	}
-	/*for (i=0;i<new_clan.size;i++)
+	//creacion del nuevo id a traves de la funcion time
+	int newClanID = (int) (time (NULL));
+	// creacion del nuevo clan y envia de mensaje a sus nuevos miembros
+	for (i=0;i<new_clan.size;i++)
 		add_transfer_message (get_cID(), newClanID,new_clan.array[i]);
-	add_clan_agent (newClanID,0,0,0,get_x(),get_y(),0,new_clan.array[0],needmem,ifree,index,mem,get_linguistics());*/
+	add_clan_agent (newClanID,0,0,0,get_x(),get_y(),0,new_clan.array[0],MNEEDS,IFREE,get_indexID(),new_clan.size,get_linguistics(),
+	get_exchange_record(),get_irecord(),get_targetX(),get_targetY());
+
 	free_int_array(&ID_list);
 	free_int_array(&mom_list);
 	free_int_array(&pareja_list);
@@ -430,10 +466,11 @@ int creacion_clan ()
 	free_int_array(&new_clan);
 	return 0;
 }
+//Anualmente se revisa las palabras conocidas por el clan
 int vocabulary_review ()
 {
 	int i,random;
-	printf ("hola\n");
+
 	for (i=0;i<100;i++)
 	{
 		random = rand() % 10;
@@ -448,5 +485,187 @@ int vocabulary_review ()
 	}
 	return 0;
 }
-//-----------------------------------------------------------
+
+int move_clan()
+{
+	int season, targetX, targetY, nextX, nextY, max, i, j;
+	struct guanacosAround guanacos[9] = {{-1,-1,-1},{-1,-1,-1},{-1,-1,-1},{-1,-1,-1},{-1,-1,-1},{-1,-1,-1},{-1,-1,-1},{-1,-1,-1},{-1,-1,-1}};
+	nextX = get_x();
+	nextY = get_y();
+	targetX = get_targetX();
+	targetY = get_targetY();
+
+	add_clanmove_message(get_x(), get_y(), 0);
+
+	START_GUANACOSPATCH_MESSAGE_LOOP
+		if(guanacospatch_message->x == get_x() -1){
+			if(guanacospatch_message->y == get_y() -1){
+				guanacos[0].x = guanacospatch_message->x;
+				guanacos[0].y = guanacospatch_message->y;
+				guanacos[0].guanacos = guanacospatch_message->adultos;
+			}if(guanacospatch_message->y == get_y()){
+				guanacos[3].x = guanacospatch_message->x;
+				guanacos[3].y = guanacospatch_message->y;
+				guanacos[3].guanacos = guanacospatch_message->adultos;
+			}if(guanacospatch_message->y == get_y() +1){
+				guanacos[6].x = guanacospatch_message->x;
+				guanacos[6].y = guanacospatch_message->y;
+				guanacos[6].guanacos = guanacospatch_message->adultos;
+			}
+		}
+		if(guanacospatch_message->x == get_x()){
+			if(guanacospatch_message->y == get_y() -1){
+				guanacos[1].x = guanacospatch_message->x;
+				guanacos[1].y = guanacospatch_message->y;
+				guanacos[1].guanacos = guanacospatch_message->adultos;
+			}if(guanacospatch_message->y == get_y()){
+				guanacos[4].x = guanacospatch_message->x;
+				guanacos[4].y = guanacospatch_message->y;
+				guanacos[4].guanacos = guanacospatch_message->adultos;
+			}if(guanacospatch_message->y == get_y() +1){
+				guanacos[7].x = guanacospatch_message->x;
+				guanacos[7].y = guanacospatch_message->y;
+				guanacos[7].guanacos = guanacospatch_message->adultos;
+			}
+		}
+		if(guanacospatch_message->x == get_x() +1){
+			if(guanacospatch_message->y == get_y() -1){
+				guanacos[2].x = guanacospatch_message->x;
+				guanacos[2].y = guanacospatch_message->y;
+				guanacos[2].guanacos = guanacospatch_message->adultos;
+			}if(guanacospatch_message->y == get_y()){
+				guanacos[5].x = guanacospatch_message->x;
+				guanacos[5].y = guanacospatch_message->y;
+				guanacos[5].guanacos = guanacospatch_message->adultos;
+			}if(guanacospatch_message->y == get_y() +1){
+				guanacos[8].x = guanacospatch_message->x;
+				guanacos[8].y = guanacospatch_message->y;
+				guanacos[8].guanacos = guanacospatch_message->adultos;
+			}
+		}
+		season = guanacospatch_message->season;
+
+	FINISH_GUANACOSPATCH_MESSAGE_LOOP
+
+	max = 0;
+	j = 0;
+	for(i = 0; i < 9; i++){
+		if(guanacos[i].guanacos > max){
+			j = i;
+			max = guanacos[i].guanacos;	
+		}
+	}
+	if(max > 0){
+		targetX = guanacos[j].x;
+		targetY = guanacos[j].y;
+		nextX = targetX;
+		nextY = targetY;
+	}
+	else{
+		if(leviflightclan(get_x(), get_y(), &targetX, &targetY)){
+			//no estamos en la posicion, calcular nueva posicion segun target
+			if(targetX < get_x()){
+				nextX = get_x()-1;
+			}else if(targetX > get_x()){
+				nextX = get_x()+1;
+			}
+			if(targetY < get_y()){
+				nextY = get_y()-1;
+			}else if(targetY > get_y()){
+				nextY = get_y()+1;
+			}
+		}else{ //movimiento corto
+			if(targetY < 0){
+				targetY = 0;
+			}
+			else if(targetY > GRIDSIZE-1){
+				targetY = GRIDSIZE-1;
+			}
+			if(targetX < 1){
+				targetX = 1;
+			}
+			else if(targetX > GRIDSIZE-1){
+				targetX = GRIDSIZE-1;
+			}
+			nextX = targetX;
+			nextY = targetY;
+			//movernos a la posicion target
+		}
+		if (season==1){
+			if(get_y() <= ((GRIDSIZE-1)/2)){
+				i = get_y();
+			}
+			else i = (GRIDSIZE-1) - get_y();
+			j = (GRIDSIZE-1) - get_x();
+			if(i <= j){
+				if(get_y() <= ((GRIDSIZE-1)/2)){
+				targetY = 0;
+				}
+				else targetY = GRIDSIZE-1;
+			}
+			else targetX = GRIDSIZE-1;
+		}
+	}
+	set_targetX(targetX);
+	set_targetY(targetY);
+	set_y(nextY);
+	set_x(nextX);
+
+
+	add_clanmove_message(get_x(), get_y(), 1);
+	return 0;
+}
+
+int leviflightclan(int posX, int posY, int *targetX, int *targetY){
+	int r;
+	//si estamos en nuestro target recalcular nuevo target
+	if(posX == *targetX && posY == *targetY){
+		r = rand() % 100;
+		//movimiento largo, aleatorio por todo el mapa
+		if(r >= 90){
+			r = rand()%GRIDSIZE;
+			if(r < 1) r = 1; 
+			*targetX = r;
+			r = rand()%GRIDSIZE;
+			*targetY = r;
+			return 1;
+		}
+		else{//movimiento corto
+			r = rand()%3;
+			if(r == 0){
+				if(posX > 1){
+					*targetX = posX-1;
+				}
+			}
+			else if(r == 1){
+				*targetX = posX+1;
+ 			}else{ //si no cambiamos el targetX cambiamos si o si el targetY
+ 				r = rand()%2;
+ 				*targetX = posX;
+ 				if(r == 0){
+ 					*targetY = posY-1;
+ 					return 0;
+ 				}
+ 				else{
+ 					*targetY = posY+1;
+ 					return 0;
+ 				}
+ 			}
+ 			r = rand()%3;
+ 			if(r == 0){
+ 				*targetY = posY-1;
+ 				return 0;
+ 			}
+ 			else if(r == 1){
+ 				*targetY = posY+1;
+ 				return 0;
+ 			}
+ 			else{
+ 				*targetY = posY;
+ 				return 0;
+ 			}
+		}
+	}
+	else return 1;
+}
 

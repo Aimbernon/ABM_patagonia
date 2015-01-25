@@ -314,11 +314,11 @@ void unittest_idle_12_13()
 	//return idle();
 }
 
-void unittest_dividir_info_13_end()
+void unittest_dividir_info_13_14()
 {
 	int rc;
 	
-	rc = MB_Iterator_CreateFiltered(b_warningDivide, &i_warningDivide, &FLAME_filter_indv_dividir_info_13_end_warningDivide, current_xmachine_indv);
+	rc = MB_Iterator_CreateFiltered(b_warningDivide, &i_warningDivide, &FLAME_filter_indv_dividir_info_13_14_warningDivide, current_xmachine_indv);
 	
 	#ifdef ERRCHECK
 	if (rc != MB_SUCCESS)
@@ -342,6 +342,36 @@ void unittest_dividir_info_13_end()
 	#endif
 	
 	//return dividir_info();
+}
+
+void unittest_dividir_transfer_14_end()
+{
+	int rc;
+	
+	rc = MB_Iterator_CreateFiltered(b_transfer, &i_transfer, &FLAME_filter_indv_dividir_transfer_14_end_transfer, current_xmachine_indv);
+	
+	#ifdef ERRCHECK
+	if (rc != MB_SUCCESS)
+	{
+	   fprintf(stderr, "ERROR: Could not create Iterator for 'transfer'\n");
+	   switch(rc) {
+	       case MB_ERR_INVALID:
+	           fprintf(stderr, "\t reason: 'transfer' board is invalid\n");
+	           break;
+	       case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'transfer' board is locked\n");
+               break;
+           case MB_ERR_MEMALLOC:
+               fprintf(stderr, "\t reason: out of memory\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	   }
+	}
+	#endif
+	
+	//return dividir_transfer();
 }
 
 void unittest_clan_Information_start_01()
@@ -411,11 +441,48 @@ void unittest_distribute_calories_02_03()
 	//return distribute_calories();
 }
 
-void unittest_marriable_indv_03_04()
+void unittest_move_clan_03_04()
 {
 	int rc;
 	
-	rc = MB_Iterator_CreateFiltered(b_ancestor, &i_ancestor, &FLAME_filter_clan_marriable_indv_03_04_ancestor, current_xmachine_clan);
+	
+	
+	#ifdef ERRCHECK
+	if (rc != MB_SUCCESS)
+	{
+	   fprintf(stderr, "ERROR: Could not create Iterator for 'guanacospatch'\n");
+	   switch(rc) {
+	       case MB_ERR_INVALID:
+	           fprintf(stderr, "\t reason: 'guanacospatch' board is invalid\n");
+	           break;
+	       case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'guanacospatch' board is locked\n");
+               break;
+           case MB_ERR_MEMALLOC:
+               fprintf(stderr, "\t reason: out of memory\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	   }
+	}
+	#endif
+	
+	//return move_clan();
+}
+
+void unittest_idle_03_04()
+{
+	
+	
+	//return idle();
+}
+
+void unittest_marriable_indv_04_05()
+{
+	int rc;
+	
+	rc = MB_Iterator_CreateFiltered(b_ancestor, &i_ancestor, &FLAME_filter_clan_marriable_indv_04_05_ancestor, current_xmachine_clan);
 	
 	#ifdef ERRCHECK
 	if (rc != MB_SUCCESS)
@@ -441,14 +508,14 @@ void unittest_marriable_indv_03_04()
 	//return marriable_indv();
 }
 
-void unittest_send_girls_04_05()
+void unittest_send_girls_05_06()
 {
 	
 	
 	//return send_girls();
 }
 
-void unittest_match_05_06()
+void unittest_match_06_07()
 {
 	int rc;
 	
@@ -478,11 +545,11 @@ void unittest_match_05_06()
 	//return match();
 }
 
-void unittest_aceptar_prop_06_07()
+void unittest_aceptar_prop_07_08()
 {
 	int rc;
 	
-	rc = MB_Iterator_CreateFiltered(b_propuesta, &i_propuesta, &FLAME_filter_clan_aceptar_prop_06_07_propuesta, current_xmachine_clan);
+	rc = MB_Iterator_CreateFiltered(b_propuesta, &i_propuesta, &FLAME_filter_clan_aceptar_prop_07_08_propuesta, current_xmachine_clan);
 	
 	#ifdef ERRCHECK
 	if (rc != MB_SUCCESS)
@@ -508,11 +575,11 @@ void unittest_aceptar_prop_06_07()
 	//return aceptar_prop();
 }
 
-void unittest_recive_conf_07_08()
+void unittest_recive_conf_08_09()
 {
 	int rc;
 	
-	rc = MB_Iterator_CreateFiltered(b_confirProp, &i_confirProp, &FLAME_filter_clan_recive_conf_07_08_confirProp, current_xmachine_clan);
+	rc = MB_Iterator_CreateFiltered(b_confirProp, &i_confirProp, &FLAME_filter_clan_recive_conf_08_09_confirProp, current_xmachine_clan);
 	
 	#ifdef ERRCHECK
 	if (rc != MB_SUCCESS)
@@ -538,11 +605,11 @@ void unittest_recive_conf_07_08()
 	//return recive_conf();
 }
 
-void unittest_repartir_id_08_09()
+void unittest_repartir_id_09_10()
 {
 	int rc;
 	
-	rc = MB_Iterator_CreateFiltered(b_peticionID, &i_peticionID, &FLAME_filter_clan_repartir_id_08_09_peticionID, current_xmachine_clan);
+	rc = MB_Iterator_CreateFiltered(b_peticionID, &i_peticionID, &FLAME_filter_clan_repartir_id_09_10_peticionID, current_xmachine_clan);
 	
 	#ifdef ERRCHECK
 	if (rc != MB_SUCCESS)
@@ -568,11 +635,11 @@ void unittest_repartir_id_08_09()
 	//return repartir_id();
 }
 
-void unittest_new_leader_09_10()
+void unittest_new_leader_10_11()
 {
 	int rc;
 	
-	rc = MB_Iterator_CreateFiltered(b_leader, &i_leader, &FLAME_filter_clan_new_leader_09_10_leader, current_xmachine_clan);
+	rc = MB_Iterator_CreateFiltered(b_leader, &i_leader, &FLAME_filter_clan_new_leader_10_11_leader, current_xmachine_clan);
 	
 	#ifdef ERRCHECK
 	if (rc != MB_SUCCESS)
@@ -598,11 +665,11 @@ void unittest_new_leader_09_10()
 	//return new_leader();
 }
 
-void unittest_again_marriable_10_11()
+void unittest_again_marriable_11_12()
 {
 	int rc;
 	
-	rc = MB_Iterator_CreateFiltered(b_widow, &i_widow, &FLAME_filter_clan_again_marriable_10_11_widow, current_xmachine_clan);
+	rc = MB_Iterator_CreateFiltered(b_widow, &i_widow, &FLAME_filter_clan_again_marriable_11_12_widow, current_xmachine_clan);
 	
 	#ifdef ERRCHECK
 	if (rc != MB_SUCCESS)
@@ -628,25 +695,25 @@ void unittest_again_marriable_10_11()
 	//return again_marriable();
 }
 
-void unittest_dividir_clan_11_12()
+void unittest_dividir_clan_12_13()
 {
 	
 	
 	//return dividir_clan();
 }
 
-void unittest_idle_11_13()
+void unittest_idle_12_14()
 {
 	
 	
 	//return idle();
 }
 
-void unittest_creacion_clan_12_13()
+void unittest_creacion_clan_13_14()
 {
 	int rc;
 	
-	rc = MB_Iterator_CreateFiltered(b_informationDivide, &i_informationDivide, &FLAME_filter_clan_creacion_clan_12_13_informationDivide, current_xmachine_clan);
+	rc = MB_Iterator_CreateFiltered(b_informationDivide, &i_informationDivide, &FLAME_filter_clan_creacion_clan_13_14_informationDivide, current_xmachine_clan);
 	
 	#ifdef ERRCHECK
 	if (rc != MB_SUCCESS)
@@ -672,14 +739,14 @@ void unittest_creacion_clan_12_13()
 	//return creacion_clan();
 }
 
-void unittest_vocabulary_review_13_end()
+void unittest_vocabulary_review_14_end()
 {
 	
 	
 	//return vocabulary_review();
 }
 
-void unittest_idle_13_end()
+void unittest_idle_14_end()
 {
 	
 	
@@ -693,11 +760,32 @@ void unittest_patchtype_start_1()
 	//return patchtype();
 }
 
-void unittest_patchcalories_1_2()
+void unittest_infoClansInPatch_start_1()
+{
+	
+	
+	//return infoClansInPatch();
+}
+
+void unittest_idle_patch_1_2()
+{
+	
+	
+	//return idle_patch();
+}
+
+void unittest_infoGuanacosPatch_1_2()
+{
+	
+	
+	//return infoGuanacosPatch();
+}
+
+void unittest_patchcalories_2_3()
 {
 	int rc;
 	
-	rc = MB_Iterator_CreateFiltered(b_clan_info, &i_clan_info, &FLAME_filter_patch_patchcalories_1_2_clan_info, current_xmachine_patch);
+	rc = MB_Iterator_CreateFiltered(b_clan_info, &i_clan_info, &FLAME_filter_patch_patchcalories_2_3_clan_info, current_xmachine_patch);
 	
 	#ifdef ERRCHECK
 	if (rc != MB_SUCCESS)
@@ -723,11 +811,39 @@ void unittest_patchcalories_1_2()
 	//return patchcalories();
 }
 
-void unittest_regenerate_2_3()
+void unittest_regenerate_3_4()
+{
+	
+	
+	//return regenerate();
+}
+
+void unittest_idle_patch_3_4()
+{
+	
+	
+	//return idle_patch();
+}
+
+void unittest_snregenerate_4_5()
+{
+	
+	
+	//return snregenerate();
+}
+
+void unittest_idle_patch_4_5()
+{
+	
+	
+	//return idle_patch();
+}
+
+void unittest_guanacos_move_5_6()
 {
 	int rc;
 	
-	rc = MB_Iterator_CreateFiltered(b_adultospatch, &i_adultospatch, &FLAME_filter_patch_regenerate_2_3_adultospatch, current_xmachine_patch);
+	rc = MB_Iterator_CreateFiltered(b_adultospatch, &i_adultospatch, &FLAME_filter_patch_guanacos_move_5_6_adultospatch, current_xmachine_patch);
 	
 	#ifdef ERRCHECK
 	if (rc != MB_SUCCESS)
@@ -750,14 +866,44 @@ void unittest_regenerate_2_3()
 	}
 	#endif
 	
-	//return regenerate();
+	//return guanacos_move();
 }
 
-void unittest_snregenerate_3_end()
+void unittest_clans_move_6_7()
 {
 	int rc;
 	
-	rc = MB_Iterator_CreateFiltered(b_reproduccionguanacos, &i_reproduccionguanacos, &FLAME_filter_patch_snregenerate_3_end_reproduccionguanacos, current_xmachine_patch);
+	rc = MB_Iterator_CreateFiltered(b_clanmove, &i_clanmove, &FLAME_filter_patch_clans_move_6_7_clanmove, current_xmachine_patch);
+	
+	#ifdef ERRCHECK
+	if (rc != MB_SUCCESS)
+	{
+	   fprintf(stderr, "ERROR: Could not create Iterator for 'clanmove'\n");
+	   switch(rc) {
+	       case MB_ERR_INVALID:
+	           fprintf(stderr, "\t reason: 'clanmove' board is invalid\n");
+	           break;
+	       case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'clanmove' board is locked\n");
+               break;
+           case MB_ERR_MEMALLOC:
+               fprintf(stderr, "\t reason: out of memory\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	   }
+	}
+	#endif
+	
+	//return clans_move();
+}
+
+void unittest_reproduccion_guanacos_7_end()
+{
+	int rc;
+	
+	rc = MB_Iterator_CreateFiltered(b_reproduccionguanacos, &i_reproduccionguanacos, &FLAME_filter_patch_reproduccion_guanacos_7_end_reproduccionguanacos, current_xmachine_patch);
 	
 	#ifdef ERRCHECK
 	if (rc != MB_SUCCESS)
@@ -780,10 +926,10 @@ void unittest_snregenerate_3_end()
 	}
 	#endif
 	
-	//return snregenerate();
+	//return reproduccion_guanacos();
 }
 
-void unittest_idle_patch_3_end()
+void unittest_idle_patch_7_end()
 {
 	
 	
@@ -797,6 +943,13 @@ void unittest_manadaInfo_start_1()
 	//return manadaInfo();
 }
 
+void unittest_seasonSwitch_start_1()
+{
+	
+	
+	//return seasonSwitch();
+}
+
 void unittest_manada_idle_1_2()
 {
 	
@@ -806,23 +959,53 @@ void unittest_manada_idle_1_2()
 
 void unittest_move_1_2()
 {
+	int rc;
 	
+	
+	
+	#ifdef ERRCHECK
+	if (rc != MB_SUCCESS)
+	{
+	   fprintf(stderr, "ERROR: Could not create Iterator for 'clanspatch'\n");
+	   switch(rc) {
+	       case MB_ERR_INVALID:
+	           fprintf(stderr, "\t reason: 'clanspatch' board is invalid\n");
+	           break;
+	       case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'clanspatch' board is locked\n");
+               break;
+           case MB_ERR_MEMALLOC:
+               fprintf(stderr, "\t reason: out of memory\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	   }
+	}
+	#endif
 	
 	//return move();
 }
 
-void unittest_reproduccion_2_end()
+void unittest_reproduccion_2_3()
 {
 	
 	
 	//return reproduccion();
 }
 
-void unittest_manada_idle2_2_end()
+void unittest_manada_idle2_2_3()
 {
 	
 	
 	//return manada_idle2();
+}
+
+void unittest_surviveGuanacos_3_end()
+{
+	
+	
+	//return surviveGuanacos();
 }
 
 
@@ -1266,6 +1449,106 @@ void free_messages()
 	               break;
 	           case MB_ERR_LOCKED:
 	               fprintf(stderr, "\t reason: 'warningDivide' board is locked\n");
+	               break;
+	           case MB_ERR_INTERNAL:
+	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+	               break;
+	           default:
+                   fprintf(stderr, "\t MB_Clear returned error code: %d (see libmboard docs for details)\n", rc);
+                   break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+	    }
+	    #endif
+	
+	    rc = MB_Clear(b_transfer);
+	    #ifdef ERRCHECK
+	    if (rc != MB_SUCCESS)
+	    {
+	       fprintf(stderr, "ERROR: Could not clear 'transfer' board\n");
+	       switch(rc) {
+	           case MB_ERR_INVALID:
+	               fprintf(stderr, "\t reason: 'transfer' board is invalid\n");
+	               break;
+	           case MB_ERR_LOCKED:
+	               fprintf(stderr, "\t reason: 'transfer' board is locked\n");
+	               break;
+	           case MB_ERR_INTERNAL:
+	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+	               break;
+	           default:
+                   fprintf(stderr, "\t MB_Clear returned error code: %d (see libmboard docs for details)\n", rc);
+                   break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+	    }
+	    #endif
+	
+	    rc = MB_Clear(b_clanmove);
+	    #ifdef ERRCHECK
+	    if (rc != MB_SUCCESS)
+	    {
+	       fprintf(stderr, "ERROR: Could not clear 'clanmove' board\n");
+	       switch(rc) {
+	           case MB_ERR_INVALID:
+	               fprintf(stderr, "\t reason: 'clanmove' board is invalid\n");
+	               break;
+	           case MB_ERR_LOCKED:
+	               fprintf(stderr, "\t reason: 'clanmove' board is locked\n");
+	               break;
+	           case MB_ERR_INTERNAL:
+	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+	               break;
+	           default:
+                   fprintf(stderr, "\t MB_Clear returned error code: %d (see libmboard docs for details)\n", rc);
+                   break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+	    }
+	    #endif
+	
+	    rc = MB_Clear(b_clanspatch);
+	    #ifdef ERRCHECK
+	    if (rc != MB_SUCCESS)
+	    {
+	       fprintf(stderr, "ERROR: Could not clear 'clanspatch' board\n");
+	       switch(rc) {
+	           case MB_ERR_INVALID:
+	               fprintf(stderr, "\t reason: 'clanspatch' board is invalid\n");
+	               break;
+	           case MB_ERR_LOCKED:
+	               fprintf(stderr, "\t reason: 'clanspatch' board is locked\n");
+	               break;
+	           case MB_ERR_INTERNAL:
+	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+	               break;
+	           default:
+                   fprintf(stderr, "\t MB_Clear returned error code: %d (see libmboard docs for details)\n", rc);
+                   break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+	    }
+	    #endif
+	
+	    rc = MB_Clear(b_guanacospatch);
+	    #ifdef ERRCHECK
+	    if (rc != MB_SUCCESS)
+	    {
+	       fprintf(stderr, "ERROR: Could not clear 'guanacospatch' board\n");
+	       switch(rc) {
+	           case MB_ERR_INVALID:
+	               fprintf(stderr, "\t reason: 'guanacospatch' board is invalid\n");
+	               break;
+	           case MB_ERR_LOCKED:
+	               fprintf(stderr, "\t reason: 'guanacospatch' board is locked\n");
 	               break;
 	           case MB_ERR_INTERNAL:
 	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
@@ -1844,6 +2127,118 @@ int rc;
 	    #endif
 	
 	/* Initialise message sync composite params as NULL */
+	FLAME_m_transfer_composite_params = NULL;
+
+	    rc = MB_Create(&b_transfer, sizeof(m_transfer));
+	    #ifdef ERRCHECK
+	    if (rc != MB_SUCCESS)
+	    {
+	       fprintf(stderr, "ERROR: Could not create 'transfer' board\n");
+	       switch(rc) {
+	           case MB_ERR_INVALID:
+	               fprintf(stderr, "\t reason: Invalid message size\n");
+	               break;
+	           case MB_ERR_MEMALLOC:
+	               fprintf(stderr, "\t reason: out of memory\n");
+	               break;
+	           case MB_ERR_INTERNAL:
+	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+	               break;
+	           default:
+                   fprintf(stderr, "\t MB_Create returned error code: %d (see libmboard docs for details)\n", rc);
+                   break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+	    }
+	    #endif
+	
+	/* Initialise message sync composite params as NULL */
+	FLAME_m_clanmove_composite_params = NULL;
+
+	    rc = MB_Create(&b_clanmove, sizeof(m_clanmove));
+	    #ifdef ERRCHECK
+	    if (rc != MB_SUCCESS)
+	    {
+	       fprintf(stderr, "ERROR: Could not create 'clanmove' board\n");
+	       switch(rc) {
+	           case MB_ERR_INVALID:
+	               fprintf(stderr, "\t reason: Invalid message size\n");
+	               break;
+	           case MB_ERR_MEMALLOC:
+	               fprintf(stderr, "\t reason: out of memory\n");
+	               break;
+	           case MB_ERR_INTERNAL:
+	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+	               break;
+	           default:
+                   fprintf(stderr, "\t MB_Create returned error code: %d (see libmboard docs for details)\n", rc);
+                   break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+	    }
+	    #endif
+	
+	/* Initialise message sync composite params as NULL */
+	FLAME_m_clanspatch_composite_params = NULL;
+
+	    rc = MB_Create(&b_clanspatch, sizeof(m_clanspatch));
+	    #ifdef ERRCHECK
+	    if (rc != MB_SUCCESS)
+	    {
+	       fprintf(stderr, "ERROR: Could not create 'clanspatch' board\n");
+	       switch(rc) {
+	           case MB_ERR_INVALID:
+	               fprintf(stderr, "\t reason: Invalid message size\n");
+	               break;
+	           case MB_ERR_MEMALLOC:
+	               fprintf(stderr, "\t reason: out of memory\n");
+	               break;
+	           case MB_ERR_INTERNAL:
+	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+	               break;
+	           default:
+                   fprintf(stderr, "\t MB_Create returned error code: %d (see libmboard docs for details)\n", rc);
+                   break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+	    }
+	    #endif
+	
+	/* Initialise message sync composite params as NULL */
+	FLAME_m_guanacospatch_composite_params = NULL;
+
+	    rc = MB_Create(&b_guanacospatch, sizeof(m_guanacospatch));
+	    #ifdef ERRCHECK
+	    if (rc != MB_SUCCESS)
+	    {
+	       fprintf(stderr, "ERROR: Could not create 'guanacospatch' board\n");
+	       switch(rc) {
+	           case MB_ERR_INVALID:
+	               fprintf(stderr, "\t reason: Invalid message size\n");
+	               break;
+	           case MB_ERR_MEMALLOC:
+	               fprintf(stderr, "\t reason: out of memory\n");
+	               break;
+	           case MB_ERR_INTERNAL:
+	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+	               break;
+	           default:
+                   fprintf(stderr, "\t MB_Create returned error code: %d (see libmboard docs for details)\n", rc);
+                   break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+	    }
+	    #endif
+	
+	/* Initialise message sync composite params as NULL */
 	FLAME_m_adultospatch_composite_params = NULL;
 
 	    rc = MB_Create(&b_adultospatch, sizeof(m_adultospatch));
@@ -1901,6 +2296,8 @@ int rc;
 	
 	indv_end_state = init_indv_state();
 
+	indv_14_state = init_indv_state();
+
 	indv_13_state = init_indv_state();
 
 	indv_12_state = init_indv_state();
@@ -1930,6 +2327,8 @@ int rc;
 	indv_start_state = init_indv_state();
 
 	clan_end_state = init_clan_state();
+
+	clan_14_state = init_clan_state();
 
 	clan_13_state = init_clan_state();
 
@@ -1961,6 +2360,14 @@ int rc;
 
 	patch_end_state = init_patch_state();
 
+	patch_7_state = init_patch_state();
+
+	patch_6_state = init_patch_state();
+
+	patch_5_state = init_patch_state();
+
+	patch_4_state = init_patch_state();
+
 	patch_3_state = init_patch_state();
 
 	patch_2_state = init_patch_state();
@@ -1970,6 +2377,8 @@ int rc;
 	patch_start_state = init_patch_state();
 
 	manada_guanacos_end_state = init_manada_guanacos_state();
+
+	manada_guanacos_3_state = init_manada_guanacos_state();
 
 	manada_guanacos_2_state = init_manada_guanacos_state();
 
@@ -2186,10 +2595,10 @@ void init_indv_free(/*@out@*/ indv_free * temp)
 {
 	init_int_static_array((*temp).male_list, 100);
 	init_int_static_array((*temp).female_list, 100);
-	init_int_static_array((*temp).mancestor_list, 600);
-	init_int_static_array((*temp).fancestor_list, 600);
-	init_int_static_array((*temp).mancestorClan_list, 600);
-	init_int_static_array((*temp).fancestorClan_list, 600);
+	init_int_static_array((*temp).mancestor_list, 700);
+	init_int_static_array((*temp).fancestor_list, 700);
+	init_int_static_array((*temp).mancestorClan_list, 700);
+	init_int_static_array((*temp).fancestorClan_list, 700);
 	(*temp).numMale = 0;
 	(*temp).numFemale = 0;
 
@@ -2218,10 +2627,10 @@ void copy_indv_free(indv_free * from, indv_free * to)
 {
 	memcpy((*to).male_list, (*from).male_list, 100*sizeof(int));
 	memcpy((*to).female_list, (*from).female_list, 100*sizeof(int));
-	memcpy((*to).mancestor_list, (*from).mancestor_list, 600*sizeof(int));
-	memcpy((*to).fancestor_list, (*from).fancestor_list, 600*sizeof(int));
-	memcpy((*to).mancestorClan_list, (*from).mancestorClan_list, 600*sizeof(int));
-	memcpy((*to).fancestorClan_list, (*from).fancestorClan_list, 600*sizeof(int));
+	memcpy((*to).mancestor_list, (*from).mancestor_list, 700*sizeof(int));
+	memcpy((*to).fancestor_list, (*from).fancestor_list, 700*sizeof(int));
+	memcpy((*to).mancestorClan_list, (*from).mancestorClan_list, 700*sizeof(int));
+	memcpy((*to).fancestorClan_list, (*from).fancestorClan_list, 700*sizeof(int));
 	(*to).numMale = (*from).numMale;
 	(*to).numFemale = (*from).numFemale;
 }
@@ -2264,8 +2673,8 @@ xmachine_memory_indv * init_indv_agent()
 	current->pregnant = 0;
 	current->lead = 0;
 	current->marriable = 0;
-	init_int_static_array(current->ancestors, 6);
-	init_int_static_array(current->ancestorsClan, 6);
+	init_int_static_array(current->ancestors, 7);
+	init_int_static_array(current->ancestorsClan, 7);
 	current->married = 0;
 	current->pareja = 0;
 	current->embarazable = 0;
@@ -2304,8 +2713,8 @@ void unittest_init_indv_agent()
 		current_xmachine_indv->pregnant = 0;
 		current_xmachine_indv->lead = 0;
 		current_xmachine_indv->marriable = 0;
-		init_int_static_array(current_xmachine_indv->ancestors, 6);
-		init_int_static_array(current_xmachine_indv->ancestorsClan, 6);
+		init_int_static_array(current_xmachine_indv->ancestors, 7);
+		init_int_static_array(current_xmachine_indv->ancestorsClan, 7);
 		current_xmachine_indv->married = 0;
 		current_xmachine_indv->pareja = 0;
 		current_xmachine_indv->embarazable = 0;
@@ -2332,6 +2741,14 @@ void free_indv_agents()
 		current_xmachine_indv_holder = temp_xmachine_indv_holder;
 	}
 	indv_end_state->count = 0;
+	current_xmachine_indv_holder = indv_14_state->agents;
+	while(current_xmachine_indv_holder)
+	{
+		temp_xmachine_indv_holder = current_xmachine_indv_holder->next;
+		free_indv_agent(current_xmachine_indv_holder, indv_14_state);
+		current_xmachine_indv_holder = temp_xmachine_indv_holder;
+	}
+	indv_14_state->count = 0;
 	current_xmachine_indv_holder = indv_13_state->agents;
 	while(current_xmachine_indv_holder)
 	{
@@ -2449,6 +2866,7 @@ void free_indv_agents()
 void free_indv_states()
 {
 	free(indv_end_state);
+	free(indv_14_state);
 	free(indv_13_state);
 	free(indv_12_state);
 	free(indv_11_state);
@@ -2531,8 +2949,8 @@ void add_indv_agent(int indvID, int cID, int cal_needs, int icalories, int patch
 	current->pregnant = pregnant;
 	current->lead = lead;
 	current->marriable = marriable;
-	memcpy(current->ancestors, ancestors, 6*sizeof(int));
-	memcpy(current->ancestorsClan, ancestorsClan, 6*sizeof(int));
+	memcpy(current->ancestors, ancestors, 7*sizeof(int));
+	memcpy(current->ancestorsClan, ancestorsClan, 7*sizeof(int));
 	current->married = married;
 	current->pareja = pareja;
 	current->embarazable = embarazable;
@@ -2571,6 +2989,10 @@ xmachine_memory_clan * init_clan_agent()
 	current->indexID = 0;
 	current->members = 0;
 	init_int_static_array(current->linguistics, 100);
+	init_int_static_array(current->exchange_record, 10);
+	current->irecord = 0;
+	current->targetX = 0;
+	current->targetY = 0;
 
 	return current;
 }
@@ -2607,6 +3029,10 @@ void unittest_init_clan_agent()
 		current_xmachine_clan->indexID = 0;
 		current_xmachine_clan->members = 0;
 		init_int_static_array(current_xmachine_clan->linguistics, 100);
+		init_int_static_array(current_xmachine_clan->exchange_record, 10);
+		current_xmachine_clan->irecord = 0;
+		current_xmachine_clan->targetX = 0;
+		current_xmachine_clan->targetY = 0;
 	
 }
 
@@ -2628,6 +3054,14 @@ void free_clan_agents()
 		current_xmachine_clan_holder = temp_xmachine_clan_holder;
 	}
 	clan_end_state->count = 0;
+	current_xmachine_clan_holder = clan_14_state->agents;
+	while(current_xmachine_clan_holder)
+	{
+		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
+		free_clan_agent(current_xmachine_clan_holder, clan_14_state);
+		current_xmachine_clan_holder = temp_xmachine_clan_holder;
+	}
+	clan_14_state->count = 0;
 	current_xmachine_clan_holder = clan_13_state->agents;
 	while(current_xmachine_clan_holder)
 	{
@@ -2745,6 +3179,7 @@ void free_clan_agents()
 void free_clan_states()
 {
 	free(clan_end_state);
+	free(clan_14_state);
 	free(clan_13_state);
 	free(clan_12_state);
 	free(clan_11_state);
@@ -2786,7 +3221,7 @@ void add_clan_agent_internal(xmachine_memory_clan * agent, xmachine_memory_clan_
     current_node->agent_total++;
 }
 
-/** \fn void add_clan_agent(int cID, int cal_need, int cal_got, int cal_stored, int x, int y, int tcalories, int leaderID, members_needs * mneeds, indv_free * ifree, int indexID, int members, int linguistics[])
+/** \fn void add_clan_agent(int cID, int cal_need, int cal_got, int cal_stored, int x, int y, int tcalories, int leaderID, members_needs * mneeds, indv_free * ifree, int indexID, int members, int linguistics[], int exchange_record[], int irecord, int targetX, int targetY)
  * \brief Add clan X-machine to the current being used X-machine list.
  * \param cID Variable for the X-machine memory.
  * \param cal_need Variable for the X-machine memory.
@@ -2801,8 +3236,12 @@ void add_clan_agent_internal(xmachine_memory_clan * agent, xmachine_memory_clan_
  * \param indexID Variable for the X-machine memory.
  * \param members Variable for the X-machine memory.
  * \param linguistics Variable for the X-machine memory.
+ * \param exchange_record Variable for the X-machine memory.
+ * \param irecord Variable for the X-machine memory.
+ * \param targetX Variable for the X-machine memory.
+ * \param targetY Variable for the X-machine memory.
  */
-void add_clan_agent(int cID, int cal_need, int cal_got, int cal_stored, int x, int y, int tcalories, int leaderID, members_needs mneeds, indv_free ifree, int indexID, int members, int linguistics[])
+void add_clan_agent(int cID, int cal_need, int cal_got, int cal_stored, int x, int y, int tcalories, int leaderID, members_needs mneeds, indv_free ifree, int indexID, int members, int linguistics[], int exchange_record[], int irecord, int targetX, int targetY)
 {
 	xmachine_memory_clan * current;
 
@@ -2824,6 +3263,10 @@ void add_clan_agent(int cID, int cal_need, int cal_got, int cal_stored, int x, i
 	current->indexID = indexID;
 	current->members = members;
 	memcpy(current->linguistics, linguistics, 100*sizeof(int));
+	memcpy(current->exchange_record, exchange_record, 10*sizeof(int));
+	current->irecord = irecord;
+	current->targetX = targetX;
+	current->targetY = targetY;
 }
 
 xmachine_memory_patch_state * init_patch_state()
@@ -2844,14 +3287,16 @@ xmachine_memory_patch * init_patch_agent()
 
 	current->patchID = 0;
 	current->pcalories = 0;
+	current->gcalories = 0;
 	current->repo = 0.0;
 	current->tpatch = 0;
-	current->xcord = 0;
-	current->ycord = 0;
+	current->x = 0;
+	current->y = 0;
 	current->repows = 0.0;
 	current->repods = 0.0;
 	current->season = 0;
 	current->adultos = 0;
+	current->pclans = 0;
 
 	return current;
 }
@@ -2875,14 +3320,16 @@ void unittest_init_patch_agent()
 
 		current_xmachine_patch->patchID = 0;
 		current_xmachine_patch->pcalories = 0;
+		current_xmachine_patch->gcalories = 0;
 		current_xmachine_patch->repo = 0.0;
 		current_xmachine_patch->tpatch = 0;
-		current_xmachine_patch->xcord = 0;
-		current_xmachine_patch->ycord = 0;
+		current_xmachine_patch->x = 0;
+		current_xmachine_patch->y = 0;
 		current_xmachine_patch->repows = 0.0;
 		current_xmachine_patch->repods = 0.0;
 		current_xmachine_patch->season = 0;
 		current_xmachine_patch->adultos = 0;
+		current_xmachine_patch->pclans = 0;
 	
 }
 
@@ -2902,6 +3349,38 @@ void free_patch_agents()
 		current_xmachine_patch_holder = temp_xmachine_patch_holder;
 	}
 	patch_end_state->count = 0;
+	current_xmachine_patch_holder = patch_7_state->agents;
+	while(current_xmachine_patch_holder)
+	{
+		temp_xmachine_patch_holder = current_xmachine_patch_holder->next;
+		free_patch_agent(current_xmachine_patch_holder, patch_7_state);
+		current_xmachine_patch_holder = temp_xmachine_patch_holder;
+	}
+	patch_7_state->count = 0;
+	current_xmachine_patch_holder = patch_6_state->agents;
+	while(current_xmachine_patch_holder)
+	{
+		temp_xmachine_patch_holder = current_xmachine_patch_holder->next;
+		free_patch_agent(current_xmachine_patch_holder, patch_6_state);
+		current_xmachine_patch_holder = temp_xmachine_patch_holder;
+	}
+	patch_6_state->count = 0;
+	current_xmachine_patch_holder = patch_5_state->agents;
+	while(current_xmachine_patch_holder)
+	{
+		temp_xmachine_patch_holder = current_xmachine_patch_holder->next;
+		free_patch_agent(current_xmachine_patch_holder, patch_5_state);
+		current_xmachine_patch_holder = temp_xmachine_patch_holder;
+	}
+	patch_5_state->count = 0;
+	current_xmachine_patch_holder = patch_4_state->agents;
+	while(current_xmachine_patch_holder)
+	{
+		temp_xmachine_patch_holder = current_xmachine_patch_holder->next;
+		free_patch_agent(current_xmachine_patch_holder, patch_4_state);
+		current_xmachine_patch_holder = temp_xmachine_patch_holder;
+	}
+	patch_4_state->count = 0;
 	current_xmachine_patch_holder = patch_3_state->agents;
 	while(current_xmachine_patch_holder)
 	{
@@ -2939,6 +3418,10 @@ void free_patch_agents()
 void free_patch_states()
 {
 	free(patch_end_state);
+	free(patch_7_state);
+	free(patch_6_state);
+	free(patch_5_state);
+	free(patch_4_state);
 	free(patch_3_state);
 	free(patch_2_state);
 	free(patch_1_state);
@@ -2970,20 +3453,22 @@ void add_patch_agent_internal(xmachine_memory_patch * agent, xmachine_memory_pat
     current_node->agent_total++;
 }
 
-/** \fn void add_patch_agent(int patchID, int pcalories, float repo, int tpatch, int xcord, int ycord, float repows, float repods, int season, int adultos)
+/** \fn void add_patch_agent(int patchID, int pcalories, int gcalories, float repo, int tpatch, int x, int y, float repows, float repods, int season, int adultos, int pclans)
  * \brief Add patch X-machine to the current being used X-machine list.
  * \param patchID Variable for the X-machine memory.
  * \param pcalories Variable for the X-machine memory.
+ * \param gcalories Variable for the X-machine memory.
  * \param repo Variable for the X-machine memory.
  * \param tpatch Variable for the X-machine memory.
- * \param xcord Variable for the X-machine memory.
- * \param ycord Variable for the X-machine memory.
+ * \param x Variable for the X-machine memory.
+ * \param y Variable for the X-machine memory.
  * \param repows Variable for the X-machine memory.
  * \param repods Variable for the X-machine memory.
  * \param season Variable for the X-machine memory.
  * \param adultos Variable for the X-machine memory.
+ * \param pclans Variable for the X-machine memory.
  */
-void add_patch_agent(int patchID, int pcalories, float repo, int tpatch, int xcord, int ycord, float repows, float repods, int season, int adultos)
+void add_patch_agent(int patchID, int pcalories, int gcalories, float repo, int tpatch, int x, int y, float repows, float repods, int season, int adultos, int pclans)
 {
 	xmachine_memory_patch * current;
 
@@ -2994,14 +3479,16 @@ void add_patch_agent(int patchID, int pcalories, float repo, int tpatch, int xco
 
 	current->patchID = patchID;
 	current->pcalories = pcalories;
+	current->gcalories = gcalories;
 	current->repo = repo;
 	current->tpatch = tpatch;
-	current->xcord = xcord;
-	current->ycord = ycord;
+	current->x = x;
+	current->y = y;
 	current->repows = repows;
 	current->repods = repods;
 	current->season = season;
 	current->adultos = adultos;
+	current->pclans = pclans;
 }
 
 xmachine_memory_manada_guanacos_state * init_manada_guanacos_state()
@@ -3020,13 +3507,15 @@ xmachine_memory_manada_guanacos * init_manada_guanacos_agent()
 	xmachine_memory_manada_guanacos * current = (xmachine_memory_manada_guanacos *)malloc(sizeof(xmachine_memory_manada_guanacos));
 	CHECK_POINTER(current);
 
-	current->id = 0;
 	current->familia = 0;
-	current->xcord = 0;
-	current->ycord = 0;
+	current->x = 0;
+	current->y = 0;
+	current->targetX = 0;
+	current->targetY = 0;
 	current->count = 0;
 	current->calorias = 0;
 	current->adultos = 0;
+	current->season = 0;
 
 	return current;
 }
@@ -3048,13 +3537,15 @@ void unittest_init_manada_guanacos_agent()
 	current_xmachine_manada_guanacos = (xmachine_memory_manada_guanacos *)malloc(sizeof(xmachine_memory_manada_guanacos));
 	CHECK_POINTER(current);
 
-		current_xmachine_manada_guanacos->id = 0;
 		current_xmachine_manada_guanacos->familia = 0;
-		current_xmachine_manada_guanacos->xcord = 0;
-		current_xmachine_manada_guanacos->ycord = 0;
+		current_xmachine_manada_guanacos->x = 0;
+		current_xmachine_manada_guanacos->y = 0;
+		current_xmachine_manada_guanacos->targetX = 0;
+		current_xmachine_manada_guanacos->targetY = 0;
 		current_xmachine_manada_guanacos->count = 0;
 		current_xmachine_manada_guanacos->calorias = 0;
 		current_xmachine_manada_guanacos->adultos = 0;
+		current_xmachine_manada_guanacos->season = 0;
 	
 }
 
@@ -3074,6 +3565,14 @@ void free_manada_guanacos_agents()
 		current_xmachine_manada_guanacos_holder = temp_xmachine_manada_guanacos_holder;
 	}
 	manada_guanacos_end_state->count = 0;
+	current_xmachine_manada_guanacos_holder = manada_guanacos_3_state->agents;
+	while(current_xmachine_manada_guanacos_holder)
+	{
+		temp_xmachine_manada_guanacos_holder = current_xmachine_manada_guanacos_holder->next;
+		free_manada_guanacos_agent(current_xmachine_manada_guanacos_holder, manada_guanacos_3_state);
+		current_xmachine_manada_guanacos_holder = temp_xmachine_manada_guanacos_holder;
+	}
+	manada_guanacos_3_state->count = 0;
 	current_xmachine_manada_guanacos_holder = manada_guanacos_2_state->agents;
 	while(current_xmachine_manada_guanacos_holder)
 	{
@@ -3103,6 +3602,7 @@ void free_manada_guanacos_agents()
 void free_manada_guanacos_states()
 {
 	free(manada_guanacos_end_state);
+	free(manada_guanacos_3_state);
 	free(manada_guanacos_2_state);
 	free(manada_guanacos_1_state);
 	free(manada_guanacos_start_state);
@@ -3133,17 +3633,19 @@ void add_manada_guanacos_agent_internal(xmachine_memory_manada_guanacos * agent,
     current_node->agent_total++;
 }
 
-/** \fn void add_manada_guanacos_agent(int id, int familia, int xcord, int ycord, int count, int calorias, int adultos)
+/** \fn void add_manada_guanacos_agent(int familia, int x, int y, int targetX, int targetY, int count, int calorias, int adultos, int season)
  * \brief Add manada_guanacos X-machine to the current being used X-machine list.
- * \param id Variable for the X-machine memory.
  * \param familia Variable for the X-machine memory.
- * \param xcord Variable for the X-machine memory.
- * \param ycord Variable for the X-machine memory.
+ * \param x Variable for the X-machine memory.
+ * \param y Variable for the X-machine memory.
+ * \param targetX Variable for the X-machine memory.
+ * \param targetY Variable for the X-machine memory.
  * \param count Variable for the X-machine memory.
  * \param calorias Variable for the X-machine memory.
  * \param adultos Variable for the X-machine memory.
+ * \param season Variable for the X-machine memory.
  */
-void add_manada_guanacos_agent(int id, int familia, int xcord, int ycord, int count, int calorias, int adultos)
+void add_manada_guanacos_agent(int familia, int x, int y, int targetX, int targetY, int count, int calorias, int adultos, int season)
 {
 	xmachine_memory_manada_guanacos * current;
 
@@ -3152,13 +3654,15 @@ void add_manada_guanacos_agent(int id, int familia, int xcord, int ycord, int co
 	current_xmachine_manada_guanacos_next_state = manada_guanacos_start_state;
 	add_manada_guanacos_agent_internal(current, current_xmachine_manada_guanacos_next_state);
 
-	current->id = id;
 	current->familia = familia;
-	current->xcord = xcord;
-	current->ycord = ycord;
+	current->x = x;
+	current->y = y;
+	current->targetX = targetX;
+	current->targetY = targetY;
 	current->count = count;
 	current->calorias = calorias;
 	current->adultos = adultos;
+	current->season = season;
 }
 
 
@@ -3644,6 +4148,8 @@ int get_cal_stored()
 void set_x(int x)
 {
 	if(current_xmachine->xmachine_clan) (*current_xmachine->xmachine_clan).x = x;
+	if(current_xmachine->xmachine_patch) (*current_xmachine->xmachine_patch).x = x;
+	if(current_xmachine->xmachine_manada_guanacos) (*current_xmachine->xmachine_manada_guanacos).x = x;
 }
 
 /** \fn int get_x()
@@ -3653,6 +4159,8 @@ void set_x(int x)
 int get_x()
 {
 	if(current_xmachine->xmachine_clan) return (*current_xmachine->xmachine_clan).x;
+	if(current_xmachine->xmachine_patch) return (*current_xmachine->xmachine_patch).x;
+	if(current_xmachine->xmachine_manada_guanacos) return (*current_xmachine->xmachine_manada_guanacos).x;
 
     // suppress compiler warning by returning dummy value /
     // this statement should rightfully NEVER be reached /
@@ -3666,6 +4174,8 @@ int get_x()
 void set_y(int y)
 {
 	if(current_xmachine->xmachine_clan) (*current_xmachine->xmachine_clan).y = y;
+	if(current_xmachine->xmachine_patch) (*current_xmachine->xmachine_patch).y = y;
+	if(current_xmachine->xmachine_manada_guanacos) (*current_xmachine->xmachine_manada_guanacos).y = y;
 }
 
 /** \fn int get_y()
@@ -3675,6 +4185,8 @@ void set_y(int y)
 int get_y()
 {
 	if(current_xmachine->xmachine_clan) return (*current_xmachine->xmachine_clan).y;
+	if(current_xmachine->xmachine_patch) return (*current_xmachine->xmachine_patch).y;
+	if(current_xmachine->xmachine_manada_guanacos) return (*current_xmachine->xmachine_manada_guanacos).y;
 
     // suppress compiler warning by returning dummy value /
     // this statement should rightfully NEVER be reached /
@@ -3808,6 +4320,89 @@ int * get_linguistics()
     return NULL;
 }
 
+/** \fn int get_exchange_record()
+ * \brief Get exchange_record memory variable from current X-machine.
+ * \return Value for variable.
+ */
+int * get_exchange_record()
+{
+	if(current_xmachine->xmachine_clan) return (*current_xmachine->xmachine_clan).exchange_record;
+
+    // suppress compiler warning by returning dummy value /
+    // this statement should rightfully NEVER be reached /
+    return NULL;
+}
+
+/** \fn void set_irecord(int irecord)
+ * \brief Set irecord memory variable for current X-machine.
+ * \param irecord New value for variable.
+ */
+void set_irecord(int irecord)
+{
+	if(current_xmachine->xmachine_clan) (*current_xmachine->xmachine_clan).irecord = irecord;
+}
+
+/** \fn int get_irecord()
+ * \brief Get irecord memory variable from current X-machine.
+ * \return Value for variable.
+ */
+int get_irecord()
+{
+	if(current_xmachine->xmachine_clan) return (*current_xmachine->xmachine_clan).irecord;
+
+    // suppress compiler warning by returning dummy value /
+    // this statement should rightfully NEVER be reached /
+    return (int)0;
+}
+
+/** \fn void set_targetX(int targetX)
+ * \brief Set targetX memory variable for current X-machine.
+ * \param targetX New value for variable.
+ */
+void set_targetX(int targetX)
+{
+	if(current_xmachine->xmachine_clan) (*current_xmachine->xmachine_clan).targetX = targetX;
+	if(current_xmachine->xmachine_manada_guanacos) (*current_xmachine->xmachine_manada_guanacos).targetX = targetX;
+}
+
+/** \fn int get_targetX()
+ * \brief Get targetX memory variable from current X-machine.
+ * \return Value for variable.
+ */
+int get_targetX()
+{
+	if(current_xmachine->xmachine_clan) return (*current_xmachine->xmachine_clan).targetX;
+	if(current_xmachine->xmachine_manada_guanacos) return (*current_xmachine->xmachine_manada_guanacos).targetX;
+
+    // suppress compiler warning by returning dummy value /
+    // this statement should rightfully NEVER be reached /
+    return (int)0;
+}
+
+/** \fn void set_targetY(int targetY)
+ * \brief Set targetY memory variable for current X-machine.
+ * \param targetY New value for variable.
+ */
+void set_targetY(int targetY)
+{
+	if(current_xmachine->xmachine_clan) (*current_xmachine->xmachine_clan).targetY = targetY;
+	if(current_xmachine->xmachine_manada_guanacos) (*current_xmachine->xmachine_manada_guanacos).targetY = targetY;
+}
+
+/** \fn int get_targetY()
+ * \brief Get targetY memory variable from current X-machine.
+ * \return Value for variable.
+ */
+int get_targetY()
+{
+	if(current_xmachine->xmachine_clan) return (*current_xmachine->xmachine_clan).targetY;
+	if(current_xmachine->xmachine_manada_guanacos) return (*current_xmachine->xmachine_manada_guanacos).targetY;
+
+    // suppress compiler warning by returning dummy value /
+    // this statement should rightfully NEVER be reached /
+    return (int)0;
+}
+
 /** \fn void set_pcalories(int pcalories)
  * \brief Set pcalories memory variable for current X-machine.
  * \param pcalories New value for variable.
@@ -3824,6 +4419,28 @@ void set_pcalories(int pcalories)
 int get_pcalories()
 {
 	if(current_xmachine->xmachine_patch) return (*current_xmachine->xmachine_patch).pcalories;
+
+    // suppress compiler warning by returning dummy value /
+    // this statement should rightfully NEVER be reached /
+    return (int)0;
+}
+
+/** \fn void set_gcalories(int gcalories)
+ * \brief Set gcalories memory variable for current X-machine.
+ * \param gcalories New value for variable.
+ */
+void set_gcalories(int gcalories)
+{
+	if(current_xmachine->xmachine_patch) (*current_xmachine->xmachine_patch).gcalories = gcalories;
+}
+
+/** \fn int get_gcalories()
+ * \brief Get gcalories memory variable from current X-machine.
+ * \return Value for variable.
+ */
+int get_gcalories()
+{
+	if(current_xmachine->xmachine_patch) return (*current_xmachine->xmachine_patch).gcalories;
 
     // suppress compiler warning by returning dummy value /
     // this statement should rightfully NEVER be reached /
@@ -3868,54 +4485,6 @@ void set_tpatch(int tpatch)
 int get_tpatch()
 {
 	if(current_xmachine->xmachine_patch) return (*current_xmachine->xmachine_patch).tpatch;
-
-    // suppress compiler warning by returning dummy value /
-    // this statement should rightfully NEVER be reached /
-    return (int)0;
-}
-
-/** \fn void set_xcord(int xcord)
- * \brief Set xcord memory variable for current X-machine.
- * \param xcord New value for variable.
- */
-void set_xcord(int xcord)
-{
-	if(current_xmachine->xmachine_patch) (*current_xmachine->xmachine_patch).xcord = xcord;
-	if(current_xmachine->xmachine_manada_guanacos) (*current_xmachine->xmachine_manada_guanacos).xcord = xcord;
-}
-
-/** \fn int get_xcord()
- * \brief Get xcord memory variable from current X-machine.
- * \return Value for variable.
- */
-int get_xcord()
-{
-	if(current_xmachine->xmachine_patch) return (*current_xmachine->xmachine_patch).xcord;
-	if(current_xmachine->xmachine_manada_guanacos) return (*current_xmachine->xmachine_manada_guanacos).xcord;
-
-    // suppress compiler warning by returning dummy value /
-    // this statement should rightfully NEVER be reached /
-    return (int)0;
-}
-
-/** \fn void set_ycord(int ycord)
- * \brief Set ycord memory variable for current X-machine.
- * \param ycord New value for variable.
- */
-void set_ycord(int ycord)
-{
-	if(current_xmachine->xmachine_patch) (*current_xmachine->xmachine_patch).ycord = ycord;
-	if(current_xmachine->xmachine_manada_guanacos) (*current_xmachine->xmachine_manada_guanacos).ycord = ycord;
-}
-
-/** \fn int get_ycord()
- * \brief Get ycord memory variable from current X-machine.
- * \return Value for variable.
- */
-int get_ycord()
-{
-	if(current_xmachine->xmachine_patch) return (*current_xmachine->xmachine_patch).ycord;
-	if(current_xmachine->xmachine_manada_guanacos) return (*current_xmachine->xmachine_manada_guanacos).ycord;
 
     // suppress compiler warning by returning dummy value /
     // this statement should rightfully NEVER be reached /
@@ -3973,6 +4542,7 @@ float get_repods()
 void set_season(int season)
 {
 	if(current_xmachine->xmachine_patch) (*current_xmachine->xmachine_patch).season = season;
+	if(current_xmachine->xmachine_manada_guanacos) (*current_xmachine->xmachine_manada_guanacos).season = season;
 }
 
 /** \fn int get_season()
@@ -3982,6 +4552,7 @@ void set_season(int season)
 int get_season()
 {
 	if(current_xmachine->xmachine_patch) return (*current_xmachine->xmachine_patch).season;
+	if(current_xmachine->xmachine_manada_guanacos) return (*current_xmachine->xmachine_manada_guanacos).season;
 
     // suppress compiler warning by returning dummy value /
     // this statement should rightfully NEVER be reached /
@@ -4012,22 +4583,22 @@ int get_adultos()
     return (int)0;
 }
 
-/** \fn void set_id(int id)
- * \brief Set id memory variable for current X-machine.
- * \param id New value for variable.
+/** \fn void set_pclans(int pclans)
+ * \brief Set pclans memory variable for current X-machine.
+ * \param pclans New value for variable.
  */
-void set_id(int id)
+void set_pclans(int pclans)
 {
-	if(current_xmachine->xmachine_manada_guanacos) (*current_xmachine->xmachine_manada_guanacos).id = id;
+	if(current_xmachine->xmachine_patch) (*current_xmachine->xmachine_patch).pclans = pclans;
 }
 
-/** \fn int get_id()
- * \brief Get id memory variable from current X-machine.
+/** \fn int get_pclans()
+ * \brief Get pclans memory variable from current X-machine.
  * \return Value for variable.
  */
-int get_id()
+int get_pclans()
 {
-	if(current_xmachine->xmachine_manada_guanacos) return (*current_xmachine->xmachine_manada_guanacos).id;
+	if(current_xmachine->xmachine_patch) return (*current_xmachine->xmachine_patch).pclans;
 
     // suppress compiler warning by returning dummy value /
     // this statement should rightfully NEVER be reached /
@@ -4126,7 +4697,7 @@ int agent_get_id()
     /*if (current_xmachine->xmachine_indv) value = current_xmachine->xmachine_indv->;*/
     /*if (current_xmachine->xmachine_clan) value = current_xmachine->xmachine_clan->;*/
     /*if (current_xmachine->xmachine_patch) value = current_xmachine->xmachine_patch->;*/
-    /*if (current_xmachine->xmachine_manada_guanacos) value = current_xmachine->xmachine_manada_guanacos->id;*/
+    /*if (current_xmachine->xmachine_manada_guanacos) value = current_xmachine->xmachine_manada_guanacos->;*/
 
     return value;
 }
@@ -4140,8 +4711,8 @@ double agent_get_x()
     double value = 0.0;
     /*if (current_xmachine->xmachine_indv) value = current_xmachine->xmachine_indv->0.0;*/
     /*if (current_xmachine->xmachine_clan) value = current_xmachine->xmachine_clan->x;*/
-    /*if (current_xmachine->xmachine_patch) value = current_xmachine->xmachine_patch->0.0;*/
-    /*if (current_xmachine->xmachine_manada_guanacos) value = current_xmachine->xmachine_manada_guanacos->0.0;*/
+    /*if (current_xmachine->xmachine_patch) value = current_xmachine->xmachine_patch->x;*/
+    /*if (current_xmachine->xmachine_manada_guanacos) value = current_xmachine->xmachine_manada_guanacos->x;*/
 
     return value;
 }
@@ -4154,8 +4725,8 @@ double agent_get_y()
     double value = 0.0;
     /*if (current_xmachine->xmachine_indv) value = current_xmachine->xmachine_indv->0.0;*/
     /*if (current_xmachine->xmachine_clan) value = current_xmachine->xmachine_clan->y;*/
-    /*if (current_xmachine->xmachine_patch) value = current_xmachine->xmachine_patch->0.0;*/
-    /*if (current_xmachine->xmachine_manada_guanacos) value = current_xmachine->xmachine_manada_guanacos->0.0;*/
+    /*if (current_xmachine->xmachine_patch) value = current_xmachine->xmachine_patch->y;*/
+    /*if (current_xmachine->xmachine_manada_guanacos) value = current_xmachine->xmachine_manada_guanacos->y;*/
 
     return value;
 }
@@ -4226,6 +4797,10 @@ void add_node(int node_id, double minx, double maxx, double miny, double maxy, d
 	current->respuestaID_messages = NULL;
 	current->lmarriage_messages = NULL;
 	current->warningDivide_messages = NULL;
+	current->transfer_messages = NULL;
+	current->clanmove_messages = NULL;
+	current->clanspatch_messages = NULL;
+	current->guanacospatch_messages = NULL;
 	current->adultospatch_messages = NULL;
 	current->reproduccionguanacos_messages = NULL;
 
@@ -4247,6 +4822,10 @@ void add_node(int node_id, double minx, double maxx, double miny, double maxy, d
 	current->respuestaID_message_no = 0;
 	current->lmarriage_message_no = 0;
 	current->warningDivide_message_no = 0;
+	current->transfer_message_no = 0;
+	current->clanmove_message_no = 0;
+	current->clanspatch_message_no = 0;
+	current->guanacospatch_message_no = 0;
 	current->adultospatch_message_no = 0;
 	current->reproduccionguanacos_message_no = 0;
 	current->indv_agents = NULL;
@@ -4764,6 +5343,106 @@ void clean_up(int code)
     }
     #endif
 
+	rc = MB_Delete(&b_transfer);
+	#ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not delete 'transfer' board\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'transfer' board has not been created?\n");
+               break;
+           case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'transfer' board is locked\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	       default:
+               fprintf(stderr, "\t MB_Delete returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+    }
+    #endif
+
+	rc = MB_Delete(&b_clanmove);
+	#ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not delete 'clanmove' board\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'clanmove' board has not been created?\n");
+               break;
+           case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'clanmove' board is locked\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	       default:
+               fprintf(stderr, "\t MB_Delete returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+    }
+    #endif
+
+	rc = MB_Delete(&b_clanspatch);
+	#ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not delete 'clanspatch' board\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'clanspatch' board has not been created?\n");
+               break;
+           case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'clanspatch' board is locked\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	       default:
+               fprintf(stderr, "\t MB_Delete returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+    }
+    #endif
+
+	rc = MB_Delete(&b_guanacospatch);
+	#ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not delete 'guanacospatch' board\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'guanacospatch' board has not been created?\n");
+               break;
+           case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'guanacospatch' board is locked\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	       default:
+               fprintf(stderr, "\t MB_Delete returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+    }
+    #endif
+
 	rc = MB_Delete(&b_adultospatch);
 	#ifdef ERRCHECK
     if (rc != MB_SUCCESS)
@@ -4883,6 +5562,14 @@ void clean_up(int code)
         /* MPI_Type_free(&messagelmarriageType); */
         
         /* MPI_Type_free(&messagewarningDivideType); */
+        
+        /* MPI_Type_free(&messagetransferType); */
+        
+        /* MPI_Type_free(&messageclanmoveType); */
+        
+        /* MPI_Type_free(&messageclanspatchType); */
+        
+        /* MPI_Type_free(&messageguanacospatchType); */
         
         /* MPI_Type_free(&messageadultospatchType); */
         
@@ -5638,10 +6325,10 @@ void add_indv_free(indv_free_array * array, /*@out@*/ int * male_list, /*@out@*/
 	init_indv_free(&(*array).array[(*array).size]);
 	if(male_list != NULL) memcpy((*array).array[(*array).size].male_list, male_list, 100*sizeof(int));
 	if(female_list != NULL) memcpy((*array).array[(*array).size].female_list, female_list, 100*sizeof(int));
-	if(mancestor_list != NULL) memcpy((*array).array[(*array).size].mancestor_list, mancestor_list, 600*sizeof(int));
-	if(fancestor_list != NULL) memcpy((*array).array[(*array).size].fancestor_list, fancestor_list, 600*sizeof(int));
-	if(mancestorClan_list != NULL) memcpy((*array).array[(*array).size].mancestorClan_list, mancestorClan_list, 600*sizeof(int));
-	if(fancestorClan_list != NULL) memcpy((*array).array[(*array).size].fancestorClan_list, fancestorClan_list, 600*sizeof(int));
+	if(mancestor_list != NULL) memcpy((*array).array[(*array).size].mancestor_list, mancestor_list, 700*sizeof(int));
+	if(fancestor_list != NULL) memcpy((*array).array[(*array).size].fancestor_list, fancestor_list, 700*sizeof(int));
+	if(mancestorClan_list != NULL) memcpy((*array).array[(*array).size].mancestorClan_list, mancestorClan_list, 700*sizeof(int));
+	if(fancestorClan_list != NULL) memcpy((*array).array[(*array).size].fancestorClan_list, fancestorClan_list, 700*sizeof(int));
 	(*array).array[(*array).size].numMale = numMale;
 	(*array).array[(*array).size].numFemale = numFemale;
 
@@ -5699,6 +6386,14 @@ int FLAME_get_environment_variable_lang_threshold()
 {
 	return FLAME_environment_variable_lang_threshold;
 }
+int FLAME_get_environment_variable_genoma()
+{
+	return FLAME_environment_variable_genoma;
+}
+int FLAME_get_environment_variable_record_size()
+{
+	return FLAME_environment_variable_record_size;
+}
 int FLAME_get_environment_variable_max_manada()
 {
 	return FLAME_environment_variable_max_manada;
@@ -5710,6 +6405,14 @@ int FLAME_get_environment_variable_max_familia()
 int FLAME_get_environment_variable_cal_adulto()
 {
 	return FLAME_environment_variable_cal_adulto;
+}
+int FLAME_get_environment_variable_surviveChanceAdult()
+{
+	return FLAME_environment_variable_surviveChanceAdult;
+}
+int FLAME_get_environment_variable_surviveChanceChild()
+{
+	return FLAME_environment_variable_surviveChanceChild;
 }
 
 

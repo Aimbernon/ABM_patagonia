@@ -26,8 +26,8 @@
 		<age>245</age>
 		<married>1</married>
 		<marriable>0</marriable>
-		<ancestors>{0,1,2,3,4,5}</ancestors>
-		<ancestorsClan>{0,0,0,0,0,0}</ancestorsClan>
+		<ancestors>{0,0,10,20,30,40,50}</ancestors>
+		<ancestorsClan>{0,0,0,0,0,0,0}</ancestorsClan>
 		<pareja>1</pareja>
 	</xagent>
 	<xagent>
@@ -37,11 +37,11 @@
 		<icalories>0</icalories>
 		<patchid>0</patchid>
 		<sex>1</sex>
-		<age>250</age>
+		<age>230</age>
 		<married>1</married>
 		<marriable>0</marriable>
-		<ancestors>{6,7,8,9,10,11}</ancestors>
-		<ancestorsClan>{0,0,0,0,0,0}</ancestorsClan>
+		<ancestors>{1,60,70,80,90,10,11}</ancestors>
+		<ancestorsClan>{0,0,0,0,0,0,0}</ancestorsClan>
 		<pareja>0</pareja>
 	</xagent>
 	<xagent>
@@ -54,8 +54,8 @@
 		<age>15</age>
 		<married>0</married>
 		<marriable>0</marriable>
-		<ancestors>{0,1,14,15,16,17}</ancestors>
-		<ancestorsClan>{0,0,0,0,0,0}</ancestorsClan>
+		<ancestors>{2,0,1,14,15,16,17}</ancestors>
+		<ancestorsClan>{0,0,0,0,0,0,0}</ancestorsClan>
 		<pareja>-1</pareja>
 	</xagent>
 	<xagent>
@@ -68,8 +68,8 @@
 		<age>105</age>
 		<married>0</married>
 		<marriable>0</marriable>
-		<ancestors>{0,1,20,21,22,23}</ancestors>
-		<ancestorsClan>{0,0,0,0,0,0}</ancestorsClan>
+		<ancestors>{3,0,1,20,21,22,23}</ancestors>
+		<ancestorsClan>{0,0,0,0,0,0,0}</ancestorsClan>
 		<pareja>-1</pareja>
 	</xagent>
 	<xagent><!--familia 2-->
@@ -82,8 +82,8 @@
 		<age>180</age>
 		<married>1</married>
 		<marriable>0</marriable>
-		<ancestors>{0,1,26,27,28,29}</ancestors>
-		<ancestorsClan>{0,0,0,0,0,0}</ancestorsClan>
+		<ancestors>{4,0,1,26,27,28,29}</ancestors>
+		<ancestorsClan>{0,0,0,0,0,0,0}</ancestorsClan>
 		<pareja>5</pareja>
 	</xagent>
 	<xagent>
@@ -96,8 +96,8 @@
 		<age>180</age>
 		<married>1</married>
 		<marriable>0</marriable>
-		<ancestors>{30,31,32,33,34,35}</ancestors>
-		<ancestorsClan>{0,0,0,0,0,0}</ancestorsClan>
+		<ancestors>{5,30,31,32,33,34,35}</ancestors>
+		<ancestorsClan>{0,0,0,0,0,0,0}</ancestorsClan>
 		<pareja>4</pareja>
 	</xagent>
 	<xagent><!-- otros -->
@@ -110,8 +110,8 @@
 		<age>180</age>
 		<married>0</married>
 		<marriable>0</marriable>
-		<ancestors>{36,37,38,39,40,41}</ancestors>
-		<ancestorsClan>{0,0,0,0,0,0}</ancestorsClan>
+		<ancestors>{6,36,37,38,39,40,41}</ancestors>
+		<ancestorsClan>{0,0,0,0,0,0,0}</ancestorsClan>
 		<pareja>-1</pareja>
 	</xagent>
 	<xagent>
@@ -124,8 +124,8 @@
 		<age>180</age>
 		<married>0</married>
 		<marriable>0</marriable>
-		<ancestors>{42,43,44,45,46,47}</ancestors>
-		<ancestorsClan>{0,0,0,0,0,0}</ancestorsClan>
+		<ancestors>{7,42,43,44,45,46,47}</ancestors>
+		<ancestorsClan>{0,0,0,0,0,0,0}</ancestorsClan>
 		<pareja>-1</pareja>
 	</xagent>
 	<xagent>
@@ -138,8 +138,8 @@
 		<age>180</age>
 		<married>0</married>
 		<marriable>0</marriable>
-		<ancestors>{48,49,50,51,52,53}</ancestors>
-		<ancestorsClan>{0,0,0,0,0,0}</ancestorsClan>
+		<ancestors>{8,48,49,50,51,52,53}</ancestors>
+		<ancestorsClan>{0,0,0,0,0,0,0}</ancestorsClan>
 		<pareja>-1</pareja>
 	</xagent>
 	<xagent>
@@ -152,8 +152,8 @@
 		<age>180</age>
 		<married>0</married>
 		<marriable>0</marriable>
-		<ancestors>{54,55,56,57,58,59}</ancestors>
-		<ancestorsClan>{0,0,0,0,0,0}</ancestorsClan>
+		<ancestors>{9,54,55,56,57,58,59}</ancestors>
+		<ancestorsClan>{0,0,0,0,0,0,0}</ancestorsClan>
 		<pareja>-1</pareja>
 	</xagent>
 	
@@ -169,6 +169,7 @@
                 <y>0</y>
 		<indexID>3</indexID>
 		<members>4</members>
+		<primes>{3,5,7}</primes>
 	</xagent>
 <xagent>
 		<name>patch</name>

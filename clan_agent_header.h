@@ -42,3 +42,15 @@
 /** \def LINGUISTICS
  * \brief Direct access to linguistics of clan agent memory variable. */
 #define LINGUISTICS (current_xmachine_clan->linguistics)
+/** \def EXCHANGE_RECORD
+ * \brief Direct access to exchange_record of clan agent memory variable. */
+#define EXCHANGE_RECORD (current_xmachine_clan->exchange_record)
+/** \def IRECORD
+ * \brief Direct access to irecord of clan agent memory variable. */
+#define IRECORD (current_xmachine_clan->irecord)
+/** \def TARGETX
+ * \brief Direct access to targetX of clan agent memory variable. */
+#define TARGETX (current_xmachine_clan->targetX)
+/** \def TARGETY
+ * \brief Direct access to targetY of clan agent memory variable. */
+#define TARGETY (current_xmachine_clan->targetY)

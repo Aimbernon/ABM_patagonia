@@ -1,8 +1,10 @@
 <states>
 <itno>0</itno>
 <environment>
-<nancestors>6</nancestors>
+<nancestors>7</nancestors>
 <propegnant>9</propegnant>
+<genoma>100</genoma>
+<record_size>10</record_size>
 </environment>
 <outputs>
 <output>
@@ -26,8 +28,8 @@
 		<age>1</age>
 		<married>0</married>
 		<marriable>1</marriable>
-		<ancestors>{56,22,22,11,44,55}</ancestors>
-		<ancestorsClan>{0,0,0,0,0,0}</ancestorsClan>
+		<ancestors>{0,56,22,22,11,44,55}</ancestors>
+		<ancestorsClan>{0,0,0,0,0,0,0}</ancestorsClan>
 	</xagent>
 	<xagent><!-- viuda-->
 		<name>indv</name>
@@ -39,8 +41,8 @@
 		<age>1</age>
 		<married>0</married>
 		<marriable>1</marriable>
-		<ancestors>{77,88,44,110,220,557}</ancestors>
-		<ancestorsClan>{0,0,2,0,0,0}</ancestorsClan>
+		<ancestors>{1,77,88,449,110,220,557}</ancestors>
+		<ancestorsClan>{0,0,30,2,0,0,0}</ancestorsClan>
 		<widow>1</widow>
 	</xagent>
 	<xagent>
@@ -53,8 +55,8 @@
 		<age>1</age>
 		<married>0</married>
 		<marriable>0</marriable>
-		<ancestors>{}</ancestors>
-		<ancestorsClan>{}</ancestorsClan>
+		<ancestors>{2,1,20,3,4,5,6}</ancestors>
+		<ancestorsClan>{0,0,0,54,0,0,0}</ancestorsClan>
 	</xagent>
 	<xagent>
 		<name>indv</name>
@@ -66,8 +68,8 @@
 		<age>180</age>
 		<married>0</married>
 		<marriable>0</marriable>
-		<ancestors>{1,2,0,-1,-1,-1}</ancestors>
-		<ancestorsClan>{0,0,0,0,0,0}</ancestorsClan>
+		<ancestors>{3,1,2,0,-1,-1,-1}</ancestors>
+		<ancestorsClan>{0,0,0,0,0,0,0}</ancestorsClan>
 	</xagent>
 	<xagent><!-- liante -->
 		<name>indv</name>
@@ -79,21 +81,21 @@
 		<age>1</age>
 		<pregnant>0</pregnant>
 		<marriable>1</marriable>
-		<ancestors>{77,78,898,55,44,22}</ancestors>
-		<ancestorsClan>{1,1,1,1,1,1}</ancestorsClan>
+		<ancestors>{0,77,78,898,55,44,1}</ancestors>
+		<ancestorsClan>{1,1,1,1,1,1,0}</ancestorsClan>
 	</xagent>
 	<xagent>
 		<name>indv</name>
-		<indvID>1</indvID>
+		<indvID>157</indvID>
 		<cID>1</cID>
 		<icalories>0</icalories>
 		<patchid>0</patchid>
-		<sex>0</sex>
+		<sex>1</sex>
 		<age>1</age>
 		<pregnant>0</pregnant>
 		<marriable>0</marriable>
-		<ancestors>{}</ancestors>
-		<ancestorsClan>{}</ancestorsClan>
+		<ancestors>{157,56,44,12,884,0,33}</ancestors>
+		<ancestorsClan>{1,1,1,1,1,0,1}</ancestorsClan>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -105,7 +107,7 @@
                 <leaderID>0</leaderID>
                 <x>1</x>
                 <y>0</y>
-		<indexID>3</indexID>
+		<indexID>4</indexID>
 	</xagent>
 <xagent>
 		<name>clan</name>
@@ -117,7 +119,7 @@
                 <leaderID>0</leaderID>
                 <x>1</x>
                 <y>0</y>
-		<indexID>2</indexID>
+		<indexID>3</indexID>
 	</xagent>
 <xagent>
 		<name>patch</name>

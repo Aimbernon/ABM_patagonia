@@ -452,7 +452,7 @@ int read_indv_free(char * buffer, int /*@unused@*/ buffer_size, int * j, indv_fr
 	{
 		if(buffer[(*j)] == '\0') return -1;
 		while(buffer[*j] != '{') (*j)++;
-		rc = read_int_static_array(buffer, buffer_size, j, (*temp_datatype).mancestor_list, 600);
+		rc = read_int_static_array(buffer, buffer_size, j, (*temp_datatype).mancestor_list, 700);
 		if(rc != 0) { printf("Error: reading variable 'mancestor_list' of type 'int'\n"); return -1; }
 	}
 	
@@ -462,7 +462,7 @@ int read_indv_free(char * buffer, int /*@unused@*/ buffer_size, int * j, indv_fr
 	{
 		if(buffer[(*j)] == '\0') return -1;
 		while(buffer[*j] != '{') (*j)++;
-		rc = read_int_static_array(buffer, buffer_size, j, (*temp_datatype).fancestor_list, 600);
+		rc = read_int_static_array(buffer, buffer_size, j, (*temp_datatype).fancestor_list, 700);
 		if(rc != 0) { printf("Error: reading variable 'fancestor_list' of type 'int'\n"); return -1; }
 	}
 	
@@ -472,7 +472,7 @@ int read_indv_free(char * buffer, int /*@unused@*/ buffer_size, int * j, indv_fr
 	{
 		if(buffer[(*j)] == '\0') return -1;
 		while(buffer[*j] != '{') (*j)++;
-		rc = read_int_static_array(buffer, buffer_size, j, (*temp_datatype).mancestorClan_list, 600);
+		rc = read_int_static_array(buffer, buffer_size, j, (*temp_datatype).mancestorClan_list, 700);
 		if(rc != 0) { printf("Error: reading variable 'mancestorClan_list' of type 'int'\n"); return -1; }
 	}
 	
@@ -482,7 +482,7 @@ int read_indv_free(char * buffer, int /*@unused@*/ buffer_size, int * j, indv_fr
 	{
 		if(buffer[(*j)] == '\0') return -1;
 		while(buffer[*j] != '{') (*j)++;
-		rc = read_int_static_array(buffer, buffer_size, j, (*temp_datatype).fancestorClan_list, 600);
+		rc = read_int_static_array(buffer, buffer_size, j, (*temp_datatype).fancestorClan_list, 700);
 		if(rc != 0) { printf("Error: reading variable 'fancestorClan_list' of type 'int'\n"); return -1; }
 	}
 	
@@ -530,24 +530,24 @@ int read_indv_free_dynamic_array(char * buffer, int buffer_size, int * j, indv_f
 	init_int_static_array(female_list, 100);
 # endif
 	
-	int mancestor_list[600];
+	int mancestor_list[700];
 # ifndef S_SPLINT_S
-	init_int_static_array(mancestor_list, 600);
+	init_int_static_array(mancestor_list, 700);
 # endif
 	
-	int fancestor_list[600];
+	int fancestor_list[700];
 # ifndef S_SPLINT_S
-	init_int_static_array(fancestor_list, 600);
+	init_int_static_array(fancestor_list, 700);
 # endif
 	
-	int mancestorClan_list[600];
+	int mancestorClan_list[700];
 # ifndef S_SPLINT_S
-	init_int_static_array(mancestorClan_list, 600);
+	init_int_static_array(mancestorClan_list, 700);
 # endif
 	
-	int fancestorClan_list[600];
+	int fancestorClan_list[700];
 # ifndef S_SPLINT_S
-	init_int_static_array(fancestorClan_list, 600);
+	init_int_static_array(fancestorClan_list, 700);
 # endif
 	
 	
@@ -617,9 +617,13 @@ int readEnvironmentXML(char * location)
 	int in_learn = 0;
 	int in_forget = 0;
 	int in_lang_threshold = 0;
+	int in_genoma = 0;
+	int in_record_size = 0;
 	int in_max_manada = 0;
 	int in_max_familia = 0;
 	int in_cal_adulto = 0;
+	int in_surviveChanceAdult = 0;
+	int in_surviveChanceChild = 0;
 	
 
 	buffer[0] = '\0';
@@ -651,12 +655,20 @@ int readEnvironmentXML(char * location)
 			if(strcmp(buffer, "/forget") == 0) in_forget = 0;
 			if(strcmp(buffer, "lang_threshold") == 0) in_lang_threshold = 1;
 			if(strcmp(buffer, "/lang_threshold") == 0) in_lang_threshold = 0;
+			if(strcmp(buffer, "genoma") == 0) in_genoma = 1;
+			if(strcmp(buffer, "/genoma") == 0) in_genoma = 0;
+			if(strcmp(buffer, "record_size") == 0) in_record_size = 1;
+			if(strcmp(buffer, "/record_size") == 0) in_record_size = 0;
 			if(strcmp(buffer, "max_manada") == 0) in_max_manada = 1;
 			if(strcmp(buffer, "/max_manada") == 0) in_max_manada = 0;
 			if(strcmp(buffer, "max_familia") == 0) in_max_familia = 1;
 			if(strcmp(buffer, "/max_familia") == 0) in_max_familia = 0;
 			if(strcmp(buffer, "cal_adulto") == 0) in_cal_adulto = 1;
 			if(strcmp(buffer, "/cal_adulto") == 0) in_cal_adulto = 0;
+			if(strcmp(buffer, "surviveChanceAdult") == 0) in_surviveChanceAdult = 1;
+			if(strcmp(buffer, "/surviveChanceAdult") == 0) in_surviveChanceAdult = 0;
+			if(strcmp(buffer, "surviveChanceChild") == 0) in_surviveChanceChild = 1;
+			if(strcmp(buffer, "/surviveChanceChild") == 0) in_surviveChanceChild = 0;
 			
 			index = 0;
 			buffer[index] = '\0';
@@ -671,9 +683,13 @@ int readEnvironmentXML(char * location)
 				if(in_learn == 1) { FLAME_environment_variable_learn = atoi(buffer); }
 				if(in_forget == 1) { FLAME_environment_variable_forget = atoi(buffer); }
 				if(in_lang_threshold == 1) { FLAME_environment_variable_lang_threshold = atoi(buffer); }
+				if(in_genoma == 1) { FLAME_environment_variable_genoma = atoi(buffer); }
+				if(in_record_size == 1) { FLAME_environment_variable_record_size = atoi(buffer); }
 				if(in_max_manada == 1) { FLAME_environment_variable_max_manada = atoi(buffer); }
 				if(in_max_familia == 1) { FLAME_environment_variable_max_familia = atoi(buffer); }
 				if(in_cal_adulto == 1) { FLAME_environment_variable_cal_adulto = atoi(buffer); }
+				if(in_surviveChanceAdult == 1) { FLAME_environment_variable_surviveChanceAdult = atoi(buffer); }
+				if(in_surviveChanceChild == 1) { FLAME_environment_variable_surviveChanceChild = atoi(buffer); }
 				
 			}
 			index = 0;
@@ -745,16 +761,19 @@ int readAgentXML(char * location,
 	int in_indexID = 0;
 	int in_members = 0;
 	int in_linguistics = 0;
+	int in_exchange_record = 0;
+	int in_irecord = 0;
+	int in_targetX = 0;
+	int in_targetY = 0;
 	int in_pcalories = 0;
+	int in_gcalories = 0;
 	int in_repo = 0;
 	int in_tpatch = 0;
-	int in_xcord = 0;
-	int in_ycord = 0;
 	int in_repows = 0;
 	int in_repods = 0;
 	int in_season = 0;
 	int in_adultos = 0;
-	int in_id = 0;
+	int in_pclans = 0;
 	int in_familia = 0;
 	int in_count = 0;
 	int in_calorias = 0;
@@ -904,8 +923,8 @@ int readAgentXML(char * location,
 				{
 					if(current_patch_agent == NULL) { printf("Memory error reading patch agent\n"); exit(0); }
 					
-					posx = (double)0.0;
-					posy = (double)0.0;
+					posx = (double)current_patch_agent->x;
+					posy = (double)current_patch_agent->y;
 					posz = (double)0.0;
 					
 					/* If flag is zero just read the data. We'll partition later.
@@ -953,8 +972,8 @@ int readAgentXML(char * location,
 				{
 					if(current_manada_guanacos_agent == NULL) { printf("Memory error reading manada_guanacos agent\n"); exit(0); }
 					
-					posx = (double)0.0;
-					posy = (double)0.0;
+					posx = (double)current_manada_guanacos_agent->x;
+					posy = (double)current_manada_guanacos_agent->y;
 					posz = (double)0.0;
 					
 					/* If flag is zero just read the data. We'll partition later.
@@ -1075,16 +1094,22 @@ int readAgentXML(char * location,
 			if(strcmp(buffer, "/members") == 0) { in_members = 0; }
 			if(strcmp(buffer, "linguistics") == 0) { in_linguistics = 1; }
 			if(strcmp(buffer, "/linguistics") == 0) { in_linguistics = 0; }
+			if(strcmp(buffer, "exchange_record") == 0) { in_exchange_record = 1; }
+			if(strcmp(buffer, "/exchange_record") == 0) { in_exchange_record = 0; }
+			if(strcmp(buffer, "irecord") == 0) { in_irecord = 1; }
+			if(strcmp(buffer, "/irecord") == 0) { in_irecord = 0; }
+			if(strcmp(buffer, "targetX") == 0) { in_targetX = 1; }
+			if(strcmp(buffer, "/targetX") == 0) { in_targetX = 0; }
+			if(strcmp(buffer, "targetY") == 0) { in_targetY = 1; }
+			if(strcmp(buffer, "/targetY") == 0) { in_targetY = 0; }
 			if(strcmp(buffer, "pcalories") == 0) { in_pcalories = 1; }
 			if(strcmp(buffer, "/pcalories") == 0) { in_pcalories = 0; }
+			if(strcmp(buffer, "gcalories") == 0) { in_gcalories = 1; }
+			if(strcmp(buffer, "/gcalories") == 0) { in_gcalories = 0; }
 			if(strcmp(buffer, "repo") == 0) { in_repo = 1; }
 			if(strcmp(buffer, "/repo") == 0) { in_repo = 0; }
 			if(strcmp(buffer, "tpatch") == 0) { in_tpatch = 1; }
 			if(strcmp(buffer, "/tpatch") == 0) { in_tpatch = 0; }
-			if(strcmp(buffer, "xcord") == 0) { in_xcord = 1; }
-			if(strcmp(buffer, "/xcord") == 0) { in_xcord = 0; }
-			if(strcmp(buffer, "ycord") == 0) { in_ycord = 1; }
-			if(strcmp(buffer, "/ycord") == 0) { in_ycord = 0; }
 			if(strcmp(buffer, "repows") == 0) { in_repows = 1; }
 			if(strcmp(buffer, "/repows") == 0) { in_repows = 0; }
 			if(strcmp(buffer, "repods") == 0) { in_repods = 1; }
@@ -1093,8 +1118,8 @@ int readAgentXML(char * location,
 			if(strcmp(buffer, "/season") == 0) { in_season = 0; }
 			if(strcmp(buffer, "adultos") == 0) { in_adultos = 1; }
 			if(strcmp(buffer, "/adultos") == 0) { in_adultos = 0; }
-			if(strcmp(buffer, "id") == 0) { in_id = 1; }
-			if(strcmp(buffer, "/id") == 0) { in_id = 0; }
+			if(strcmp(buffer, "pclans") == 0) { in_pclans = 1; }
+			if(strcmp(buffer, "/pclans") == 0) { in_pclans = 0; }
 			if(strcmp(buffer, "familia") == 0) { in_familia = 1; }
 			if(strcmp(buffer, "/familia") == 0) { in_familia = 0; }
 			if(strcmp(buffer, "count") == 0) { in_count = 1; }
@@ -1155,10 +1180,10 @@ int readAgentXML(char * location,
 					if(in_lead) { current_indv_agent->lead = atoi(buffer); }
 					if(in_marriable) { current_indv_agent->marriable = atoi(buffer); }
 					if(in_ancestors) { j = 0;
-						rc = read_int_static_array(buffer, index, &j, current_indv_agent->ancestors, 6);
+						rc = read_int_static_array(buffer, index, &j, current_indv_agent->ancestors, 7);
 						if(rc != 0) { printf("Error: reading 'indv' agent variable 'ancestors' of type 'int'\n"); exit(0); } }
 					if(in_ancestorsClan) { j = 0;
-						rc = read_int_static_array(buffer, index, &j, current_indv_agent->ancestorsClan, 6);
+						rc = read_int_static_array(buffer, index, &j, current_indv_agent->ancestorsClan, 7);
 						if(rc != 0) { printf("Error: reading 'indv' agent variable 'ancestorsClan' of type 'int'\n"); exit(0); } }
 					if(in_married) { current_indv_agent->married = atoi(buffer); }
 					if(in_pareja) { current_indv_agent->pareja = atoi(buffer); }
@@ -1190,27 +1215,37 @@ int readAgentXML(char * location,
 					if(in_linguistics) { j = 0;
 						rc = read_int_static_array(buffer, index, &j, current_clan_agent->linguistics, 100);
 						if(rc != 0) { printf("Error: reading 'clan' agent variable 'linguistics' of type 'int'\n"); exit(0); } }
+					if(in_exchange_record) { j = 0;
+						rc = read_int_static_array(buffer, index, &j, current_clan_agent->exchange_record, 10);
+						if(rc != 0) { printf("Error: reading 'clan' agent variable 'exchange_record' of type 'int'\n"); exit(0); } }
+					if(in_irecord) { current_clan_agent->irecord = atoi(buffer); }
+					if(in_targetX) { current_clan_agent->targetX = atoi(buffer); }
+					if(in_targetY) { current_clan_agent->targetY = atoi(buffer); }
 				 }else if(in_patch_agent == 1)
 				{
 					if(in_patchID) { current_patch_agent->patchID = atoi(buffer); }
 					if(in_pcalories) { current_patch_agent->pcalories = atoi(buffer); }
+					if(in_gcalories) { current_patch_agent->gcalories = atoi(buffer); }
 					if(in_repo) { current_patch_agent->repo = atof(buffer); }
 					if(in_tpatch) { current_patch_agent->tpatch = atoi(buffer); }
-					if(in_xcord) { current_patch_agent->xcord = atoi(buffer); }
-					if(in_ycord) { current_patch_agent->ycord = atoi(buffer); }
+					if(in_x) { current_patch_agent->x = atoi(buffer); }
+					if(in_y) { current_patch_agent->y = atoi(buffer); }
 					if(in_repows) { current_patch_agent->repows = atof(buffer); }
 					if(in_repods) { current_patch_agent->repods = atof(buffer); }
 					if(in_season) { current_patch_agent->season = atoi(buffer); }
 					if(in_adultos) { current_patch_agent->adultos = atoi(buffer); }
+					if(in_pclans) { current_patch_agent->pclans = atoi(buffer); }
 				 }else if(in_manada_guanacos_agent == 1)
 				{
-					if(in_id) { current_manada_guanacos_agent->id = atoi(buffer); }
 					if(in_familia) { current_manada_guanacos_agent->familia = atoi(buffer); }
-					if(in_xcord) { current_manada_guanacos_agent->xcord = atoi(buffer); }
-					if(in_ycord) { current_manada_guanacos_agent->ycord = atoi(buffer); }
+					if(in_x) { current_manada_guanacos_agent->x = atoi(buffer); }
+					if(in_y) { current_manada_guanacos_agent->y = atoi(buffer); }
+					if(in_targetX) { current_manada_guanacos_agent->targetX = atoi(buffer); }
+					if(in_targetY) { current_manada_guanacos_agent->targetY = atoi(buffer); }
 					if(in_count) { current_manada_guanacos_agent->count = atoi(buffer); }
 					if(in_calorias) { current_manada_guanacos_agent->calorias = atoi(buffer); }
 					if(in_adultos) { current_manada_guanacos_agent->adultos = atoi(buffer); }
+					if(in_season) { current_manada_guanacos_agent->season = atoi(buffer); }
 				 }
 			}
 			index = 0;
@@ -1314,9 +1349,13 @@ void readprepartitionedinitialstates(char * fileroot, char * filelocation, int *
 	FLAME_environment_variable_learn = 0;
 	FLAME_environment_variable_forget = 0;
 	FLAME_environment_variable_lang_threshold = 0;
+	FLAME_environment_variable_genoma = 0;
+	FLAME_environment_variable_record_size = 0;
 	FLAME_environment_variable_max_manada = 0;
 	FLAME_environment_variable_max_familia = 0;
 	FLAME_environment_variable_cal_adulto = 0;
+	FLAME_environment_variable_surviveChanceAdult = 0;
+	FLAME_environment_variable_surviveChanceChild = 0;
 	
 
 	MPI_Comm_size (MPI_COMM_WORLD, &number_partitions);
@@ -1650,9 +1689,13 @@ void readinitialstates(char * filename, char * filelocation, int * itno, double 
 	FLAME_environment_variable_learn = 0;
 	FLAME_environment_variable_forget = 0;
 	FLAME_environment_variable_lang_threshold = 0;
+	FLAME_environment_variable_genoma = 0;
+	FLAME_environment_variable_record_size = 0;
 	FLAME_environment_variable_max_manada = 0;
 	FLAME_environment_variable_max_familia = 0;
 	FLAME_environment_variable_cal_adulto = 0;
+	FLAME_environment_variable_surviveChanceAdult = 0;
+	FLAME_environment_variable_surviveChanceChild = 0;
 	
 
 	/* Open config file to read-only */
@@ -2141,10 +2184,10 @@ void write_indv_free(FILE *file, indv_free * temp_datatype)
 	fputs("{", file);
 	write_int_static_array(file, (*temp_datatype).male_list, 100);
 	fputs(", ", file);	write_int_static_array(file, (*temp_datatype).female_list, 100);
-	fputs(", ", file);	write_int_static_array(file, (*temp_datatype).mancestor_list, 600);
-	fputs(", ", file);	write_int_static_array(file, (*temp_datatype).fancestor_list, 600);
-	fputs(", ", file);	write_int_static_array(file, (*temp_datatype).mancestorClan_list, 600);
-	fputs(", ", file);	write_int_static_array(file, (*temp_datatype).fancestorClan_list, 600);
+	fputs(", ", file);	write_int_static_array(file, (*temp_datatype).mancestor_list, 700);
+	fputs(", ", file);	write_int_static_array(file, (*temp_datatype).fancestor_list, 700);
+	fputs(", ", file);	write_int_static_array(file, (*temp_datatype).mancestorClan_list, 700);
+	fputs(", ", file);	write_int_static_array(file, (*temp_datatype).fancestorClan_list, 700);
 	fputs(", ", file);	sprintf(data, "%i", (*temp_datatype).numMale);
 	fputs(data, file);
 	fputs(", ", file);	sprintf(data, "%i", (*temp_datatype).numFemale);
@@ -2228,10 +2271,10 @@ void write_indv_agent(FILE *file, xmachine_memory_indv * current)
 	fputs(data, file);
 	fputs("</marriable>\n", file);
 		fputs("<ancestors>", file);
-	write_int_static_array(file, current->ancestors, 6);
+	write_int_static_array(file, current->ancestors, 7);
 	fputs("</ancestors>\n", file);
 		fputs("<ancestorsClan>", file);
-	write_int_static_array(file, current->ancestorsClan, 6);
+	write_int_static_array(file, current->ancestorsClan, 7);
 	fputs("</ancestorsClan>\n", file);
 		fputs("<married>", file);
 	sprintf(data, "%i", current->married);
@@ -2318,6 +2361,21 @@ void write_clan_agent(FILE *file, xmachine_memory_clan * current)
 		fputs("<linguistics>", file);
 	write_int_static_array(file, current->linguistics, 100);
 	fputs("</linguistics>\n", file);
+		fputs("<exchange_record>", file);
+	write_int_static_array(file, current->exchange_record, 10);
+	fputs("</exchange_record>\n", file);
+		fputs("<irecord>", file);
+	sprintf(data, "%i", current->irecord);
+	fputs(data, file);
+	fputs("</irecord>\n", file);
+		fputs("<targetX>", file);
+	sprintf(data, "%i", current->targetX);
+	fputs(data, file);
+	fputs("</targetX>\n", file);
+		fputs("<targetY>", file);
+	sprintf(data, "%i", current->targetY);
+	fputs(data, file);
+	fputs("</targetY>\n", file);
 
 	fputs("</xagent>\n", file);
 }
@@ -2335,6 +2393,10 @@ void write_patch_agent(FILE *file, xmachine_memory_patch * current)
 	sprintf(data, "%i", current->pcalories);
 	fputs(data, file);
 	fputs("</pcalories>\n", file);
+		fputs("<gcalories>", file);
+	sprintf(data, "%i", current->gcalories);
+	fputs(data, file);
+	fputs("</gcalories>\n", file);
 		fputs("<repo>", file);
 	sprintf(data, "%f", current->repo);
 	fputs(data, file);
@@ -2343,14 +2405,14 @@ void write_patch_agent(FILE *file, xmachine_memory_patch * current)
 	sprintf(data, "%i", current->tpatch);
 	fputs(data, file);
 	fputs("</tpatch>\n", file);
-		fputs("<xcord>", file);
-	sprintf(data, "%i", current->xcord);
+		fputs("<x>", file);
+	sprintf(data, "%i", current->x);
 	fputs(data, file);
-	fputs("</xcord>\n", file);
-		fputs("<ycord>", file);
-	sprintf(data, "%i", current->ycord);
+	fputs("</x>\n", file);
+		fputs("<y>", file);
+	sprintf(data, "%i", current->y);
 	fputs(data, file);
-	fputs("</ycord>\n", file);
+	fputs("</y>\n", file);
 		fputs("<repows>", file);
 	sprintf(data, "%f", current->repows);
 	fputs(data, file);
@@ -2367,6 +2429,10 @@ void write_patch_agent(FILE *file, xmachine_memory_patch * current)
 	sprintf(data, "%i", current->adultos);
 	fputs(data, file);
 	fputs("</adultos>\n", file);
+		fputs("<pclans>", file);
+	sprintf(data, "%i", current->pclans);
+	fputs(data, file);
+	fputs("</pclans>\n", file);
 
 	fputs("</xagent>\n", file);
 }
@@ -2376,22 +2442,26 @@ void write_manada_guanacos_agent(FILE *file, xmachine_memory_manada_guanacos * c
 	char data[1000];
 	fputs("<xagent>\n" , file);
 	fputs("<name>manada_guanacos</name>\n", file);
-		fputs("<id>", file);
-	sprintf(data, "%i", current->id);
-	fputs(data, file);
-	fputs("</id>\n", file);
 		fputs("<familia>", file);
 	sprintf(data, "%i", current->familia);
 	fputs(data, file);
 	fputs("</familia>\n", file);
-		fputs("<xcord>", file);
-	sprintf(data, "%i", current->xcord);
+		fputs("<x>", file);
+	sprintf(data, "%i", current->x);
 	fputs(data, file);
-	fputs("</xcord>\n", file);
-		fputs("<ycord>", file);
-	sprintf(data, "%i", current->ycord);
+	fputs("</x>\n", file);
+		fputs("<y>", file);
+	sprintf(data, "%i", current->y);
 	fputs(data, file);
-	fputs("</ycord>\n", file);
+	fputs("</y>\n", file);
+		fputs("<targetX>", file);
+	sprintf(data, "%i", current->targetX);
+	fputs(data, file);
+	fputs("</targetX>\n", file);
+		fputs("<targetY>", file);
+	sprintf(data, "%i", current->targetY);
+	fputs(data, file);
+	fputs("</targetY>\n", file);
 		fputs("<count>", file);
 	sprintf(data, "%i", current->count);
 	fputs(data, file);
@@ -2404,6 +2474,10 @@ void write_manada_guanacos_agent(FILE *file, xmachine_memory_manada_guanacos * c
 	sprintf(data, "%i", current->adultos);
 	fputs(data, file);
 	fputs("</adultos>\n", file);
+		fputs("<season>", file);
+	sprintf(data, "%i", current->season);
+	fputs(data, file);
+	fputs("</season>\n", file);
 
 	fputs("</xagent>\n", file);
 }
@@ -2452,6 +2526,14 @@ void FLAME_write_xml(char * location, int iteration_number, int * output_types, 
 		sprintf(data, "%i", FLAME_environment_variable_lang_threshold);
 		fputs(data, file);
 		fputs("</lang_threshold>\n", file);
+			fputs("<genoma>", file);
+		sprintf(data, "%i", FLAME_environment_variable_genoma);
+		fputs(data, file);
+		fputs("</genoma>\n", file);
+			fputs("<record_size>", file);
+		sprintf(data, "%i", FLAME_environment_variable_record_size);
+		fputs(data, file);
+		fputs("</record_size>\n", file);
 			fputs("<max_manada>", file);
 		sprintf(data, "%i", FLAME_environment_variable_max_manada);
 		fputs(data, file);
@@ -2464,6 +2546,14 @@ void FLAME_write_xml(char * location, int iteration_number, int * output_types, 
 		sprintf(data, "%i", FLAME_environment_variable_cal_adulto);
 		fputs(data, file);
 		fputs("</cal_adulto>\n", file);
+			fputs("<surviveChanceAdult>", file);
+		sprintf(data, "%i", FLAME_environment_variable_surviveChanceAdult);
+		fputs(data, file);
+		fputs("</surviveChanceAdult>\n", file);
+			fputs("<surviveChanceChild>", file);
+		sprintf(data, "%i", FLAME_environment_variable_surviveChanceChild);
+		fputs(data, file);
+		fputs("</surviveChanceChild>\n", file);
 			fputs("</environment>\n" , file);
 	}
 		}

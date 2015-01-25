@@ -19,6 +19,16 @@
 				<name>cal_adulto</name>
 				<description>numero de calorias dadas por cada guanaco adulto</description>
 			</variable>
+			<variable>
+				<type>int</type>
+				<name>surviveChanceAdult</name>
+				<description>probabilidad de que un guanaco adulto sobreviva</description>
+			</variable>
+			<variable>
+				<type>int</type>
+				<name>surviveChanceChild</name>
+				<description>probabilidad que un guanaco cria sobreviva</description>
+			</variable>
 		</constants>
 		<functionFiles>
 			<file>guanacos.c</file>
@@ -40,23 +50,28 @@
 			<memory>
 				<variable>
 					<type>int</type>
-					<name>id</name>
-					<description>Identificador de la manada</description>
-				</variable>
-				<variable>
-					<type>int</type>
 					<name>familia</name>
 					<description>Identificador si es manada(=0) o si es familia (!=0)</description>
 				</variable>
 				<variable>
 					<type>int</type>
-					<name>xcord</name>
+					<name>x</name>
 					<description>Coordenada x de la manada</description>
 				</variable>
 				<variable>
 					<type>int</type>
-					<name>ycord</name>
+					<name>y</name>
 					<description>Coordenada y de la manada</description>
+				</variable>
+				<variable>
+					<type>int</type>
+					<name>targetX</name>
+					<description>Coordenada objetivo x de la manada</description>
+				</variable>
+				<variable>
+					<type>int</type>
+					<name>targetY</name>
+					<description>Coordenada objetivo y de la manada</description>
 				</variable>
 				<variable>
 					<type>int</type>
@@ -73,6 +88,10 @@
 					<name>adultos</name>
 					<description>Numero de adultos que contiene la manada</description>
 				</variable>
+				<variable>
+					<type>int</type>
+					<name>season</name>
+				</variable>
 			</memory>
 			<functions>
 				<function>
@@ -80,6 +99,24 @@
 					<description>informacion de la manada</description>
 					<currentState>start</currentState>
 					<nextState>1</nextState>
+					<condition>
+						<not><time>
+							<period>season</period>
+							<phase>0</phase>
+						</time></not>
+					</condition>
+				</function>
+				<function>
+					<name>seasonSwitch</name>
+					<description>cambio de estacion</description>
+					<currentState>start</currentState>
+					<nextState>1</nextState>
+					<condition>
+						<time>
+							<period>season</period>
+							<phase>0</phase>
+						</time>
+					</condition>
 				</function>
 				<function>
 					<name>manada_idle</name>
@@ -94,26 +131,37 @@
 				</function>
 				<function>
 					<name>move</name>
-					<description>Calculamos el movimiento de la manada (depende de la estación)</description>
+					<description>Calculamos el movimiento de la manada</description>
 					<currentState>1</currentState>
 					<nextState>2</nextState>
 					<condition>
-						<time>
-							<period>dias_por_patch</period>
-							<phase>0</phase>
-						</time>
+
+							<time>
+								<period>dias_por_patch</period>
+								<phase>0</phase>
+							</time>
+
 					</condition>
+					<inputs>
+						<input>
+							<messageName>clanspatch</messageName>
+							<filter>
+								<box2d>2.0</box2d>
+							</filter>
+						</input>
+					</inputs>
 					<outputs>
 						<output>
 							<messageName>adultospatch</messageName>
 						</output>
 					</outputs>
 				</function>
+				
 				<function>
 					<name>reproduccion</name>
 					<description>los guanacos dentro del patch crean nuevas manadas</description>
 					<currentState>2</currentState>
-					<nextState>end</nextState>
+					<nextState>3</nextState>
 					<condition>
 						<time>
 							<period>yearly</period>
@@ -130,13 +178,19 @@
 					<name>manada_idle2</name>
 					<description>la manada no hace nada</description>
 					<currentState>2</currentState>
-					<nextState>end</nextState>
+					<nextState>3</nextState>
 					<condition>
 						<not><time>
 							<period>yearly</period>
 							<phase>0</phase>
 						</time></not>
 					</condition>
+				</function>
+				<function>
+					<name>surviveGuanacos</name>
+					<description>la manada no hace nada</description>
+					<currentState>3</currentState>
+					<nextState>end</nextState>
 				</function>
 			</functions>
 		</xagent>
@@ -148,12 +202,12 @@
 			<variables>
 				<variable>
 					<type>int</type>
-					<name>xcord</name>
+					<name>x</name>
 					<description>posicion x de la manada de guanacos</description>
 				</variable>
 				<variable>
 					<type>int</type>
-					<name>ycord</name>
+					<name>y</name>
 					<description>posicion y de la manada de guanacos</description>
 				</variable>
 				<variable>
@@ -174,12 +228,12 @@
 			<variables>
 				<variable>
 					<type>int</type>
-					<name>xcord</name>
+					<name>x</name>
 					<description>posicion x de la manada de guanacos</description>
 				</variable>
 				<variable>
 					<type>int</type>
-					<name>ycord</name>
+					<name>y</name>
 					<description>posicion y de la manada de guanacos</description>
 				</variable>
 				<variable>

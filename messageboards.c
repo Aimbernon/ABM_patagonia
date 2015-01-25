@@ -451,8 +451,8 @@ void add_ancestor_message(int ancest[], int ancestClan[], int clanID, int indvID
     int rc;
 	m_ancestor msg;
     
-    memcpy(msg.ancest, ancest, 6*sizeof(int));
-    memcpy(msg.ancestClan, ancestClan, 6*sizeof(int));
+    memcpy(msg.ancest, ancest, 7*sizeof(int));
+    memcpy(msg.ancestClan, ancestClan, 7*sizeof(int));
     msg.clanID = clanID;
     msg.indvID = indvID;
     msg.sex = sex;
@@ -1004,8 +1004,8 @@ void add_widow_message(int ancestors[], int Cancestors[], int clanID, int indvID
     int rc;
 	m_widow msg;
     
-    memcpy(msg.ancestors, ancestors, 6*sizeof(int));
-    memcpy(msg.Cancestors, Cancestors, 6*sizeof(int));
+    memcpy(msg.ancestors, ancestors, 7*sizeof(int));
+    memcpy(msg.Cancestors, Cancestors, 7*sizeof(int));
     msg.clanID = clanID;
     msg.indvID = indvID;
     
@@ -1575,8 +1575,8 @@ void add_freeGirls_message(int girls[], int num_chicas, int y, int x, int clanID
     msg.y = y;
     msg.x = x;
     msg.clanID = clanID;
-    memcpy(msg.lancestors, lancestors, 600*sizeof(int));
-    memcpy(msg.lancestorsClan, lancestorsClan, 600*sizeof(int));
+    memcpy(msg.lancestors, lancestors, 700*sizeof(int));
+    memcpy(msg.lancestorsClan, lancestorsClan, 700*sizeof(int));
     memcpy(msg.linguistic, linguistic, 100*sizeof(int));
     
     
@@ -1702,24 +1702,22 @@ union pu_propuesta
     void *ptr_anon;
 };
 
-/** \fn void add_propuesta_message(int id_list, int id_man, int oclanID, int dclanID, int count)
+/** \fn void add_propuesta_message(int id_list, int id_man, int oclanID, int dclanID)
  * \brief Add propuesta message by calling internal and processing.
  * \param id_list Message variable.
  * \param id_man Message variable.
  * \param oclanID Message variable.
  * \param dclanID Message variable.
- * \param count Message variable.
  */
-void add_propuesta_message(int id_list[], int id_man[], int oclanID, int dclanID, int count)
+void add_propuesta_message(int id_list, int id_man, int oclanID, int dclanID)
 {
     int rc;
 	m_propuesta msg;
     
-    memcpy(msg.id_list, id_list, 100*sizeof(int));
-    memcpy(msg.id_man, id_man, 100*sizeof(int));
+    msg.id_list = id_list;
+    msg.id_man = id_man;
     msg.oclanID = oclanID;
     msg.dclanID = dclanID;
-    msg.count = count;
     
     
     rc = MB_AddMessage(b_propuesta, &msg);
@@ -2536,26 +2534,580 @@ m_warningDivide * get_next_warningDivide_message(m_warningDivide * current)
 
 
 
+union pu_transfer 
+{
+    m_transfer *ptr;
+    void *ptr_anon;
+};
+
+/** \fn void add_transfer_message(int clanID, int newID, int indvID)
+ * \brief Add transfer message by calling internal and processing.
+ * \param clanID Message variable.
+ * \param newID Message variable.
+ * \param indvID Message variable.
+ */
+void add_transfer_message(int clanID, int newID, int indvID)
+{
+    int rc;
+	m_transfer msg;
+    
+    msg.clanID = clanID;
+    msg.newID = newID;
+    msg.indvID = indvID;
+    
+    
+    rc = MB_AddMessage(b_transfer, &msg);
+    #ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not add message to 'transfer' board\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'transfer' board has not been created?\n");
+               break;
+           case MB_ERR_MEMALLOC:
+               fprintf(stderr, "\t reason: out of memory\n");
+               break;
+           case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'transfer' board is locked\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	       default:
+               fprintf(stderr, "\t MB_AddMessage returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+	   }
+	      
+	   MPI_Abort(MPI_COMM_WORLD, rc);
+       exit(rc);
+    }
+    #endif
+}
+
+inline static m_transfer* getInternalMessage_transfer(void)
+{
+    static m_transfer *msg_prev = NULL;
+    union pu_transfer msg_pu;
+    int rc;
+    
+    /* deallocate previously returned message */
+    if (msg_prev != NULL) 
+    {
+        free(msg_prev);
+    }
+    else 
+    {
+        rc = MB_Iterator_Rewind(i_transfer); 
+        #ifdef ERRCHECK
+        if (rc != MB_SUCCESS)
+        {
+            fprintf(stderr, "ERROR: Could not rewind 'transfer' Iterator\n");
+            switch(rc) {
+                case MB_ERR_INVALID:
+                    fprintf(stderr, "\t reason: 'transfer' Iterator has not been created?\n");
+                    break;
+	            default:
+                    fprintf(stderr, "\t MB_Iterator_Rewind returned error code: %d (see libmboard docs for details)\n", rc);
+                    break;
+	        }
+	       
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+        }
+        #endif
+    }
+    
+    /* get next message from iterator */
+    rc = MB_Iterator_GetMessage(i_transfer, &(msg_pu.ptr_anon));
+    #ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not get message from 'transfer' Iterator\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'transfer' Iterator has not been created?\n");
+               break;
+           case MB_ERR_MEMALLOC:
+               fprintf(stderr, "\t reason: out of memory\n");
+               break;
+	       default:
+               fprintf(stderr, "\t MB_Iterator_GetMessage returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+	       }
+	       
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+    }
+    #endif
+    
+    /* store pointer so memory can be deallocated later */
+    msg_prev = msg_pu.ptr;
+    
+    return msg_pu.ptr;
+}
+
+/** \fn xmachine_message_transfer * get_first_transfer_message()
+ * \brief Get the first transfer message in the transfer message list.
+ * \return The first message in the list.
+ */
+m_transfer * get_first_transfer_message()
+{
+	return getInternalMessage_transfer();
+}
+
+/** \fn xmachine_message_transfer * get_next_transfer_message(xmachine_message_transfer * current)
+ * \brief Get the next transfer message in the transfer message list after the current message.
+ * \param current The current message in the list.
+ * \return The next message in the list.
+ */
+m_transfer * get_next_transfer_message(m_transfer * current)
+{
+	return getInternalMessage_transfer();
+}
+
+
+/* Box filtering functions */
+
+
+
+
+union pu_clanmove 
+{
+    m_clanmove *ptr;
+    void *ptr_anon;
+};
+
+/** \fn void add_clanmove_message(int x, int y, int sentido)
+ * \brief Add clanmove message by calling internal and processing.
+ * \param x Message variable.
+ * \param y Message variable.
+ * \param sentido Message variable.
+ */
+void add_clanmove_message(int x, int y, int sentido)
+{
+    int rc;
+	m_clanmove msg;
+    
+    msg.x = x;
+    msg.y = y;
+    msg.sentido = sentido;
+    
+    
+    rc = MB_AddMessage(b_clanmove, &msg);
+    #ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not add message to 'clanmove' board\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'clanmove' board has not been created?\n");
+               break;
+           case MB_ERR_MEMALLOC:
+               fprintf(stderr, "\t reason: out of memory\n");
+               break;
+           case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'clanmove' board is locked\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	       default:
+               fprintf(stderr, "\t MB_AddMessage returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+	   }
+	      
+	   MPI_Abort(MPI_COMM_WORLD, rc);
+       exit(rc);
+    }
+    #endif
+}
+
+inline static m_clanmove* getInternalMessage_clanmove(void)
+{
+    static m_clanmove *msg_prev = NULL;
+    union pu_clanmove msg_pu;
+    int rc;
+    
+    /* deallocate previously returned message */
+    if (msg_prev != NULL) 
+    {
+        free(msg_prev);
+    }
+    else 
+    {
+        rc = MB_Iterator_Rewind(i_clanmove); 
+        #ifdef ERRCHECK
+        if (rc != MB_SUCCESS)
+        {
+            fprintf(stderr, "ERROR: Could not rewind 'clanmove' Iterator\n");
+            switch(rc) {
+                case MB_ERR_INVALID:
+                    fprintf(stderr, "\t reason: 'clanmove' Iterator has not been created?\n");
+                    break;
+	            default:
+                    fprintf(stderr, "\t MB_Iterator_Rewind returned error code: %d (see libmboard docs for details)\n", rc);
+                    break;
+	        }
+	       
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+        }
+        #endif
+    }
+    
+    /* get next message from iterator */
+    rc = MB_Iterator_GetMessage(i_clanmove, &(msg_pu.ptr_anon));
+    #ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not get message from 'clanmove' Iterator\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'clanmove' Iterator has not been created?\n");
+               break;
+           case MB_ERR_MEMALLOC:
+               fprintf(stderr, "\t reason: out of memory\n");
+               break;
+	       default:
+               fprintf(stderr, "\t MB_Iterator_GetMessage returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+	       }
+	       
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+    }
+    #endif
+    
+    /* store pointer so memory can be deallocated later */
+    msg_prev = msg_pu.ptr;
+    
+    return msg_pu.ptr;
+}
+
+/** \fn xmachine_message_clanmove * get_first_clanmove_message()
+ * \brief Get the first clanmove message in the clanmove message list.
+ * \return The first message in the list.
+ */
+m_clanmove * get_first_clanmove_message()
+{
+	return getInternalMessage_clanmove();
+}
+
+/** \fn xmachine_message_clanmove * get_next_clanmove_message(xmachine_message_clanmove * current)
+ * \brief Get the next clanmove message in the clanmove message list after the current message.
+ * \param current The current message in the list.
+ * \return The next message in the list.
+ */
+m_clanmove * get_next_clanmove_message(m_clanmove * current)
+{
+	return getInternalMessage_clanmove();
+}
+
+
+/* Box filtering functions */
+double clanspatch_message_extract_x(void *msg_ptr) { return (double)((m_clanspatch*)msg_ptr)->x; }
+double clanspatch_message_extract_y(void *msg_ptr) { return (double)((m_clanspatch*)msg_ptr)->y; }
+
+
+union pu_clanspatch 
+{
+    m_clanspatch *ptr;
+    void *ptr_anon;
+};
+
+/** \fn void add_clanspatch_message(int x, int y, int pclans)
+ * \brief Add clanspatch message by calling internal and processing.
+ * \param x Message variable.
+ * \param y Message variable.
+ * \param pclans Message variable.
+ */
+void add_clanspatch_message(int x, int y, int pclans)
+{
+    int rc;
+	m_clanspatch msg;
+    
+    msg.x = x;
+    msg.y = y;
+    msg.pclans = pclans;
+    
+    
+    rc = MB_AddMessage(b_clanspatch, &msg);
+    #ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not add message to 'clanspatch' board\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'clanspatch' board has not been created?\n");
+               break;
+           case MB_ERR_MEMALLOC:
+               fprintf(stderr, "\t reason: out of memory\n");
+               break;
+           case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'clanspatch' board is locked\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	       default:
+               fprintf(stderr, "\t MB_AddMessage returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+	   }
+	      
+	   MPI_Abort(MPI_COMM_WORLD, rc);
+       exit(rc);
+    }
+    #endif
+}
+
+inline static m_clanspatch* getInternalMessage_clanspatch(void)
+{
+    static m_clanspatch *msg_prev = NULL;
+    union pu_clanspatch msg_pu;
+    int rc;
+    
+    /* deallocate previously returned message */
+    if (msg_prev != NULL) 
+    {
+        free(msg_prev);
+    }
+    else 
+    {
+        rc = MB_Iterator_Rewind(i_clanspatch); 
+        #ifdef ERRCHECK
+        if (rc != MB_SUCCESS)
+        {
+            fprintf(stderr, "ERROR: Could not rewind 'clanspatch' Iterator\n");
+            switch(rc) {
+                case MB_ERR_INVALID:
+                    fprintf(stderr, "\t reason: 'clanspatch' Iterator has not been created?\n");
+                    break;
+	            default:
+                    fprintf(stderr, "\t MB_Iterator_Rewind returned error code: %d (see libmboard docs for details)\n", rc);
+                    break;
+	        }
+	       
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+        }
+        #endif
+    }
+    
+    /* get next message from iterator */
+    rc = MB_Iterator_GetMessage(i_clanspatch, &(msg_pu.ptr_anon));
+    #ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not get message from 'clanspatch' Iterator\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'clanspatch' Iterator has not been created?\n");
+               break;
+           case MB_ERR_MEMALLOC:
+               fprintf(stderr, "\t reason: out of memory\n");
+               break;
+	       default:
+               fprintf(stderr, "\t MB_Iterator_GetMessage returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+	       }
+	       
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+    }
+    #endif
+    
+    /* store pointer so memory can be deallocated later */
+    msg_prev = msg_pu.ptr;
+    
+    return msg_pu.ptr;
+}
+
+/** \fn xmachine_message_clanspatch * get_first_clanspatch_message()
+ * \brief Get the first clanspatch message in the clanspatch message list.
+ * \return The first message in the list.
+ */
+m_clanspatch * get_first_clanspatch_message()
+{
+	return getInternalMessage_clanspatch();
+}
+
+/** \fn xmachine_message_clanspatch * get_next_clanspatch_message(xmachine_message_clanspatch * current)
+ * \brief Get the next clanspatch message in the clanspatch message list after the current message.
+ * \param current The current message in the list.
+ * \return The next message in the list.
+ */
+m_clanspatch * get_next_clanspatch_message(m_clanspatch * current)
+{
+	return getInternalMessage_clanspatch();
+}
+
+
+/* Box filtering functions */
+double guanacospatch_message_extract_x(void *msg_ptr) { return (double)((m_guanacospatch*)msg_ptr)->x; }
+double guanacospatch_message_extract_y(void *msg_ptr) { return (double)((m_guanacospatch*)msg_ptr)->y; }
+
+
+union pu_guanacospatch 
+{
+    m_guanacospatch *ptr;
+    void *ptr_anon;
+};
+
+/** \fn void add_guanacospatch_message(int x, int y, int adultos, int season)
+ * \brief Add guanacospatch message by calling internal and processing.
+ * \param x Message variable.
+ * \param y Message variable.
+ * \param adultos Message variable.
+ * \param season Message variable.
+ */
+void add_guanacospatch_message(int x, int y, int adultos, int season)
+{
+    int rc;
+	m_guanacospatch msg;
+    
+    msg.x = x;
+    msg.y = y;
+    msg.adultos = adultos;
+    msg.season = season;
+    
+    
+    rc = MB_AddMessage(b_guanacospatch, &msg);
+    #ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not add message to 'guanacospatch' board\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'guanacospatch' board has not been created?\n");
+               break;
+           case MB_ERR_MEMALLOC:
+               fprintf(stderr, "\t reason: out of memory\n");
+               break;
+           case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'guanacospatch' board is locked\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	       default:
+               fprintf(stderr, "\t MB_AddMessage returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+	   }
+	      
+	   MPI_Abort(MPI_COMM_WORLD, rc);
+       exit(rc);
+    }
+    #endif
+}
+
+inline static m_guanacospatch* getInternalMessage_guanacospatch(void)
+{
+    static m_guanacospatch *msg_prev = NULL;
+    union pu_guanacospatch msg_pu;
+    int rc;
+    
+    /* deallocate previously returned message */
+    if (msg_prev != NULL) 
+    {
+        free(msg_prev);
+    }
+    else 
+    {
+        rc = MB_Iterator_Rewind(i_guanacospatch); 
+        #ifdef ERRCHECK
+        if (rc != MB_SUCCESS)
+        {
+            fprintf(stderr, "ERROR: Could not rewind 'guanacospatch' Iterator\n");
+            switch(rc) {
+                case MB_ERR_INVALID:
+                    fprintf(stderr, "\t reason: 'guanacospatch' Iterator has not been created?\n");
+                    break;
+	            default:
+                    fprintf(stderr, "\t MB_Iterator_Rewind returned error code: %d (see libmboard docs for details)\n", rc);
+                    break;
+	        }
+	       
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+        }
+        #endif
+    }
+    
+    /* get next message from iterator */
+    rc = MB_Iterator_GetMessage(i_guanacospatch, &(msg_pu.ptr_anon));
+    #ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not get message from 'guanacospatch' Iterator\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'guanacospatch' Iterator has not been created?\n");
+               break;
+           case MB_ERR_MEMALLOC:
+               fprintf(stderr, "\t reason: out of memory\n");
+               break;
+	       default:
+               fprintf(stderr, "\t MB_Iterator_GetMessage returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+	       }
+	       
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+    }
+    #endif
+    
+    /* store pointer so memory can be deallocated later */
+    msg_prev = msg_pu.ptr;
+    
+    return msg_pu.ptr;
+}
+
+/** \fn xmachine_message_guanacospatch * get_first_guanacospatch_message()
+ * \brief Get the first guanacospatch message in the guanacospatch message list.
+ * \return The first message in the list.
+ */
+m_guanacospatch * get_first_guanacospatch_message()
+{
+	return getInternalMessage_guanacospatch();
+}
+
+/** \fn xmachine_message_guanacospatch * get_next_guanacospatch_message(xmachine_message_guanacospatch * current)
+ * \brief Get the next guanacospatch message in the guanacospatch message list after the current message.
+ * \param current The current message in the list.
+ * \return The next message in the list.
+ */
+m_guanacospatch * get_next_guanacospatch_message(m_guanacospatch * current)
+{
+	return getInternalMessage_guanacospatch();
+}
+
+
+/* Box filtering functions */
+
+
+
+
 union pu_adultospatch 
 {
     m_adultospatch *ptr;
     void *ptr_anon;
 };
 
-/** \fn void add_adultospatch_message(int xcord, int ycord, int adultos, int sentido)
+/** \fn void add_adultospatch_message(int x, int y, int adultos, int sentido)
  * \brief Add adultospatch message by calling internal and processing.
- * \param xcord Message variable.
- * \param ycord Message variable.
+ * \param x Message variable.
+ * \param y Message variable.
  * \param adultos Message variable.
  * \param sentido Message variable.
  */
-void add_adultospatch_message(int xcord, int ycord, int adultos, int sentido)
+void add_adultospatch_message(int x, int y, int adultos, int sentido)
 {
     int rc;
 	m_adultospatch msg;
     
-    msg.xcord = xcord;
-    msg.ycord = ycord;
+    msg.x = x;
+    msg.y = y;
     msg.adultos = adultos;
     msg.sentido = sentido;
     
@@ -2682,20 +3234,20 @@ union pu_reproduccionguanacos
     void *ptr_anon;
 };
 
-/** \fn void add_reproduccionguanacos_message(int xcord, int ycord, int count, int familia)
+/** \fn void add_reproduccionguanacos_message(int x, int y, int count, int familia)
  * \brief Add reproduccionguanacos message by calling internal and processing.
- * \param xcord Message variable.
- * \param ycord Message variable.
+ * \param x Message variable.
+ * \param y Message variable.
  * \param count Message variable.
  * \param familia Message variable.
  */
-void add_reproduccionguanacos_message(int xcord, int ycord, int count, int familia)
+void add_reproduccionguanacos_message(int x, int y, int count, int familia)
 {
     int rc;
 	m_reproduccionguanacos msg;
     
-    msg.xcord = xcord;
-    msg.ycord = ycord;
+    msg.x = x;
+    msg.y = y;
     msg.count = count;
     msg.familia = familia;
     

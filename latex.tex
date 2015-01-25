@@ -160,6 +160,8 @@
 \parbox{5cm}{\url{idle}} \index{\url{idle}} & \parbox{10cm}{} \\
 \midrule
 \parbox{5cm}{\url{dividir_info}} \index{\url{dividir_info}} & \parbox{10cm}{Envia informacion al clan cuando comienza la division del clan} \\
+\midrule
+\parbox{5cm}{\url{dividir_transfer}} \index{\url{dividir_transfer}} & \parbox{10cm}{Los individuos elegidos, se cambian al nuevo clan} \\
 \end{longtable}
 
 \subsection{clan}
@@ -207,6 +209,14 @@
 \parbox{5cm}{\url{int} \url{members}} \index{\url{members}} & \parbox{10cm}{ numero actual de miembros del clan } \\
 \midrule
 \parbox{5cm}{\url{int} \url{linguistics}} \index{\url{linguistics}} & \parbox{10cm}{ muestra de la linguistica del clan } \\
+\midrule
+\parbox{5cm}{\url{int} \url{exchange_record}} \index{\url{exchange_record}} & \parbox{10cm}{recuerdo con que clanes he enviado chicas (buffer circular de 10 pos)} \\
+\midrule
+\parbox{5cm}{\url{int} \url{irecord}} \index{\url{irecord}} & \parbox{10cm}{indice del buffer circular exchange\_record} \\
+\midrule
+\parbox{5cm}{\url{int} \url{targetX}} \index{\url{targetX}} & \parbox{10cm}{coordinate X for the next movement} \\
+\midrule
+\parbox{5cm}{\url{int} \url{targetY}} \index{\url{targetY}} & \parbox{10cm}{coordinate Y for the next movement} \\
 \end{longtable}
 \begin{longtable}[H!]{ll}
 \caption{{\bfseries List of functions for clan agent.}}
@@ -231,6 +241,10 @@
 \parbox{5cm}{\url{clan_extract_calories}} \index{\url{clan_extract_calories}} & \parbox{10cm}{every clan takes calories in their own patch} \\
 \midrule
 \parbox{5cm}{\url{distribute_calories}} \index{\url{distribute_calories}} & \parbox{10cm}{now the clan should distribute calories among its members} \\
+\midrule
+\parbox{5cm}{\url{move_clan}} \index{\url{move_clan}} & \parbox{10cm}{clan moves} \\
+\midrule
+\parbox{5cm}{\url{idle}} \index{\url{idle}} & \parbox{10cm}{clan idle} \\
 \midrule
 \parbox{5cm}{\url{marriable_indv}} \index{\url{marriable_indv}} & \parbox{10cm}{informacion de los individuos que estan en edad de casarse} \\
 \midrule
@@ -283,13 +297,15 @@
 \midrule
 \parbox{5cm}{\url{int} \url{pcalories}} \index{\url{pcalories}} & \parbox{10cm}{calories of the patch} \\
 \midrule
+\parbox{5cm}{\url{int} \url{gcalories}} \index{\url{gcalories}} & \parbox{10cm}{calories given by the guanacos to the patch} \\
+\midrule
 \parbox{5cm}{\url{float} \url{repo}} \index{\url{repo}} & \parbox{10cm}{reposition rate} \\
 \midrule
 \parbox{5cm}{\url{int} \url{tpatch}} \index{\url{tpatch}} & \parbox{10cm}{type of patch such as high/low/dry/wet/coastal} \\
 \midrule
-\parbox{5cm}{\url{int} \url{xcord}} \index{\url{xcord}} & \parbox{10cm}{xcordinate of the patch} \\
+\parbox{5cm}{\url{int} \url{x}} \index{\url{x}} & \parbox{10cm}{xinate of the patch} \\
 \midrule
-\parbox{5cm}{\url{int} \url{ycord}} \index{\url{ycord}} & \parbox{10cm}{ycordinate of the patch} \\
+\parbox{5cm}{\url{int} \url{y}} \index{\url{y}} & \parbox{10cm}{yinate of the patch} \\
 \midrule
 \parbox{5cm}{\url{float} \url{repows}} \index{\url{repows}} & \parbox{10cm}{reposition rate for wet season} \\
 \midrule
@@ -298,6 +314,8 @@
 \parbox{5cm}{\url{int} \url{season}} \index{\url{season}} & \parbox{10cm}{current season, initially it must be wet season} \\
 \midrule
 \parbox{5cm}{\url{int} \url{adultos}} \index{\url{adultos}} & \parbox{10cm}{numero de guanacos adultos} \\
+\midrule
+\parbox{5cm}{\url{int} \url{pclans}} \index{\url{pclans}} & \parbox{10cm}{clans in patch} \\
 \end{longtable}
 \begin{longtable}[H!]{ll}
 \caption{{\bfseries List of functions for patch agent.}}
@@ -319,11 +337,27 @@
 \midrule
 \parbox{5cm}{\url{patchtype}} \index{\url{patchtype}} & \parbox{10cm}{the type of patch} \\
 \midrule
+\parbox{5cm}{\url{infoClansInPatch}} \index{\url{infoClansInPatch}} & \parbox{10cm}{gives clans in patch info to guanacos } \\
+\midrule
+\parbox{5cm}{\url{idle_patch}} \index{\url{idle_patch}} & \parbox{10cm}{idle patch} \\
+\midrule
+\parbox{5cm}{\url{infoGuanacosPatch}} \index{\url{infoGuanacosPatch}} & \parbox{10cm}{gives guanacos in patch info to clans} \\
+\midrule
 \parbox{5cm}{\url{patchcalories}} \index{\url{patchcalories}} & \parbox{10cm}{patch sends available calories} \\
 \midrule
-\parbox{5cm}{\url{regenerate}} \index{\url{regenerate}} & \parbox{10cm}{calorias aportadas por los guanacos} \\
+\parbox{5cm}{\url{regenerate}} \index{\url{regenerate}} & \parbox{10cm}{patch generates some new calories each week} \\
 \midrule
-\parbox{5cm}{\url{snregenerate}} \index{\url{snregenerate}} & \parbox{10cm}{reproduccion de guanacos} \\
+\parbox{5cm}{\url{idle_patch}} \index{\url{idle_patch}} & \parbox{10cm}{the days the patch does not generate new calories this function should be executed instead of regenerate} \\
+\midrule
+\parbox{5cm}{\url{snregenerate}} \index{\url{snregenerate}} & \parbox{10cm}{status of new regenaration based on reposition rate} \\
+\midrule
+\parbox{5cm}{\url{idle_patch}} \index{\url{idle_patch}} & \parbox{10cm}{the time the patch does not generate new calories this function should be executed instead of regenerate } \\
+\midrule
+\parbox{5cm}{\url{guanacos_move}} \index{\url{guanacos_move}} & \parbox{10cm}{entrada y salida de guanacos al patch} \\
+\midrule
+\parbox{5cm}{\url{clans_move}} \index{\url{clans_move}} & \parbox{10cm}{entrada salida de clanes al patch} \\
+\midrule
+\parbox{5cm}{\url{reproduccion_guanacos}} \index{\url{reproduccion_guanacos}} & \parbox{10cm}{reproduccion de guanacos} \\
 \midrule
 \parbox{5cm}{\url{idle_patch}} \index{\url{idle_patch}} & \parbox{10cm}{the time the patch does not generate new calories this function should be executed instead of regenerate 
                 } \\
@@ -349,19 +383,23 @@
 \bottomrule
 \endlastfoot
 \midrule
-\parbox{5cm}{\url{int} \url{id}} \index{\url{id}} & \parbox{10cm}{Identificador de la manada} \\
-\midrule
 \parbox{5cm}{\url{int} \url{familia}} \index{\url{familia}} & \parbox{10cm}{Identificador si es manada(=0) o si es familia (!=0)} \\
 \midrule
-\parbox{5cm}{\url{int} \url{xcord}} \index{\url{xcord}} & \parbox{10cm}{Coordenada x de la manada} \\
+\parbox{5cm}{\url{int} \url{x}} \index{\url{x}} & \parbox{10cm}{Coordenada x de la manada} \\
 \midrule
-\parbox{5cm}{\url{int} \url{ycord}} \index{\url{ycord}} & \parbox{10cm}{Coordenada y de la manada} \\
+\parbox{5cm}{\url{int} \url{y}} \index{\url{y}} & \parbox{10cm}{Coordenada y de la manada} \\
+\midrule
+\parbox{5cm}{\url{int} \url{targetX}} \index{\url{targetX}} & \parbox{10cm}{Coordenada objetivo x de la manada} \\
+\midrule
+\parbox{5cm}{\url{int} \url{targetY}} \index{\url{targetY}} & \parbox{10cm}{Coordenada objetivo y de la manada} \\
 \midrule
 \parbox{5cm}{\url{int} \url{count}} \index{\url{count}} & \parbox{10cm}{Numero de guanacos de la manada} \\
 \midrule
 \parbox{5cm}{\url{int} \url{calorias}} \index{\url{calorias}} & \parbox{10cm}{Numero de calorias que proporciona la manada} \\
 \midrule
 \parbox{5cm}{\url{int} \url{adultos}} \index{\url{adultos}} & \parbox{10cm}{Numero de adultos que contiene la manada} \\
+\midrule
+\parbox{5cm}{\url{int} \url{season}} \index{\url{season}} & \parbox{10cm}{} \\
 \end{longtable}
 \begin{longtable}[H!]{ll}
 \caption{{\bfseries List of functions for manada\_guanacos agent.}}
@@ -383,13 +421,17 @@
 \midrule
 \parbox{5cm}{\url{manadaInfo}} \index{\url{manadaInfo}} & \parbox{10cm}{informacion de la manada} \\
 \midrule
+\parbox{5cm}{\url{seasonSwitch}} \index{\url{seasonSwitch}} & \parbox{10cm}{cambio de estacion} \\
+\midrule
 \parbox{5cm}{\url{manada_idle}} \index{\url{manada_idle}} & \parbox{10cm}{no se hace nada} \\
 \midrule
-\parbox{5cm}{\url{move}} \index{\url{move}} & \parbox{10cm}{Calculamos el movimiento de la manada (depende de la estación)} \\
+\parbox{5cm}{\url{move}} \index{\url{move}} & \parbox{10cm}{Calculamos el movimiento de la manada} \\
 \midrule
 \parbox{5cm}{\url{reproduccion}} \index{\url{reproduccion}} & \parbox{10cm}{los guanacos dentro del patch crean nuevas manadas} \\
 \midrule
 \parbox{5cm}{\url{manada_idle2}} \index{\url{manada_idle2}} & \parbox{10cm}{la manada no hace nada} \\
+\midrule
+\parbox{5cm}{\url{surviveGuanacos}} \index{\url{surviveGuanacos}} & \parbox{10cm}{la manada no hace nada} \\
 \end{longtable}
 \subsection{Messages}
 See Table \ref{Table: Messages}.\begin{longtable}[H!]{ll}
@@ -448,7 +490,7 @@ See Table \ref{Table: Messages}.\begin{longtable}[H!]{ll}
     \url{int} \url{parejaID} \index{\url{parejaID}} & \parbox{10cm}{}\\
     \url{int} \url{clanID} \index{\url{clanID}} & \parbox{10cm}{}\\
 \midrule
-\url{widow} & \parbox{10cm}{ju}\\
+\url{widow} & \parbox{10cm}{se pide una pareja al clan para la mujer viuda}\\
     \url{int} \url{ancestors} \index{\url{ancestors}} & \parbox{10cm}{}\\
     \url{int} \url{Cancestors} \index{\url{Cancestors}} & \parbox{10cm}{}\\
     \url{int} \url{clanID} \index{\url{clanID}} & \parbox{10cm}{}\\
@@ -474,21 +516,20 @@ See Table \ref{Table: Messages}.\begin{longtable}[H!]{ll}
     \url{int} \url{clcalories} \index{\url{clcalories}} & \parbox{10cm}{}\\
 \midrule
 \url{freeGirls} & \parbox{10cm}{envio de lista de mujeres en edad de emparejarse}\\
-    \url{int} \url{girls} \index{\url{girls}} & \parbox{10cm}{}\\
-    \url{int} \url{num_chicas} \index{\url{num_chicas}} & \parbox{10cm}{}\\
-    \url{int} \url{y} \index{\url{y}} & \parbox{10cm}{}\\
-    \url{int} \url{x} \index{\url{x}} & \parbox{10cm}{}\\
+    \url{int} \url{girls} \index{\url{girls}} & \parbox{10cm}{vector de id de las chicas}\\
+    \url{int} \url{num_chicas} \index{\url{num_chicas}} & \parbox{10cm}{ numero de chicas}\\
+    \url{int} \url{y} \index{\url{y}} & \parbox{10cm}{coordenada y}\\
+    \url{int} \url{x} \index{\url{x}} & \parbox{10cm}{coordenada x}\\
     \url{int} \url{clanID} \index{\url{clanID}} & \parbox{10cm}{}\\
-    \url{int} \url{lancestors} \index{\url{lancestors}} & \parbox{10cm}{}\\
-    \url{int} \url{lancestorsClan} \index{\url{lancestorsClan}} & \parbox{10cm}{}\\
-    \url{int} \url{linguistic} \index{\url{linguistic}} & \parbox{10cm}{}\\
+    \url{int} \url{lancestors} \index{\url{lancestors}} & \parbox{10cm}{id ancestros de las chicas}\\
+    \url{int} \url{lancestorsClan} \index{\url{lancestorsClan}} & \parbox{10cm}{clan id ancestros de las chicas}\\
+    \url{int} \url{linguistic} \index{\url{linguistic}} & \parbox{10cm}{gen linguistico del clan}\\
 \midrule
-\url{propuesta} & \parbox{10cm}{gtgt}\\
+\url{propuesta} & \parbox{10cm}{propuestas de emparejamiento que hace el clan}\\
     \url{int} \url{id_list} \index{\url{id_list}} & \parbox{10cm}{lista propuestas}\\
     \url{int} \url{id_man} \index{\url{id_man}} & \parbox{10cm}{lista id de los hombres}\\
     \url{int} \url{oclanID} \index{\url{oclanID}} & \parbox{10cm}{clan origen}\\
     \url{int} \url{dclanID} \index{\url{dclanID}} & \parbox{10cm}{clan destino}\\
-    \url{int} \url{count} \index{\url{count}} & \parbox{10cm}{cantidad}\\
 \midrule
 \url{confirProp} & \parbox{10cm}{envia al clan las propuestas que ha aceptado }\\
     \url{int} \url{girlID} \index{\url{girlID}} & \parbox{10cm}{id chica}\\
@@ -504,30 +545,51 @@ See Table \ref{Table: Messages}.\begin{longtable}[H!]{ll}
     \url{int} \url{oclanID} \index{\url{oclanID}} & \parbox{10cm}{clan actual}\\
     \url{int} \url{newID} \index{\url{newID}} & \parbox{10cm}{nuevo id para la chica}\\
 \midrule
-\url{respuestaID} & \parbox{10cm}{ }\\
+\url{respuestaID} & \parbox{10cm}{clan envia un id libre }\\
     \url{int} \url{freeID} \index{\url{freeID}} & \parbox{10cm}{}\\
     \url{int} \url{indvID} \index{\url{indvID}} & \parbox{10cm}{}\\
     \url{int} \url{clanID} \index{\url{clanID}} & \parbox{10cm}{}\\
 \midrule
-\url{lmarriage} & \parbox{10cm}{ }\\
-    \url{int} \url{manID} \index{\url{manID}} & \parbox{10cm}{}\\
-    \url{int} \url{girlID} \index{\url{girlID}} & \parbox{10cm}{}\\
+\url{lmarriage} & \parbox{10cm}{emparejamiento de una chica viuda }\\
+    \url{int} \url{manID} \index{\url{manID}} & \parbox{10cm}{id del marrido}\\
+    \url{int} \url{girlID} \index{\url{girlID}} & \parbox{10cm}{id de la mujer}\\
     \url{int} \url{clanID} \index{\url{clanID}} & \parbox{10cm}{}\\
-    \url{int} \url{mancestorsID} \index{\url{mancestorsID}} & \parbox{10cm}{}\\
-    \url{int} \url{mancestorsCID} \index{\url{mancestorsCID}} & \parbox{10cm}{}\\
+    \url{int} \url{mancestorsID} \index{\url{mancestorsID}} & \parbox{10cm}{envio a la chica datos de su esposo}\\
+    \url{int} \url{mancestorsCID} \index{\url{mancestorsCID}} & \parbox{10cm}{envio a la chica datos de su esposo}\\
 \midrule
 \url{warningDivide} & \parbox{10cm}{ aviso de separacion del clan a sus miembros}\\
     \url{int} \url{clanID} \index{\url{clanID}} & \parbox{10cm}{id del clan}\\
 \midrule
+\url{transfer} & \parbox{10cm}{ notificacion a los indv de cual es su nuevo clan}\\
+    \url{int} \url{clanID} \index{\url{clanID}} & \parbox{10cm}{id del clan actual}\\
+    \url{int} \url{newID} \index{\url{newID}} & \parbox{10cm}{id del nuevo clan}\\
+    \url{int} \url{indvID} \index{\url{indvID}} & \parbox{10cm}{id del individuo}\\
+\midrule
+\url{clanmove} & \parbox{10cm}{movement of clan}\\
+    \url{int} \url{x} \index{\url{x}} & \parbox{10cm}{coordinate x where clan goes}\\
+    \url{int} \url{y} \index{\url{y}} & \parbox{10cm}{coordinate y where clan goes}\\
+    \url{int} \url{sentido} \index{\url{sentido}} & \parbox{10cm}{if clan goes(1) or leaves(0) }\\
+\midrule
+\url{clanspatch} & \parbox{10cm}{sends clan coordinates and the number of clans in patch}\\
+    \url{int} \url{x} \index{\url{x}} & \parbox{10cm}{coordinate x of the patch}\\
+    \url{int} \url{y} \index{\url{y}} & \parbox{10cm}{coordinate y of the patch}\\
+    \url{int} \url{pclans} \index{\url{pclans}} & \parbox{10cm}{number of clans in patch}\\
+\midrule
+\url{guanacospatch} & \parbox{10cm}{sends guanacos coordinates and the number of adults in patch}\\
+    \url{int} \url{x} \index{\url{x}} & \parbox{10cm}{coordinate x of the patch}\\
+    \url{int} \url{y} \index{\url{y}} & \parbox{10cm}{coordinate y of the patch}\\
+    \url{int} \url{adultos} \index{\url{adultos}} & \parbox{10cm}{adult guanacos in patch}\\
+    \url{int} \url{season} \index{\url{season}} & \parbox{10cm}{season of the year}\\
+\midrule
 \url{adultospatch} & \parbox{10cm}{manda los adultos que hay en el patch}\\
-    \url{int} \url{xcord} \index{\url{xcord}} & \parbox{10cm}{posicion x de la manada de guanacos}\\
-    \url{int} \url{ycord} \index{\url{ycord}} & \parbox{10cm}{posicion y de la manada de guanacos}\\
+    \url{int} \url{x} \index{\url{x}} & \parbox{10cm}{posicion x de la manada de guanacos}\\
+    \url{int} \url{y} \index{\url{y}} & \parbox{10cm}{posicion y de la manada de guanacos}\\
     \url{int} \url{adultos} \index{\url{adultos}} & \parbox{10cm}{adultos de la manada de guanacos}\\
     \url{int} \url{sentido} \index{\url{sentido}} & \parbox{10cm}{indica si se van o llegan al patch(0 se van, 1 llegan)}\\
 \midrule
 \url{reproduccionguanacos} & \parbox{10cm}{manda los guanacos a reproducirse}\\
-    \url{int} \url{xcord} \index{\url{xcord}} & \parbox{10cm}{posicion x de la manada de guanacos}\\
-    \url{int} \url{ycord} \index{\url{ycord}} & \parbox{10cm}{posicion y de la manada de guanacos}\\
+    \url{int} \url{x} \index{\url{x}} & \parbox{10cm}{posicion x de la manada de guanacos}\\
+    \url{int} \url{y} \index{\url{y}} & \parbox{10cm}{posicion y de la manada de guanacos}\\
     \url{int} \url{count} \index{\url{count}} & \parbox{10cm}{numero de guanacos (incluido crias)}\\
     \url{int} \url{familia} \index{\url{familia}} & \parbox{10cm}{indica si son familias o no(0 no son, 1 son familia)}\\
 \end{longtable}
@@ -554,9 +616,13 @@ See Table \ref{Table: Messages}.\begin{longtable}[H!]{ll}
 \url{int} \url{learn} \index{\url{learn}} & \parbox{10cm}{probabilidad de aprender palabras nuevas}\\
 \url{int} \url{forget} \index{\url{forget}} & \parbox{10cm}{probabilidad de olvidar palabras}\\
 \url{int} \url{lang_threshold} \index{\url{lang_threshold}} & \parbox{10cm}{umbral de coincidencia entre dos genes linguisticos}\\
+\url{int} \url{genoma} \index{\url{genoma}} & \parbox{10cm}{tamaño del genoma linguistico}\\
+\url{int} \url{record_size} \index{\url{record_size}} & \parbox{10cm}{cantidad de clanes recordados al intercambiar chicas}\\
 \url{int} \url{max_manada} \index{\url{max_manada}} & \parbox{10cm}{numero maximo de guanacos por manada}\\
 \url{int} \url{max_familia} \index{\url{max_familia}} & \parbox{10cm}{numero maximo de guanacos por familia}\\
 \url{int} \url{cal_adulto} \index{\url{cal_adulto}} & \parbox{10cm}{numero de calorias dadas por cada guanaco adulto}\\
+\url{int} \url{surviveChanceAdult} \index{\url{surviveChanceAdult}} & \parbox{10cm}{probabilidad de que un guanaco adulto sobreviva}\\
+\url{int} \url{surviveChanceChild} \index{\url{surviveChanceChild}} & \parbox{10cm}{probabilidad que un guanaco cria sobreviva}\\
 \end{longtable}
 \subsection{Datatypes}
 \begin{longtable}[H!]{ll}

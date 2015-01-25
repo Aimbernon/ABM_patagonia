@@ -7,6 +7,7 @@ int indvInformation()
 {
 	int cal=get_cal_needs(), ID=get_indvID(), ageX=get_age(), cIDX=get_cID(), pregX=get_pregnant();
 
+
 	set_icalories(cal);
         add_information_message(ID,cIDX,cal,ageX,pregX);
         return 0;
@@ -71,10 +72,16 @@ int getolder()
 			set_cal_needs( caln - 500 );
 			break;
 	}
-	// se contabiliza los meses de embarazo que lleva la chica
+	// se comprueba si hace 9 meses desde que esta embarazada la chica
 	if (get_pregnant () ==1 ){
 		month ++;
 		set_month (month);
+		// se mantiene el "estado de embarazo" 5 meses mas
+		if (get_month() == 15){
+			set_embarazable (1);
+			set_pregnant (0);
+			set_month (0);
+		}
 	}
 	set_age(age);	
 	return 0;
@@ -125,7 +132,7 @@ int casamiento_male()
 	if (message >0){
 		set_married(1);
 		set_pareja(wife);
-		int info[4] = {get_ancestors()[0],get_ancestors()[1],get_ancestorsClan()[0],get_ancestorsClan()[1]};
+		int info[4] = {get_ancestors()[1],get_ancestors()[2],get_ancestorsClan()[1],get_ancestorsClan()[2]};
 		add_family_message (wife,get_cID(),get_indvID(),info);
 	}
 	return 0;
@@ -163,19 +170,18 @@ int child_inf ()
 // creacion del nuevo individuo
 int birth ()
 {
-	int id = -3, aux[2];
+	int id=-1, aux[2];
 	// se recive del clan un id libre para el hijo
 	START_RESPUESTAID_MESSAGE_LOOP
 		id = respuestaID_message->freeID;
 	FINISH_RESPUESTAID_MESSAGE_LOOP
 	// se crea el array ancestros que tendra el hijo
-	int ancestors[6] = {get_pareja(),get_indvID(),get_husband_info()[0],get_husband_info()[1],get_ancestors()[0],get_ancestors()[1]};
-	int ancestorsClan[6] ={get_cID(),get_cID(),get_husband_info()[2],get_husband_info()[3]};
+	int ancestors[7] = {id,get_pareja(),get_indvID(),get_husband_info()[0],get_husband_info()[1],get_ancestors()[0],get_ancestors()[1]};
+	int ancestorsClan[7] ={get_cID(),get_cID(),get_cID(),get_husband_info()[2],get_husband_info()[3]};
 	add_indv_agent (id,get_cID(),0,0,0,1,1,0,0,0,ancestors,ancestorsClan,0,0,0,0,get_indvID(),aux,0);
-	//actualizacion del estado de la chica una vez acabado el embarazo
-	set_pregnant (0);
-	set_month (0);
-	set_embarazable (1);
+
+	//inclemento un mes mas para que no vuelva a entrar y que comienze los 5 meses de reposo
+	set_month (get_month()+1);
 	return 0;
 }
 
@@ -205,7 +211,7 @@ int survive()
 	}
 	return 0; 
 }
-
+// se comprueba si la pareja del indv ha muerto
 int update_status ()
 {
 	START_DEATH_MESSAGE_LOOP
@@ -227,6 +233,7 @@ int husband_request () //entrada solo viudas
 	add_widow_message (get_ancestors(),get_ancestorsClan(),get_cID(),get_indvID());
 	return 0;
 }
+// la chica viuda se empareja con un chico libre de su clan
 int local_marriage ()
 {
 	START_LMARRIAGE_MESSAGE_LOOP
@@ -238,18 +245,27 @@ int local_marriage ()
 			HUSBAND_INFO[2] = lmarriage_message->mancestorsCID[2];
 			HUSBAND_INFO[3] = lmarriage_message->mancestorsCID[3];
 		}
-		else
+		else// male case
 			set_pareja(lmarriage_message->girlID);
 		set_married(1);
 	FINISH_LMARRIAGE_MESSAGE_LOOP
 	return 0;
 }
+// Se envia al clan toda la informacion nesesaria para dividir el clan
 int dividir_info ()
 {
-	int mom = get_ancestors()[1];
+	int mom = get_ancestors()[2];
 	START_WARNINGDIVIDE_MESSAGE_LOOP
 		add_informationDivide_message(get_cID(),get_indvID(),get_pareja(),get_sex(),mom,get_age());
 	FINISH_WARNINGDIVIDE_MESSAGE_LOOP
+	return 0;
+}
+// se comprueba si el indv tiene que cambiar de clan
+int dividir_transfer()
+{
+	START_TRANSFER_MESSAGE_LOOP
+		set_cID (transfer_message->newID);
+	FINISH_TRANSFER_MESSAGE_LOOP
 	return 0;
 }
 
