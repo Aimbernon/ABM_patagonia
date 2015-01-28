@@ -5808,10 +5808,10 @@ if(FLAME_ancestor_message_board_read == 0)
 		
           /* MB_Iterator 2d tree */
           rc = MB_SearchTree_Search2D(tree_ptr_2d_freeGirls, &i_freeGirls,
-                           (double)current_xmachine_clan->x - (double)15.0,
-                           (double)current_xmachine_clan->x + (double)15.0,
-                           (double)current_xmachine_clan->y - (double)15.0,
-                           (double)current_xmachine_clan->y + (double)15.0);
+                           (double)current_xmachine_clan->x - (double)2.0,
+                           (double)current_xmachine_clan->x + (double)2.0,
+                           (double)current_xmachine_clan->y - (double)2.0,
+                           (double)current_xmachine_clan->y + (double)2.0);
                   
           
 		  

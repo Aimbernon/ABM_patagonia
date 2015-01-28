@@ -348,7 +348,7 @@ digraph state_graph {
 	freeGirls_message_start_0 [ label = "start 9" color="#00ff00" shape = parallelogram];
 	freeGirls_message_start_0 -> freeGirls_message_end_0 [ color="#00ff00" ];
 	freeGirls_message_end_0 [ label = "end 10" color="#00ff00" shape = parallelogram];
-	freeGirls_message_end_0 -> clan_match_06_07 [ color="#00ff00" label = "Box2d: 15.0" ];
+	freeGirls_message_end_0 -> clan_match_06_07 [ color="#00ff00" label = "Box2d: 2.0" ];
 	propuesta_message [ label = "propuesta" color="#00ff00" shape = parallelogram];
 	propuesta_message -> propuesta_message_start_0 [ color="#00ff00" ];
 	propuesta_message_start_0 [ label = "start 10" color="#00ff00" shape = parallelogram];

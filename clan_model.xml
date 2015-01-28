@@ -328,7 +328,7 @@
 		    <input>
 		    	<messageName>freeGirls</messageName> 
 			<filter>
-				<box2d>15.0</box2d>
+				<box2d>2.0</box2d>
 			</filter> 
 		    </input>
 		    <output>

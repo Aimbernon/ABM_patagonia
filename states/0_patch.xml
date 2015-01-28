@@ -1,0 +1,1820 @@
+<states>
+<itno>0</itno>
+
+<imports>
+	<import>
+    <location>0_guanacos.xml</location>
+    <format>xml</format>
+    <type>agent</type>
+	</import>
+	<import>
+	<location>0_environment.xml</location>
+    <format>xml</format>
+    <type>environment</type>
+	</import>
+	<import>
+		<location>0_clans.xml</location>
+		<format>xml</format>
+		<type>agent</type>
+	</import>
+</imports>
+<outputs>
+<output>
+<type>snapshot</type>
+<format>xml</format>
+<location></location>
+<time>
+<period>500</period>
+<phase>0</phase>
+</time>
+</output>
+</outputs>
+<xagent>
+		<name>patch</name>
+		<patchID>0</patchID>
+		<x>0</x>
+        <y>0</y>
+        <repows>0</repows>
+		<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>1</patchID>
+		<x>0</x>
+                <y>1</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>2</patchID>
+		<x>0</x>
+                <y>2</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>3</patchID>
+		<x>0</x>
+                <y>3</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>4</patchID>
+		<x>0</x>
+                <y>4</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>5</patchID>
+		<x>0</x>
+                <y>5</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>6</patchID>
+		<x>0</x>
+                <y>6</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>7</patchID>
+		<x>0</x>
+                <y>7</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>8</patchID>
+		<x>0</x>
+                <y>8</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>9</patchID>
+		<x>0</x>
+                <y>9</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>10</patchID>
+		<x>0</x>
+                <y>10</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>11</patchID>
+		<x>0</x>
+                <y>11</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>12</patchID>
+		<x>0</x>
+                <y>12</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>13</patchID>
+		<x>0</x>
+                <y>13</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>14</patchID>
+		<x>0</x>
+                <y>14</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>15</patchID>
+		<x>1</x>
+                <y>0</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>16</patchID>
+		<x>1</x>
+                <y>1</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>17</patchID>
+		<x>1</x>
+                <y>2</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>18</patchID>
+		<x>1</x>
+                <y>3</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>19</patchID>
+		<x>1</x>
+                <y>4</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>20</patchID>
+		<x>1</x>
+                <y>5</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>21</patchID>
+		<x>1</x>
+                <y>6</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>22</patchID>
+		<x>1</x>
+                <y>7</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>23</patchID>
+		<x>1</x>
+                <y>8</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>24</patchID>
+		<x>1</x>
+                <y>9</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>25</patchID>
+		<x>1</x>
+                <y>10</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>26</patchID>
+		<x>1</x>
+                <y>11</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>27</patchID>
+		<x>1</x>
+                <y>12</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>28</patchID>
+		<x>1</x>
+                <y>13</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>29</patchID>
+		<x>1</x>
+                <y>14</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>30</patchID>
+		<x>2</x>
+                <y>0</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>31</patchID>
+		<x>2</x>
+                <y>1</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>32</patchID>
+		<x>2</x>
+                <y>2</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>33</patchID>
+		<x>2</x>
+                <y>3</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>34</patchID>
+		<x>2</x>
+                <y>4</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>35</patchID>
+		<x>2</x>
+                <y>5</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>36</patchID>
+		<x>2</x>
+                <y>6</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>37</patchID>
+		<x>2</x>
+                <y>7</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>38</patchID>
+		<x>2</x>
+                <y>8</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>39</patchID>
+		<x>2</x>
+                <y>9</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>	
+<xagent>
+		<name>patch</name>
+		<patchID>40</patchID>
+		<x>2</x>
+                <y>10</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>41</patchID>
+		<x>2</x>
+                <y>11</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>42</patchID>
+		<x>2</x>
+                <y>12</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>43</patchID>
+		<x>2</x>
+                <y>13</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>44</patchID>
+		<x>2</x>
+                <y>14</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>45</patchID>
+		<x>3</x>
+                <y>0</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>46</patchID>
+		<x>3</x>
+                <y>1</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>47</patchID>
+		<x>3</x>
+                <y>2</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>48</patchID>
+		<x>3</x>
+                <y>3</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>49</patchID>
+		<x>3</x>
+                <y>4</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>50</patchID>
+		<x>3</x>
+                <y>5</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>51</patchID>
+		<x>3</x>
+                <y>6</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>52</patchID>
+		<x>3</x>
+                <y>7</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>53</patchID>
+		<x>3</x>
+                <y>8</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>54</patchID>
+		<x>3</x>
+                <y>9</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>55</patchID>
+		<x>3</x>
+                <y>10</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>56</patchID>
+		<x>3</x>
+                <y>11</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>57</patchID>
+		<x>3</x>
+                <y>12</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>58</patchID>
+		<x>3</x>
+                <y>13</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>59</patchID>
+		<x>3</x>
+                <y>14</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>60</patchID>
+		<x>4</x>
+                <y>0</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>61</patchID>
+		<x>4</x>
+                <y>1</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	
+	<xagent>
+		<name>patch</name>
+		<patchID>62</patchID>
+		<x>4</x>
+                <y>2</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>63</patchID>
+		<x>4</x>
+                <y>3</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>64</patchID>
+		<x>4</x>
+                <y>4</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>65</patchID>
+		<x>4</x>
+                <y>5</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>66</patchID>
+		<x>4</x>
+                <y>6</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>67</patchID>
+		<x>4</x>
+                <y>7</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>68</patchID>
+		<x>4</x>
+                <y>8</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>69</patchID>
+		<x>4</x>
+                <y>9</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>70</patchID>
+		<x>4</x>
+                <y>10</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>71</patchID>
+		<x>4</x>
+                <y>11</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>72</patchID>
+		<x>4</x>
+                <y>12</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>73</patchID>
+		<x>4</x>
+                <y>13</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>74</patchID>
+		<x>4</x>
+                <y>14</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>75</patchID>
+		<x>5</x>
+                <y>0</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>76</patchID>
+		<x>5</x>
+                <y>1</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>77</patchID>
+		<x>5</x>
+                <y>2</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>78</patchID>
+		<x>5</x>
+                <y>3</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>79</patchID>
+		<x>5</x>
+                <y>4</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>80</patchID>
+		<x>5</x>
+                <y>5</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>81</patchID>
+		<x>5</x>
+                <y>6</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>82</patchID>
+		<x>5</x>
+                <y>7</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>83</patchID>
+		<x>5</x>
+                <y>8</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>84</patchID>
+		<x>5</x>
+                <y>9</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>85</patchID>
+		<x>5</x>
+                <y>10</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>86</patchID>
+		<x>5</x>
+                <y>11</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>87</patchID>
+		<x>5</x>
+                <y>12</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>88</patchID>
+		<x>5</x>
+                <y>13</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>89</patchID>
+		<x>5</x>
+                <y>14</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>90</patchID>
+		<x>6</x>
+                <y>0</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>91</patchID>
+		<x>6</x>
+                <y>1</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>92</patchID>
+		<x>6</x>
+                <y>2</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>93</patchID>
+		<x>6</x>
+                <y>3</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>94</patchID>
+		<x>6</x>
+                <y>4</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>95</patchID>
+		<x>6</x>
+                <y>5</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>96</patchID>
+		<x>6</x>
+                <y>6</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>97</patchID>
+		<x>6</x>
+                <y>7</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>98</patchID>
+		<x>6</x>
+                <y>8</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>99</patchID>
+		<x>6</x>
+                <y>9</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>100</patchID>
+		<x>6</x>
+                <y>10</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>101</patchID>
+		<x>6</x>
+                <y>11</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>102</patchID>
+		<x>6</x>
+		                <y>12</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>103</patchID>
+		<x>6</x>
+                <y>13</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>104</patchID>
+		<x>6</x>
+                <y>14</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent><xagent>
+		<name>patch</name>
+		<patchID>105</patchID>
+		<x>7</x>
+                <y>0</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent><xagent>
+		<name>patch</name>
+		<patchID>106</patchID>
+		<x>7</x>
+                <y>1</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>107</patchID>
+		<x>7</x>
+                <y>2</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>108</patchID>
+		<x>7</x>
+                <y>3</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>109</patchID>
+		<x>7</x>
+                <y>4</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>110</patchID>
+		<x>7</x>
+                <y>5</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+                <adultos>50</adultos>
+	</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>111</patchID>
+		<x>7</x>
+                <y>6</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>112</patchID>
+		<x>7</x>
+                <y>7</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>113</patchID>
+		<x>7</x>
+                <y>8</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>114</patchID>
+		<x>7</x>
+                <y>9</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>115</patchID>
+		<x>7</x>
+                <y>10</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>116</patchID>
+		<x>7</x>
+                <y>11</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent><xagent>
+		<name>patch</name>
+		<patchID>117</patchID>
+		<x>7</x>
+                <y>12</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>118</patchID>
+		<x>7</x>
+                <y>13</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>119</patchID>
+		<x>7</x>
+                <y>14</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>120</patchID>
+		<x>8</x>
+                <y>0</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>121</patchID>
+		<x>8</x>
+                <y>1</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>122</patchID>
+		<x>8</x>
+                <y>2</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>123</patchID>
+		<x>8</x>
+                <y>3</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>124</patchID>
+		<x>8</x>
+                <y>4</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>125</patchID>
+		<x>8</x>
+                <y>5</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>126</patchID>
+		<x>8</x>
+                <y>6</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>127</patchID>
+		<x>8</x>
+                <y>7</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+<xagent>
+		<name>patch</name>
+		<patchID>128</patchID>
+		<x>8</x>
+                <y>8</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>129</patchID>
+		<x>8</x>
+                <y>9</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>130</patchID>
+		<x>8</x>
+                <y>10</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>131</patchID>
+		<x>8</x>
+                <y>11</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>132</patchID>
+		<x>8</x>
+                <y>12</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>133</patchID>
+		<x>8</x>
+                <y>13</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>134</patchID>
+		<x>8</x>
+                <y>14</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>135</patchID>
+		<x>9</x>
+                <y>0</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>136</patchID>
+		<x>9</x>
+                <y>1</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent><xagent>
+		<name>patch</name>
+		<patchID>137</patchID>
+		<x>9</x>
+                <y>2</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>138</patchID>
+		<x>9</x>
+                <y>3</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>139</patchID>
+		<x>9</x>
+                <y>4</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>140</patchID>
+		<x>9</x>
+                <y>5</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>141</patchID>
+		<x>9</x>
+                <y>6</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>142</patchID>
+		<x>9</x>
+                <y>7</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>143</patchID>
+		<x>9</x>
+                <y>8</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>144</patchID>
+		<x>9</x>
+                <y>9</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>145</patchID>
+		<x>9</x>
+                <y>10</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>146</patchID>
+		<x>9</x>
+                <y>11</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>147</patchID>
+		<x>9</x>
+                <y>12</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>148</patchID>
+		<x>9</x>
+                <y>13</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>149</patchID>
+		<x>9</x>
+                <y>14</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>150</patchID>
+		<x>10</x>
+                <y>0</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>151</patchID>
+		<x>10</x>
+                <y>1</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>152</patchID>
+		<x>10</x>
+                <y>2</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>153</patchID>
+		<x>10</x>
+                <y>3</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>154</patchID>
+		<x>10</x>
+                <y>4</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>155</patchID>
+		<x>10</x>
+                <y>5</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>156</patchID>
+		<x>10</x>
+                <y>6</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>157</patchID>
+		<x>10</x>
+                <y>7</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>158</patchID>
+		<x>10</x>
+                <y>8</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>159</patchID>
+		<x>10</x>
+                <y>9</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>160</patchID>
+		<x>10</x>
+                <y>10</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>161</patchID>
+		<x>10</x>
+                <y>11</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>162</patchID>
+		<x>10</x>
+                <y>12</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>163</patchID>
+		<x>10</x>
+                <y>13</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>164</patchID>
+		<x>10</x>
+                <y>14</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>165</patchID>
+		<x>11</x>
+                <y>0</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>166</patchID>
+		<x>11</x>
+                <y>1</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>167</patchID>
+		<x>11</x>
+                <y>2</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>168</patchID>
+		<x>11</x>
+                <y>3</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>169</patchID>
+		<x>11</x>
+                <y>4</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>170</patchID>
+		<x>11</x>
+                <y>5</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>171</patchID>
+		<x>11</x>
+                <y>6</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent><xagent>
+		<name>patch</name>
+		<patchID>172</patchID>
+		<x>11</x>
+                <y>7</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>173</patchID>
+		<x>11</x>
+                <y>8</y>
+                <repows>0</repows>
+
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>174</patchID>
+		<x>11</x>
+                <y>9</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent><xagent>
+		<name>patch</name>
+		<patchID>175</patchID>
+		<x>11</x>
+                <y>10</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent><xagent>
+		<name>patch</name>
+		<patchID>176</patchID>
+		<x>11</x>
+                <y>11</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent><xagent>
+		<name>patch</name>
+		<patchID>177</patchID>
+		<x>11</x>
+                <y>12</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent><xagent>
+		<name>patch</name>
+		<patchID>178</patchID>
+		<x>11</x>
+                <y>13</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>179</patchID>
+		<x>11</x>
+                <y>14</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent><xagent>
+		<name>patch</name>
+		<patchID>180</patchID>
+		<x>12</x>
+                <y>0</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent><xagent>
+		<name>patch</name>
+		<patchID>181</patchID>
+		<x>12</x>
+                <y>1</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent><xagent>
+		<name>patch</name>
+		<patchID>182</patchID>
+		<x>12</x>
+                <y>2</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent><xagent>
+		<name>patch</name>
+		<patchID>183</patchID>
+		<x>12</x>
+                <y>3</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>184</patchID>
+		<x>12</x>
+                <y>4</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent><xagent>
+		<name>patch</name>
+		<patchID>185</patchID>
+		<x>12</x>
+                <y>5</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>186</patchID>
+		<x>12</x>
+                <y>6</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>187</patchID>
+		<x>12</x>
+                <y>7</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>188</patchID>
+		<x>12</x>
+                <y>8</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>189</patchID>
+		<x>12</x>
+                <y>9</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>190</patchID>
+		<x>12</x>
+                <y>10</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>191</patchID>
+		<x>12</x>
+                <y>11</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>192</patchID>
+		<x>12</x>
+                <y>12</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>193</patchID>
+		<x>12</x>
+                <y>13</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>194</patchID>
+		<x>12</x>
+                <y>14</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>195</patchID>
+		<x>13</x>
+                <y>0</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>196</patchID>
+		<x>13</x>
+                <y>1</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>197</patchID>
+		<x>13</x>
+                <y>2</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>198</patchID>
+		<x>13</x>
+                <y>3</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent><xagent>
+		<name>patch</name>
+		<patchID>199</patchID>
+		<x>13</x>
+                <y>4</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>200</patchID>
+		<x>13</x>
+                <y>5</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>201</patchID>
+		<x>13</x>
+                <y>6</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>202</patchID>
+		<x>13</x>
+                <y>7</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>203</patchID>
+		<x>13</x>
+                <y>8</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>204</patchID>
+		<x>13</x>
+                <y>9</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>205</patchID>
+		<x>13</x>
+                <y>10</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>206</patchID>
+		<x>13</x>
+                <y>11</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>207</patchID>
+		<x>13</x>
+                <y>12</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>208</patchID>
+		<x>13</x>
+                <y>13</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>209</patchID>
+		<x>13</x>
+                <y>14</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>210</patchID>
+		<x>14</x>
+                <y>0</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>211</patchID>
+		<x>14</x>
+                <y>1</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>212</patchID>
+		<x>14</x>
+                <y>2</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>213</patchID>
+		<x>14</x>
+                <y>3</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>214</patchID>
+		<x>14</x>
+                <y>4</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>215</patchID>
+		<x>14</x>
+                <y>5</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>216</patchID>
+		<x>14</x>
+                <y>6</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>217</patchID>
+		<x>14</x>
+                <y>7</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>218</patchID>
+		<x>14</x>
+                <y>8</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>219</patchID>
+		<x>14</x>
+                <y>9</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>220</patchID>
+		<x>14</x>
+                <y>10</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>221</patchID>
+		<x>14</x>
+                <y>11</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>222</patchID>
+		<x>14</x>
+                <y>12</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>223</patchID>
+		<x>14</x>
+                <y>13</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+	<xagent>
+		<name>patch</name>
+		<patchID>224</patchID>
+		<x>14</x>
+                <y>14</y>
+                <repows>0</repows>
+<pclans>0</pclans>
+</xagent>
+</states>

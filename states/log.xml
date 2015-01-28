@@ -1,0 +1,21 @@
+<model_run>
+<codetype>parallel</codetype>
+<nodes>1</nodes>
+<!-- <time> unit: milliseconds -->
+<!-- <time> timer resolution: 1.00e-03 ms)-->
+<!-- <time> timer overhead: ~0.00e+00 ms)-->
+<iteration><no>1</no><time>0</time></iteration>
+<iteration><no>2</no><time>0</time></iteration>
+<iteration><no>3</no><time>0</time></iteration>
+<iteration><no>4</no><time>1</time></iteration>
+<iteration><no>5</no><time>3</time></iteration>
+<iteration><no>6</no><time>13</time></iteration>
+<iteration><no>7</no><time>67</time></iteration>
+<iteration><no>8</no><time>404</time></iteration>
+<iteration><no>9</no><time>2716</time></iteration>
+<iteration><no>10</no><time>5</time></iteration>
+<iteration><no>11</no><time>8</time></iteration>
+<iteration><no>12</no><time>23</time></iteration>
+<!-- <totaltime> unit: seconds -->
+<totaltime>3.245</totaltime>
+</model_run>
