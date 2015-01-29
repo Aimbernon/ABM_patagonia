@@ -288,7 +288,7 @@ int FLAME_condition_clan_idle_03_04(xmachine_memory_clan *a)
  */
 int FLAME_condition_clan_dividir_clan_12_13(xmachine_memory_clan *a)
 {
-	if((a->members >= 10)) return 1;
+	if((a->members >= 30)) return 1;
 	else return 0;
 }
 

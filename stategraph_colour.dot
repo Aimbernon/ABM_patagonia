@@ -237,7 +237,7 @@ digraph state_graph {
 	clan_new_leader_10_11 -> clan_11;
 	clan_11 -> clan_again_marriable_11_12;
 	clan_again_marriable_11_12 -> clan_12;
-	clan_12 -> clan_dividir_clan_12_13 [ label = "a.members GEQ 10"];
+	clan_12 -> clan_dividir_clan_12_13 [ label = "a.members GEQ 30"];
 	clan_dividir_clan_12_13 -> clan_13;
 	clan_12 -> clan_idle_12_14 [ label = "not ( a.members GEQ 30 )"];
 	clan_idle_12_14 -> clan_14;

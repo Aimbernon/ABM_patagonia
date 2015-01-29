@@ -435,7 +435,7 @@
 		    <condition>
 			<lhs><value>a.members</value></lhs>
 			<op>GEQ</op>
-			<rhs><value>10</value></rhs>
+			<rhs><value>30</value></rhs>
 		    </condition>
 		    <output>
 			<messageName>warningDivide</messageName>
