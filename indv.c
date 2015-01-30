@@ -209,7 +209,7 @@ int survive()
 		if (get_married() == 1)
 			add_death_message (get_pareja(),get_cID());
 	}
-	return 0; 
+	return die; 
 }
 // se comprueba si la pareja del indv ha muerto
 int update_status ()
