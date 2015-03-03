@@ -9,6 +9,6 @@
 	<max_manada>50</max_manada>
 	<max_familia>10</max_familia>
 	<cal_adulto>1</cal_adulto>
-	<surviveChanceAdult>99</surviveChanceAdult>
-	<surviveChanceChild>98</surviveChanceChild>
+	<surviveChanceAdult>100</surviveChanceAdult>
+	<surviveChanceChild>100</surviveChanceChild>
 </environment>

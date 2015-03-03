@@ -13,8 +13,7 @@ struct guanacosAround {
 /* posting individual information*/
 int clan_Information()
 {
-	int cal, nmem, i, x=get_x(), y=get_y();
-	double ID=get_cID();
+	int cal, nmem, i, x=get_x(), y=get_y(), ID=get_cID();
 
 	for ( i = 0; i < 100; i++) MNEEDS.id_list[i] = MNEEDS.cal_list[i] = -1;
 
@@ -30,20 +29,19 @@ int clan_Information()
 	FINISH_INFORMATION_MESSAGE_LOOP
 	set_cal_need(cal);
 	set_members(i);
-        add_clan_info_message(x, y, ID, nmem, cal + get_tcalories() - get_cal_stored() );
+    add_clan_info_message(x, y, ID, nmem, cal + get_tcalories() - get_cal_stored() );
 
-        return 0;
+    return 0;
 }
 
 /* extracting calories */
 int clan_extract_calories()
 {
-        int age = get_age();
-	int cal = 0;
+		int cal = 0;
 
         START_CLANGETCALORIES_MESSAGE_LOOP
 		cal+=clangetcalories_message->clcalories;
-	FINISH_CLANGETCALORIES_MESSAGE_LOOP
+		FINISH_CLANGETCALORIES_MESSAGE_LOOP
 
         set_cal_got(cal);
 
@@ -55,6 +53,11 @@ int distribute_calories()
 {
 	int i, need = get_cal_need(), got = get_cal_got(), extra = get_tcalories();
 
+	/* if clan not have enough calories, clan seek to cooperation */
+	if (need > ( got + extra) && get_hunting () == 0)
+	{
+			set_cooperation(1);
+	}
 	/* The list of calory needs is traversed */
 	for( i = 0; MNEEDS.id_list[i] != -1; i++ ){
 		/*If we've got enough calories then we give the individual what he/she needs*/
@@ -66,15 +69,15 @@ int distribute_calories()
 		the individual gets all its needs from what is leaft of the gotten plus the rest from the
 		extra*/
 		else if (MNEEDS.cal_list[i] < (got + extra)){ 
-                        add_indgetcalories_message( MNEEDS.cal_list[i], MNEEDS.id_list[i]);
+            add_indgetcalories_message( MNEEDS.cal_list[i], MNEEDS.id_list[i]);
 			extra = extra + got - MNEEDS.cal_list[i];
-                        got = 0;
-                }
+            got = 0;
+        }
 		/*If there are still some extra calories but not enough for the individual needs, then 
 		we cover them partially*/ 
 		else if (extra > 0){
-                        add_indgetcalories_message( MNEEDS.cal_list[i], MNEEDS.id_list[i]);
-                        extra = 0;
+        	add_indgetcalories_message( MNEEDS.cal_list[i], MNEEDS.id_list[i]);
+            extra = 0;
 		}
 	}
 	/*If there are some undistributed calories they will go to the repository, if not everything is
@@ -104,7 +107,7 @@ int new_leader()
 
 	return 0;
 }
-// new -----------------------------------------------------
+
 /* Each clan gets information about their individuals marriageable age. 
 This information is stored in IFREE variable */
 int marriable_indv ()
@@ -359,7 +362,7 @@ int again_marriable ()
 				}
 				//si no son familia se envia el mensaje de casamiento
 				if (familia ==0){
-					add_lmarriage_message (IFREE.male_list[n],id.array[find],get_cID(),IFREE.mancestor_list+n*6,IFREE.mancestorClan_list+n*6);
+					add_lmarriage_message (IFREE.male_list[n],id.array[find],get_cID(),IFREE.mancestor_list+n*7,IFREE.mancestorClan_list+n*7);
 					find ++;
 				}
 			}
@@ -381,7 +384,7 @@ int dividir_clan ()
 //el hijo dependiente sigue a la madre y la esposa sigue al marrido
 int creacion_clan ()
 {
-	int i,capacidad,actual,pareja=-1,sex, mom,find,members;
+	int i,actual,pareja=-1,sex, mom,find,members;
 	int_array ID_list,sex_list,mom_list,pareja_list,new_clan;
 	init_int_array (&ID_list);
 	init_int_array (&sex_list);
@@ -446,6 +449,7 @@ int creacion_clan ()
 						remove_int (&sex_list,i);
 						remove_int (&pareja_list,i);
 						remove_int (&mom_list,i);
+						members -=1;
 						i -=1;
 					}
 			}
@@ -457,13 +461,14 @@ int creacion_clan ()
 	for (i=0;i<new_clan.size;i++)
 		add_transfer_message (get_cID(), newClanID,new_clan.array[i]);
 	add_clan_agent (newClanID,0,0,0,get_x(),get_y(),0,new_clan.array[0],MNEEDS,IFREE,get_indexID(),new_clan.size,get_linguistics(),
-	get_exchange_record(),get_irecord(),get_targetX(),get_targetY());
+	get_exchange_record(),get_irecord(),get_targetX(),get_targetY(),0,0);
 
 	free_int_array(&ID_list);
 	free_int_array(&mom_list);
 	free_int_array(&pareja_list);
 	free_int_array(&sex_list);
 	free_int_array(&new_clan);
+	set_members (members);
 	return 0;
 }
 //Anualmente se revisa las palabras conocidas por el clan
@@ -669,3 +674,87 @@ int leviflightclan(int posX, int posY, int *targetX, int *targetY){
 	else return 1;
 }
 
+// clan seek other clans for cooperation
+int start_cooperation ()
+{
+	int need = get_cal_need();
+	printf ("comienza la busqueda de clanes para cooperar, calorias nesesarias: %d\n",get_cID());
+	//clan sends requests to cooperate through box 2D
+	add_xxx_message (get_cID(),get_x(),get_y(),get_linguistics(),get_cooperation());
+	return 0;
+}
+// clan create a proposal 
+int send_proposal ()
+{
+	int i,j,nproposals = 0,rep=0, find =0,id_clan,cooperation =0,prop=0,needCooperation,coop;
+	int_array clanID_list, linguistics_list,ncooperation_list;
+	init_int_array (&clanID_list);
+	init_int_array (&linguistics_list);
+	init_int_array (&ncooperation_list);
+
+	START_XXX_MESSAGE_LOOP
+	if (get_cID()!= xxx_message->clanID)
+	{
+		add_int (&clanID_list,xxx_message->clanID);
+		add_int (&ncooperation_list, xxx_message->needCooperation);
+		for (i=0;i<GENOMA;i++)
+			add_int (&linguistics_list,xxx_message->linguistics[i]);
+		nproposals += 1;
+	}
+	FINISH_XXX_MESSAGE_LOOP
+	// if clan receives proposals, verifies the linguistic compatibility
+	if (nproposals >0)
+	{
+		while ( prop <nproposals && find ==0)
+		{
+			for (i=0;i<GENOMA;i++)
+				if (get_linguistics()[i] == linguistics_list.array[i])
+					rep ++;
+			// if clan understands to the other clan, verifies their relationship
+			if (rep > LANG_THRESHOLD)
+			{
+				cooperation = 1;
+				//default: clan chosens in order FIFO
+				id_clan = clanID_list.array[0];
+				coop = ncooperation_list.array[0];
+				for (j =0; j<RECORD_SIZE; j++)
+					if (get_exchange_record()[j] == clanID_list.array[prop]){
+						find = 1;
+						id_clan = clanID_list.array[prop];
+						coop = ncooperation_list.array [0];
+					}
+			}
+			prop += 1;
+		}
+		// clan sends a proposal the cooperation to choosen clan
+		if (cooperation == 1)
+			add_yyy_message (get_cID(),id_clan,coop);
+	}
+	free_int_array (&clanID_list);
+	free_int_array (&linguistics_list);
+	free_int_array (&ncooperation_list);
+	return 0;
+}
+int proposal_acceptation ()
+{
+	int clansID[2],nacceptations=0,coop;
+	START_YYY_MESSAGE_LOOP
+		clansID[0] = yyy_message->clanID; // ID other clan
+		clansID[1] = yyy_message->coopClanID;// my ID
+		coop = yyy_message->needCooperation;
+		nacceptations += 1;
+	FINISH_YYY_MESSAGE_LOOP
+	if (nacceptations > 0)
+	{
+		set_cooperation (0);
+		set_hunting(1);
+		if (coop == 1)// two clan needed cooperate
+			if (clansID[0] < get_cID())
+				add_hunting_agent (0,0,0,clansID);
+	}
+	return 0;
+}
+int idle_clan ()
+{
+	return 0;
+}

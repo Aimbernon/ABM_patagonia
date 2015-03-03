@@ -27,8 +27,8 @@ FLAME   = main.c memory.c xml.c messageboards.c partitioning.c rules.c timing.c
 AUX 	= stategraph.dot stategraph_colour.dot process_order_graph.dot Doxyfile latex.tex
 
 # FLAME generated model files
-SOURCES =  indv.c  clan.c  patch.c  guanacos.c 
-HEADERS = header.h low_primes.h mboard.h  indv_agent_header.h  clan_agent_header.h  patch_agent_header.h  manada_guanacos_agent_header.h 
+SOURCES =  indv.c  clan.c  patch.c  guanacos.c  hunting.c 
+HEADERS = header.h low_primes.h mboard.h  indv_agent_header.h  clan_agent_header.h  patch_agent_header.h  manada_guanacos_agent_header.h  hunting_agent_header.h 
 
 DEPS    = Makefile header.h low_primes.h
 

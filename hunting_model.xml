@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmodel version="2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://flame.ac.uk/schema/xmml_v2.xsd">
+    <name>Hunting Model</name>
+    <version>1</version>
+    <author></author>
+    <description>Defining hunting party and its process </description>
+    <environment>
+        <functionFiles>
+            <file>hunting.c</file>
+        </functionFiles>
+	<constants>
+	</constants>
+    </environment>
+    <agents>
+        <xagent>
+            <name>hunting</name>
+            <description></description>
+            <memory>
+                <variable>
+                    <type>int</type>
+                    <name>calores</name>
+                    <description>calorias obtenidas en la caza</description>
+        		</variable>
+                <variable>
+                    <type>int</type>
+                    <name>isuccess</name>
+                    <description>index de exito de la caza</description>
+        		</variable>
+                <variable>
+                    <type>int</type>
+                    <name>skill_level</name>
+                    <description>power of huntering</description>
+        		</variable>
+                <variable>
+                    <type>int</type>
+                    <name>clans[2]</name>
+                    <description>id de los clanes que participan</description>
+        		</variable>
+            </memory>
+    	    <functions>
+    			<function>
+            	    <name>get_hunters</name>
+            	    <description>gets individual hunter info for start hunting </description>
+            	    <currentState>start</currentState>
+            	    <nextState>end</nextState>
+				</function>
+            </functions>
+        </xagent>
+    </agents>
+    <!--<messages>
+        <message>
+	</message>
+    </messages>-->
+</xmodel>
+
+	

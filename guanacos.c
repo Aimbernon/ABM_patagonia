@@ -175,8 +175,8 @@ int post_calorias(){
 }*/
 
 int reproduccion(){
-	add_reproduccionguanacos_message(get_x(), get_y(), get_count(), get_familia());
-	return 1;
+	add_reproduccionguanacos_message(get_x(), get_y(), get_count(), get_familia(),get_adultos());
+	return 0;
 }
 
 int manada_idle2(){

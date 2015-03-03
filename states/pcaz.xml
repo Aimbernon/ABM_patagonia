@@ -499,10 +499,11 @@
                 <targetY>0</targetY>
 		<indexID>16</indexID>
 		<members>10</members>
+		<cooperation>0</cooperation>
 	</xagent>
 	<xagent>
 		<name>clan</name>
-		<cID>1</cID>
+		<cID>1000</cID>
 		<cal_need>0</cal_need>
 		<cal_got>0</cal_got>
                 <cal_stored>0</cal_stored>
@@ -514,6 +515,7 @@
                 <targetY>0</targetY>
 		<indexID>16</indexID>
 		<members>10</members>
+		<cooperation>0<cooperation>
 	</xagent>
 	<xagent>
 		<name>clan</name>
@@ -529,6 +531,7 @@
                 <targetY>0</targetY>
 		<indexID>16</indexID>
 		<members>10</members>
+		<cooperation>0</cooperation>
 	</xagent>
 </agents>
 

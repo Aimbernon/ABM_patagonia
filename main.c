@@ -30,6 +30,7 @@ int main(int argc, char * argv[])
 	//xmachine_memory_clan * temp_xmachine_clan;
 	//xmachine_memory_patch * temp_xmachine_patch;
 	//xmachine_memory_manada_guanacos * temp_xmachine_manada_guanacos;
+	//xmachine_memory_hunting * temp_xmachine_hunting;
 
 	int FLAME_information_message_board_write;
 	int FLAME_information_message_board_read;
@@ -72,6 +73,11 @@ int main(int argc, char * argv[])
 	int FLAME_transfer_message_board_read;
 	int FLAME_clanmove_message_board_write;
 	int FLAME_clanmove_message_board_read;
+	int FLAME_xxx_message_board_write;
+	int FLAME_xxx_message_board_read;
+	MBt_SearchTree tree_ptr_2d_xxx;
+	int FLAME_yyy_message_board_write;
+	int FLAME_yyy_message_board_read;
 	int FLAME_clanspatch_message_board_write;
 	int FLAME_clanspatch_message_board_read;
 	MBt_SearchTree tree_ptr_2d_clanspatch;
@@ -338,6 +344,9 @@ if(argc < 2)
 		
 		printf("%d> ", node_number);
 		printf("manada_guanacos agents on node: %d\n", manada_guanacos_start_state->count);
+		
+		printf("%d> ", node_number);
+		printf("hunting agents on node: %d\n", hunting_start_state->count);
 		
 
 		/* Quickly check account for all agents */
@@ -1291,6 +1300,98 @@ if(argc < 2)
 			   break;
 		   case MB_ERR_LOCKED:
 			   fprintf(stderr, "\t reason: 'clanmove' board is locked\n");
+			   break;
+		   case MB_ERR_MEMALLOC:
+			   fprintf(stderr, "\t reason: out of memory\n");
+			   break;
+		   case MB_ERR_INTERNAL:
+			   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+			   break;
+		   default:
+			   fprintf(stderr, "\t MB_SyncStart returned error code: %d (see libmboard docs for details)\n", rc);
+			   break;
+	   }
+		   MPI_Abort(MPI_COMM_WORLD, rc);
+		   exit(rc);
+	}
+	#endif
+	FLAME_xxx_message_board_write = 0;
+	FLAME_xxx_message_board_read = 0;
+	/* Sending agents */
+	if(clan_start_state->agents != NULL) FLAME_xxx_message_board_write = 1;
+	
+	/* Reading agents */
+	if(clan_start_state->agents != NULL) FLAME_xxx_message_board_read = 1;
+	
+	/* Call message board library with details */
+	if(FLAME_xxx_message_board_write == 0 &&
+		FLAME_xxx_message_board_read == 0)
+			rc = MB_SetAccessMode(b_xxx, MB_MODE_IDLE);
+	if(FLAME_xxx_message_board_write == 1 &&
+		FLAME_xxx_message_board_read == 0)
+			rc = MB_SetAccessMode(b_xxx, MB_MODE_WRITEONLY);
+	if(FLAME_xxx_message_board_write == 0 &&
+		FLAME_xxx_message_board_read == 1)
+			rc = MB_SetAccessMode(b_xxx, MB_MODE_READONLY);
+	if(FLAME_xxx_message_board_write == 1 &&
+		FLAME_xxx_message_board_read == 1)
+			rc = MB_SetAccessMode(b_xxx, MB_MODE_READWRITE);
+	#ifdef ERRCHECK
+	if (rc != MB_SUCCESS)
+	{
+	   fprintf(stderr, "ERROR: Could not set access mode of 'xxx' board\n");
+	   switch(rc) {
+		   case MB_ERR_INVALID:
+			   fprintf(stderr, "\t reason: 'xxx' board is invalid\n");
+			   break;
+		   case MB_ERR_LOCKED:
+			   fprintf(stderr, "\t reason: 'xxx' board is locked\n");
+			   break;
+		   case MB_ERR_MEMALLOC:
+			   fprintf(stderr, "\t reason: out of memory\n");
+			   break;
+		   case MB_ERR_INTERNAL:
+			   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+			   break;
+		   default:
+			   fprintf(stderr, "\t MB_SyncStart returned error code: %d (see libmboard docs for details)\n", rc);
+			   break;
+	   }
+		   MPI_Abort(MPI_COMM_WORLD, rc);
+		   exit(rc);
+	}
+	#endif
+	FLAME_yyy_message_board_write = 0;
+	FLAME_yyy_message_board_read = 0;
+	/* Sending agents */
+	if(clan_start_state->agents != NULL) FLAME_yyy_message_board_write = 1;
+	
+	/* Reading agents */
+	if(clan_start_state->agents != NULL) FLAME_yyy_message_board_read = 1;
+	
+	/* Call message board library with details */
+	if(FLAME_yyy_message_board_write == 0 &&
+		FLAME_yyy_message_board_read == 0)
+			rc = MB_SetAccessMode(b_yyy, MB_MODE_IDLE);
+	if(FLAME_yyy_message_board_write == 1 &&
+		FLAME_yyy_message_board_read == 0)
+			rc = MB_SetAccessMode(b_yyy, MB_MODE_WRITEONLY);
+	if(FLAME_yyy_message_board_write == 0 &&
+		FLAME_yyy_message_board_read == 1)
+			rc = MB_SetAccessMode(b_yyy, MB_MODE_READONLY);
+	if(FLAME_yyy_message_board_write == 1 &&
+		FLAME_yyy_message_board_read == 1)
+			rc = MB_SetAccessMode(b_yyy, MB_MODE_READWRITE);
+	#ifdef ERRCHECK
+	if (rc != MB_SUCCESS)
+	{
+	   fprintf(stderr, "ERROR: Could not set access mode of 'yyy' board\n");
+	   switch(rc) {
+		   case MB_ERR_INVALID:
+			   fprintf(stderr, "\t reason: 'yyy' board is invalid\n");
+			   break;
+		   case MB_ERR_LOCKED:
+			   fprintf(stderr, "\t reason: 'yyy' board is locked\n");
 			   break;
 		   case MB_ERR_MEMALLOC:
 			   fprintf(stderr, "\t reason: out of memory\n");
@@ -2260,6 +2361,80 @@ if(argc < 2)
 		}
 		
 		/* Start sync message boards that don't write */
+		if(FLAME_xxx_message_board_write == 0)
+		{
+			/*printf("%d> xxx message board sync start early as no agents sending any messages of this type\n", node_number);*/
+			
+			/* ********** sync message board here **********  */
+			if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncStart(b_xxx)\n");
+			rc = MB_SyncStart(b_xxx);
+			if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finish MB_SyncStart(b_xxx)\n");
+			#ifdef ERRCHECK
+			if (rc != MB_SUCCESS)
+			{
+			   fprintf(stderr, "ERROR: Could not start sync of 'xxx' board\n");
+			   switch(rc) {
+				   case MB_ERR_INVALID:
+					   fprintf(stderr, "\t reason: 'xxx' board is invalid\n");
+					   break;
+				   case MB_ERR_LOCKED:
+					   fprintf(stderr, "\t reason: 'xxx' board is locked\n");
+					   break;
+				   case MB_ERR_MEMALLOC:
+					   fprintf(stderr, "\t reason: out of memory\n");
+					   break;
+				   case MB_ERR_INTERNAL:
+					   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+					   break;
+				   default:
+					   fprintf(stderr, "\t MB_SyncStart returned error code: %d (see libmboard docs for details)\n", rc);
+					   break;
+			   }
+			   
+					   MPI_Abort(MPI_COMM_WORLD, rc);
+					   exit(rc);
+			   }
+			   #endif
+		}
+		
+		/* Start sync message boards that don't write */
+		if(FLAME_yyy_message_board_write == 0)
+		{
+			/*printf("%d> yyy message board sync start early as no agents sending any messages of this type\n", node_number);*/
+			
+			/* ********** sync message board here **********  */
+			if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncStart(b_yyy)\n");
+			rc = MB_SyncStart(b_yyy);
+			if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finish MB_SyncStart(b_yyy)\n");
+			#ifdef ERRCHECK
+			if (rc != MB_SUCCESS)
+			{
+			   fprintf(stderr, "ERROR: Could not start sync of 'yyy' board\n");
+			   switch(rc) {
+				   case MB_ERR_INVALID:
+					   fprintf(stderr, "\t reason: 'yyy' board is invalid\n");
+					   break;
+				   case MB_ERR_LOCKED:
+					   fprintf(stderr, "\t reason: 'yyy' board is locked\n");
+					   break;
+				   case MB_ERR_MEMALLOC:
+					   fprintf(stderr, "\t reason: out of memory\n");
+					   break;
+				   case MB_ERR_INTERNAL:
+					   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+					   break;
+				   default:
+					   fprintf(stderr, "\t MB_SyncStart returned error code: %d (see libmboard docs for details)\n", rc);
+					   break;
+			   }
+			   
+					   MPI_Abort(MPI_COMM_WORLD, rc);
+					   exit(rc);
+			   }
+			   #endif
+		}
+		
+		/* Start sync message boards that don't write */
 		if(FLAME_clanspatch_message_board_write == 0)
 		{
 			/*printf("%d> clanspatch message board sync start early as no agents sending any messages of this type\n", node_number);*/
@@ -2421,6 +2596,7 @@ if(argc < 2)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_patch = current_xmachine_patch;
 
 		if(FLAME_condition_patch_infoClansInPatch_start_1(current_xmachine_patch)==1)
@@ -2496,6 +2672,7 @@ if(argc < 2)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_indv = current_xmachine_indv;
 
 		
@@ -2558,6 +2735,46 @@ if(argc < 2)
     
 
 
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start get_hunters\n");
+	current_xmachine_hunting_holder = hunting_start_state->agents;
+	while(current_xmachine_hunting_holder)
+	{
+		temp_xmachine_hunting_holder = current_xmachine_hunting_holder->next;
+		current_xmachine_hunting = current_xmachine_hunting_holder->agent;
+		current_xmachine_hunting_next_state = hunting_end_state;
+		/* For backwards compatibility set current_xmachine */
+		current_xmachine->xmachine_indv = NULL;
+		current_xmachine->xmachine_clan = NULL;
+		current_xmachine->xmachine_patch = NULL;
+		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
+		current_xmachine->xmachine_hunting = current_xmachine_hunting;
+
+		
+
+		
+
+			i = get_hunters();
+
+		
+
+			if(i == 1)
+			{
+				free_hunting_agent(current_xmachine_hunting_holder, hunting_start_state);
+			}
+			else
+			{
+				transition_hunting_agent(current_xmachine_hunting_holder, hunting_start_state, hunting_end_state);
+			}
+		
+
+		current_xmachine_hunting = NULL;
+
+		current_xmachine_hunting_holder = temp_xmachine_hunting_holder;
+	}
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish get_hunters\n");
+
+
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start seasonSwitch\n");
 	current_xmachine_manada_guanacos_holder = manada_guanacos_start_state->agents;
 	while(current_xmachine_manada_guanacos_holder)
@@ -2570,6 +2787,7 @@ if(argc < 2)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_manada_guanacos = current_xmachine_manada_guanacos;
 
 		if(FLAME_condition_manada_guanacos_seasonSwitch_start_1(current_xmachine_manada_guanacos)==1)
@@ -2610,6 +2828,7 @@ if(argc < 2)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_manada_guanacos = current_xmachine_manada_guanacos;
 
 		if(FLAME_condition_manada_guanacos_manadaInfo_start_1(current_xmachine_manada_guanacos)==1)
@@ -2650,6 +2869,7 @@ if(argc < 2)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_patch = current_xmachine_patch;
 
 		if(FLAME_condition_patch_patchtype_start_1(current_xmachine_patch)==1)
@@ -2741,6 +2961,7 @@ if(argc < 2)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_manada_guanacos = current_xmachine_manada_guanacos;
 
 		if(FLAME_condition_manada_guanacos_move_1_2(current_xmachine_manada_guanacos)==1)
@@ -2880,6 +3101,7 @@ if(argc < 2)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_patch = current_xmachine_patch;
 
 		if(FLAME_condition_patch_infoGuanacosPatch_1_2(current_xmachine_patch)==1)
@@ -2955,6 +3177,7 @@ if(argc < 2)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_manada_guanacos = current_xmachine_manada_guanacos;
 
 		if(FLAME_condition_manada_guanacos_manada_idle_1_2(current_xmachine_manada_guanacos)==1)
@@ -2995,6 +3218,7 @@ if(argc < 2)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_patch = current_xmachine_patch;
 
 		if(FLAME_condition_patch_idle_patch_1_2(current_xmachine_patch)==1)
@@ -3069,6 +3293,7 @@ if(argc < 2)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_clan = current_xmachine_clan;
 
 		
@@ -3365,6 +3590,7 @@ if(FLAME_clanspatch_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_patch = current_xmachine_patch;
 
 		
@@ -3500,6 +3726,7 @@ if(FLAME_clanspatch_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_manada_guanacos = current_xmachine_manada_guanacos;
 
 		if(FLAME_condition_manada_guanacos_reproduccion_2_3(current_xmachine_manada_guanacos)==1)
@@ -3575,6 +3802,7 @@ if(FLAME_clanspatch_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_manada_guanacos = current_xmachine_manada_guanacos;
 
 		if(FLAME_condition_manada_guanacos_manada_idle2_2_3(current_xmachine_manada_guanacos)==1)
@@ -3669,6 +3897,47 @@ if(FLAME_clan_info_message_board_read == 0)
     #endif
 
 
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start idle\n");
+	current_xmachine_manada_guanacos_holder = manada_guanacos_3_state->agents;
+	while(current_xmachine_manada_guanacos_holder)
+	{
+		temp_xmachine_manada_guanacos_holder = current_xmachine_manada_guanacos_holder->next;
+		current_xmachine_manada_guanacos = current_xmachine_manada_guanacos_holder->agent;
+		current_xmachine_manada_guanacos_next_state = manada_guanacos_end_state;
+		/* For backwards compatibility set current_xmachine */
+		current_xmachine->xmachine_indv = NULL;
+		current_xmachine->xmachine_clan = NULL;
+		current_xmachine->xmachine_patch = NULL;
+		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
+		current_xmachine->xmachine_manada_guanacos = current_xmachine_manada_guanacos;
+
+		if(FLAME_condition_manada_guanacos_idle_3_end(current_xmachine_manada_guanacos)==1)
+		{
+
+		
+
+			i = idle();
+
+		
+
+			if(i == 1)
+			{
+				free_manada_guanacos_agent(current_xmachine_manada_guanacos_holder, manada_guanacos_3_state);
+			}
+			else
+			{
+				transition_manada_guanacos_agent(current_xmachine_manada_guanacos_holder, manada_guanacos_3_state, manada_guanacos_end_state);
+			}
+		}
+
+		current_xmachine_manada_guanacos = NULL;
+
+		current_xmachine_manada_guanacos_holder = temp_xmachine_manada_guanacos_holder;
+	}
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish idle\n");
+
+
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start surviveGuanacos\n");
 	current_xmachine_manada_guanacos_holder = manada_guanacos_3_state->agents;
 	while(current_xmachine_manada_guanacos_holder)
@@ -3681,9 +3950,11 @@ if(FLAME_clan_info_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_manada_guanacos = current_xmachine_manada_guanacos;
 
-		
+		if(FLAME_condition_manada_guanacos_surviveGuanacos_3_end(current_xmachine_manada_guanacos)==1)
+		{
 
 		
 
@@ -3699,7 +3970,7 @@ if(FLAME_clan_info_message_board_read == 0)
 			{
 				transition_manada_guanacos_agent(current_xmachine_manada_guanacos_holder, manada_guanacos_3_state, manada_guanacos_end_state);
 			}
-		
+		}
 
 		current_xmachine_manada_guanacos = NULL;
 
@@ -3720,6 +3991,7 @@ if(FLAME_clan_info_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_patch = current_xmachine_patch;
 
 		if(FLAME_condition_patch_idle_patch_3_4(current_xmachine_patch)==1)
@@ -3760,6 +4032,7 @@ if(FLAME_clan_info_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_patch = current_xmachine_patch;
 
 		if(FLAME_condition_patch_regenerate_3_4(current_xmachine_patch)==1)
@@ -3834,6 +4107,7 @@ if(FLAME_clan_info_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_clan = current_xmachine_clan;
 
 		
@@ -4000,6 +4274,7 @@ if(FLAME_clangetcalories_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_clan = current_xmachine_clan;
 
 		
@@ -4074,6 +4349,7 @@ if(FLAME_clangetcalories_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_patch = current_xmachine_patch;
 
 		if(FLAME_condition_patch_idle_patch_4_5(current_xmachine_patch)==1)
@@ -4114,6 +4390,7 @@ if(FLAME_clangetcalories_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_patch = current_xmachine_patch;
 
 		if(FLAME_condition_patch_snregenerate_4_5(current_xmachine_patch)==1)
@@ -4148,6 +4425,82 @@ if(FLAME_clangetcalories_message_board_read == 0)
  * and sync complete if doing late sync complete */
 
 
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start start_cooperation\n");
+	current_xmachine_clan_holder = clan_03_state->agents;
+	while(current_xmachine_clan_holder)
+	{
+		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
+		current_xmachine_clan = current_xmachine_clan_holder->agent;
+		current_xmachine_clan_next_state = clan_04_state;
+		/* For backwards compatibility set current_xmachine */
+		current_xmachine->xmachine_indv = NULL;
+		current_xmachine->xmachine_clan = NULL;
+		current_xmachine->xmachine_patch = NULL;
+		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
+		current_xmachine->xmachine_clan = current_xmachine_clan;
+
+		if(FLAME_condition_clan_start_cooperation_03_04(current_xmachine_clan)==1)
+		{
+
+		
+
+			i = start_cooperation();
+
+		
+
+			if(i == 1)
+			{
+				free_clan_agent(current_xmachine_clan_holder, clan_03_state);
+			}
+			else
+			{
+				transition_clan_agent(current_xmachine_clan_holder, clan_03_state, clan_04_state);
+			}
+		}
+
+		current_xmachine_clan = NULL;
+
+		current_xmachine_clan_holder = temp_xmachine_clan_holder;
+	}
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish start_cooperation\n");
+
+	if(FLAME_xxx_message_board_write == 1)
+	{
+
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncStart(b_xxx)\n");
+		rc = MB_SyncStart(b_xxx);
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finish MB_SyncStart(b_xxx)\n");
+		#ifdef ERRCHECK
+		if (rc != MB_SUCCESS)
+		{
+		   fprintf(stderr, "ERROR: Could not start sync of 'xxx' board\n");
+		   switch(rc) {
+			   case MB_ERR_INVALID:
+				   fprintf(stderr, "\t reason: 'xxx' board is invalid\n");
+				   break;
+			   case MB_ERR_LOCKED:
+				   fprintf(stderr, "\t reason: 'xxx' board is locked\n");
+				   break;
+			   case MB_ERR_MEMALLOC:
+				   fprintf(stderr, "\t reason: out of memory\n");
+				   break;
+			   case MB_ERR_INTERNAL:
+				   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+				   break;
+			   default:
+				   fprintf(stderr, "\t MB_SyncStart returned error code: %d (see libmboard docs for details)\n", rc);
+				   break;
+		   }
+
+			MPI_Abort(MPI_COMM_WORLD, rc);
+			exit(rc);
+		}
+		#endif
+    }
+    
+
+
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start idle\n");
 	current_xmachine_clan_holder = clan_03_state->agents;
 	while(current_xmachine_clan_holder)
@@ -4160,6 +4513,7 @@ if(FLAME_clangetcalories_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_clan = current_xmachine_clan;
 
 		if(FLAME_condition_clan_idle_03_04(current_xmachine_clan)==1)
@@ -4234,6 +4588,7 @@ if(FLAME_clangetcalories_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_patch = current_xmachine_patch;
 
 		
@@ -4323,190 +4678,6 @@ if(FLAME_clangetcalories_message_board_read == 0)
 
 
 	/* If mb is not read then leave sync complete until last possible moment */
-	if(FLAME_guanacospatch_message_board_read == 1)
-	{
-		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncComplete(b_guanacospatch)\n");
-		rc = MB_SyncComplete(b_guanacospatch);
-		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finsh MB_SyncComplete(b_guanacospatch)\n");
-		#ifdef ERRCHECK
-		if (rc != MB_SUCCESS)
-		{
-		   fprintf(stderr, "ERROR: Could not complete sync of 'guanacospatch' board\n");
-		   switch(rc) {
-				case MB_ERR_INVALID:
-				   fprintf(stderr, "\t reason: 'guanacospatch' board is invalid\n");
-				   break;
-			   case MB_ERR_MEMALLOC:
-				   fprintf(stderr, "\t reason: out of memory\n");
-				   break;
-			   case MB_ERR_INTERNAL:
-				   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
-				   break;
-			   default:
-				   fprintf(stderr, "\t MB_SyncComplete returned error code: %d (see libmboard docs for details)\n", rc);
-				   break;
-		   }
-	
-		   MPI_Abort(MPI_COMM_WORLD, rc);
-		   exit(rc);
-		}
-		#endif
-    /* Built 2d tree */
-    rc = MB_SearchTree_Create2D(b_guanacospatch, &tree_ptr_2d_guanacospatch,
-                           &guanacospatch_message_extract_x,
-                           &guanacospatch_message_extract_y);
-    #ifdef ERRCHECK
-    if (rc != MB_SUCCESS)
-    {
-       fprintf(stderr, "ERROR: Could not create MB_SearchTree_Create2D for 'guanacospatch'\n");
-       MPI_Abort(MPI_COMM_WORLD, rc);
-       exit(rc);
-    }
-    #endif
-    
-    
-	}
-	
-	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start move_clan\n");
-	current_xmachine_clan_holder = clan_03_state->agents;
-	while(current_xmachine_clan_holder)
-	{
-		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
-		current_xmachine_clan = current_xmachine_clan_holder->agent;
-		current_xmachine_clan_next_state = clan_04_state;
-		/* For backwards compatibility set current_xmachine */
-		current_xmachine->xmachine_indv = NULL;
-		current_xmachine->xmachine_clan = NULL;
-		current_xmachine->xmachine_patch = NULL;
-		current_xmachine->xmachine_manada_guanacos = NULL;
-		current_xmachine->xmachine_clan = current_xmachine_clan;
-
-		if(FLAME_condition_clan_move_clan_03_04(current_xmachine_clan)==1)
-		{
-
-		
-		
-          /* MB_Iterator 2d tree */
-          rc = MB_SearchTree_Search2D(tree_ptr_2d_guanacospatch, &i_guanacospatch,
-                           (double)current_xmachine_clan->x - (double)2.0,
-                           (double)current_xmachine_clan->x + (double)2.0,
-                           (double)current_xmachine_clan->y - (double)2.0,
-                           (double)current_xmachine_clan->y + (double)2.0);
-                  
-          
-		  
-		
-		#ifdef ERRCHECK
-		if (rc != MB_SUCCESS)
-		{
-		   fprintf(stderr, "ERROR: Could not create Iterator for 'guanacospatch'\n");
-		   switch(rc) {
-		       case MB_ERR_INVALID:
-		           fprintf(stderr, "\t reason: 'guanacospatch' board is invalid\n");
-		           break;
-		       case MB_ERR_LOCKED:
-	               fprintf(stderr, "\t reason: 'guanacospatch' board is locked\n");
-	               break;
-	           case MB_ERR_MEMALLOC:
-	               fprintf(stderr, "\t reason: out of memory\n");
-	               break;
-	           case MB_ERR_INTERNAL:
-	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
-	               break;
-	           default:
-	           
-                   fprintf(stderr, "\t MB_Iterator_CreateFiltered returned error code: %d (see libmboard docs for details)\n", rc);
-               
-               
-                   break;
-		   }
-
-		   MPI_Abort(MPI_COMM_WORLD, rc);
-           exit(rc);
-		}
-		#endif
-		
-		
-
-			i = move_clan();
-
-		
-		    rc = MB_Iterator_Delete(&i_guanacospatch);
-		    #ifdef ERRCHECK
-		    if (rc != MB_SUCCESS)
-		    {
-		       fprintf(stderr, "ERROR: Could not delete 'guanacospatch' iterator\n");
-		       switch(rc) {
-		           case MB_ERR_INVALID:
-		               fprintf(stderr, "\t reason: 'guanacospatch' iterator is invalid\n");
-		               break;
-		           case MB_ERR_INTERNAL:
-		               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
-		               break;
-		           default:
-                       fprintf(stderr, "\t MB_Iterator_Delete returned error code: %d (see libmboard docs for details)\n", rc);
-                       break;
-		       }
-
-		       MPI_Abort(MPI_COMM_WORLD, rc);
-               exit(rc);
-		    }
-		    #endif
-		
-
-			if(i == 1)
-			{
-				free_clan_agent(current_xmachine_clan_holder, clan_03_state);
-			}
-			else
-			{
-				transition_clan_agent(current_xmachine_clan_holder, clan_03_state, clan_04_state);
-			}
-		}
-
-		current_xmachine_clan = NULL;
-
-		current_xmachine_clan_holder = temp_xmachine_clan_holder;
-	}
-	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish move_clan\n");
-
-	if(FLAME_clanmove_message_board_write == 1)
-	{
-
-		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncStart(b_clanmove)\n");
-		rc = MB_SyncStart(b_clanmove);
-		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finish MB_SyncStart(b_clanmove)\n");
-		#ifdef ERRCHECK
-		if (rc != MB_SUCCESS)
-		{
-		   fprintf(stderr, "ERROR: Could not start sync of 'clanmove' board\n");
-		   switch(rc) {
-			   case MB_ERR_INVALID:
-				   fprintf(stderr, "\t reason: 'clanmove' board is invalid\n");
-				   break;
-			   case MB_ERR_LOCKED:
-				   fprintf(stderr, "\t reason: 'clanmove' board is locked\n");
-				   break;
-			   case MB_ERR_MEMALLOC:
-				   fprintf(stderr, "\t reason: out of memory\n");
-				   break;
-			   case MB_ERR_INTERNAL:
-				   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
-				   break;
-			   default:
-				   fprintf(stderr, "\t MB_SyncStart returned error code: %d (see libmboard docs for details)\n", rc);
-				   break;
-		   }
-
-			MPI_Abort(MPI_COMM_WORLD, rc);
-			exit(rc);
-		}
-		#endif
-    }
-    
-
-
-	/* If mb is not read then leave sync complete until last possible moment */
 	if(FLAME_indgetcalories_message_board_read == 1)
 	{
 		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncComplete(b_indgetcalories)\n");
@@ -4552,6 +4723,7 @@ if(FLAME_clangetcalories_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_indv = current_xmachine_indv;
 
 		
@@ -4705,67 +4877,6 @@ if(FLAME_indgetcalories_message_board_read == 0)
     }
     #endif
 
-if(FLAME_guanacospatch_message_board_read == 0)
-{
-	/*printf("%d> guanacospatch message board sync complete late as no agents reading any messages of this type\n", node_number);*/
-	
-	if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncComplete(b_guanacospatch)\n");
-	rc = MB_SyncComplete(b_guanacospatch);
-	if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finsh MB_SyncComplete(b_guanacospatch)\n");
-	#ifdef ERRCHECK
-	if (rc != MB_SUCCESS)
-	{
-	   fprintf(stderr, "ERROR: Could not complete sync of 'guanacospatch' board\n");
-	   switch(rc) {
-			case MB_ERR_INVALID:
-			   fprintf(stderr, "\t reason: 'guanacospatch' board is invalid\n");
-			   break;
-		   case MB_ERR_MEMALLOC:
-			   fprintf(stderr, "\t reason: out of memory\n");
-			   break;
-		   case MB_ERR_INTERNAL:
-			   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
-			   break;
-		   default:
-			   fprintf(stderr, "\t MB_SyncComplete returned error code: %d (see libmboard docs for details)\n", rc);
-			   break;
-	   }
-
-	   MPI_Abort(MPI_COMM_WORLD, rc);
-	   exit(rc);
-	}
-	#endif
-}
-
-    /* Delete any search trees */
-    rc = MB_SearchTree_Delete(&tree_ptr_2d_guanacospatch);
-
-    rc = MB_Clear(b_guanacospatch);
-    #ifdef ERRCHECK
-    if (rc != MB_SUCCESS)
-    {
-       fprintf(stderr, "ERROR: Could not clear 'guanacospatch' board\n");
-       switch(rc) {
-           case MB_ERR_INVALID:
-               fprintf(stderr, "\t reason: 'guanacospatch' board is invalid\n");
-               break;
-           case MB_ERR_LOCKED:
-               fprintf(stderr, "\t reason: 'guanacospatch' board is locked\n");
-               break;
-           case MB_ERR_INTERNAL:
-               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
-               break;
-           default:
-               fprintf(stderr, "\t MB_Clear returned error code: %d (see libmboard docs for details)\n", rc);
-               break;
-
-       }
-
-       MPI_Abort(MPI_COMM_WORLD, rc);
-       exit(rc);
-    }
-    #endif
-
 if(FLAME_adultospatch_message_board_read == 0)
 {
 	/*printf("%d> adultospatch message board sync complete late as no agents reading any messages of this type\n", node_number);*/
@@ -4827,6 +4938,190 @@ if(FLAME_adultospatch_message_board_read == 0)
     #endif
 
 
+	/* If mb is not read then leave sync complete until last possible moment */
+	if(FLAME_xxx_message_board_read == 1)
+	{
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncComplete(b_xxx)\n");
+		rc = MB_SyncComplete(b_xxx);
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finsh MB_SyncComplete(b_xxx)\n");
+		#ifdef ERRCHECK
+		if (rc != MB_SUCCESS)
+		{
+		   fprintf(stderr, "ERROR: Could not complete sync of 'xxx' board\n");
+		   switch(rc) {
+				case MB_ERR_INVALID:
+				   fprintf(stderr, "\t reason: 'xxx' board is invalid\n");
+				   break;
+			   case MB_ERR_MEMALLOC:
+				   fprintf(stderr, "\t reason: out of memory\n");
+				   break;
+			   case MB_ERR_INTERNAL:
+				   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+				   break;
+			   default:
+				   fprintf(stderr, "\t MB_SyncComplete returned error code: %d (see libmboard docs for details)\n", rc);
+				   break;
+		   }
+	
+		   MPI_Abort(MPI_COMM_WORLD, rc);
+		   exit(rc);
+		}
+		#endif
+    /* Built 2d tree */
+    rc = MB_SearchTree_Create2D(b_xxx, &tree_ptr_2d_xxx,
+                           &xxx_message_extract_x,
+                           &xxx_message_extract_y);
+    #ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not create MB_SearchTree_Create2D for 'xxx'\n");
+       MPI_Abort(MPI_COMM_WORLD, rc);
+       exit(rc);
+    }
+    #endif
+    
+    
+	}
+	
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start send_proposal\n");
+	current_xmachine_clan_holder = clan_04_state->agents;
+	while(current_xmachine_clan_holder)
+	{
+		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
+		current_xmachine_clan = current_xmachine_clan_holder->agent;
+		current_xmachine_clan_next_state = clan_05_state;
+		/* For backwards compatibility set current_xmachine */
+		current_xmachine->xmachine_indv = NULL;
+		current_xmachine->xmachine_clan = NULL;
+		current_xmachine->xmachine_patch = NULL;
+		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
+		current_xmachine->xmachine_clan = current_xmachine_clan;
+
+		
+
+		
+		
+          /* MB_Iterator 2d tree */
+          rc = MB_SearchTree_Search2D(tree_ptr_2d_xxx, &i_xxx,
+                           (double)current_xmachine_clan->x - (double)2.0,
+                           (double)current_xmachine_clan->x + (double)2.0,
+                           (double)current_xmachine_clan->y - (double)2.0,
+                           (double)current_xmachine_clan->y + (double)2.0);
+                  
+          
+		  
+		
+		#ifdef ERRCHECK
+		if (rc != MB_SUCCESS)
+		{
+		   fprintf(stderr, "ERROR: Could not create Iterator for 'xxx'\n");
+		   switch(rc) {
+		       case MB_ERR_INVALID:
+		           fprintf(stderr, "\t reason: 'xxx' board is invalid\n");
+		           break;
+		       case MB_ERR_LOCKED:
+	               fprintf(stderr, "\t reason: 'xxx' board is locked\n");
+	               break;
+	           case MB_ERR_MEMALLOC:
+	               fprintf(stderr, "\t reason: out of memory\n");
+	               break;
+	           case MB_ERR_INTERNAL:
+	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+	               break;
+	           default:
+	           
+                   fprintf(stderr, "\t MB_Iterator_CreateFiltered returned error code: %d (see libmboard docs for details)\n", rc);
+               
+               
+                   break;
+		   }
+
+		   MPI_Abort(MPI_COMM_WORLD, rc);
+           exit(rc);
+		}
+		#endif
+		
+		
+
+			i = send_proposal();
+
+		
+		    rc = MB_Iterator_Delete(&i_xxx);
+		    #ifdef ERRCHECK
+		    if (rc != MB_SUCCESS)
+		    {
+		       fprintf(stderr, "ERROR: Could not delete 'xxx' iterator\n");
+		       switch(rc) {
+		           case MB_ERR_INVALID:
+		               fprintf(stderr, "\t reason: 'xxx' iterator is invalid\n");
+		               break;
+		           case MB_ERR_INTERNAL:
+		               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+		               break;
+		           default:
+                       fprintf(stderr, "\t MB_Iterator_Delete returned error code: %d (see libmboard docs for details)\n", rc);
+                       break;
+		       }
+
+		       MPI_Abort(MPI_COMM_WORLD, rc);
+               exit(rc);
+		    }
+		    #endif
+		
+
+			if(i == 1)
+			{
+				free_clan_agent(current_xmachine_clan_holder, clan_04_state);
+			}
+			else
+			{
+				transition_clan_agent(current_xmachine_clan_holder, clan_04_state, clan_05_state);
+			}
+		
+
+		current_xmachine_clan = NULL;
+
+		current_xmachine_clan_holder = temp_xmachine_clan_holder;
+	}
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish send_proposal\n");
+
+	if(FLAME_yyy_message_board_write == 1)
+	{
+
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncStart(b_yyy)\n");
+		rc = MB_SyncStart(b_yyy);
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finish MB_SyncStart(b_yyy)\n");
+		#ifdef ERRCHECK
+		if (rc != MB_SUCCESS)
+		{
+		   fprintf(stderr, "ERROR: Could not start sync of 'yyy' board\n");
+		   switch(rc) {
+			   case MB_ERR_INVALID:
+				   fprintf(stderr, "\t reason: 'yyy' board is invalid\n");
+				   break;
+			   case MB_ERR_LOCKED:
+				   fprintf(stderr, "\t reason: 'yyy' board is locked\n");
+				   break;
+			   case MB_ERR_MEMALLOC:
+				   fprintf(stderr, "\t reason: out of memory\n");
+				   break;
+			   case MB_ERR_INTERNAL:
+				   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+				   break;
+			   default:
+				   fprintf(stderr, "\t MB_SyncStart returned error code: %d (see libmboard docs for details)\n", rc);
+				   break;
+		   }
+
+			MPI_Abort(MPI_COMM_WORLD, rc);
+			exit(rc);
+		}
+		#endif
+    }
+    
+
+
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start idle_indv\n");
 	current_xmachine_indv_holder = indv_02_state->agents;
 	while(current_xmachine_indv_holder)
@@ -4839,6 +5134,7 @@ if(FLAME_adultospatch_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_indv = current_xmachine_indv;
 
 		if(FLAME_condition_indv_idle_indv_02_03(current_xmachine_indv)==1)
@@ -4879,6 +5175,7 @@ if(FLAME_adultospatch_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_indv = current_xmachine_indv;
 
 		if(FLAME_condition_indv_getolder_02_03(current_xmachine_indv)==1)
@@ -4905,6 +5202,819 @@ if(FLAME_adultospatch_message_board_read == 0)
 		current_xmachine_indv_holder = temp_xmachine_indv_holder;
 	}
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish getolder\n");
+
+
+/* End of layer number 6 */
+
+/* Clear message boards that have finished being used
+ * and sync complete if doing late sync complete */
+
+if(FLAME_xxx_message_board_read == 0)
+{
+	/*printf("%d> xxx message board sync complete late as no agents reading any messages of this type\n", node_number);*/
+	
+	if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncComplete(b_xxx)\n");
+	rc = MB_SyncComplete(b_xxx);
+	if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finsh MB_SyncComplete(b_xxx)\n");
+	#ifdef ERRCHECK
+	if (rc != MB_SUCCESS)
+	{
+	   fprintf(stderr, "ERROR: Could not complete sync of 'xxx' board\n");
+	   switch(rc) {
+			case MB_ERR_INVALID:
+			   fprintf(stderr, "\t reason: 'xxx' board is invalid\n");
+			   break;
+		   case MB_ERR_MEMALLOC:
+			   fprintf(stderr, "\t reason: out of memory\n");
+			   break;
+		   case MB_ERR_INTERNAL:
+			   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+			   break;
+		   default:
+			   fprintf(stderr, "\t MB_SyncComplete returned error code: %d (see libmboard docs for details)\n", rc);
+			   break;
+	   }
+
+	   MPI_Abort(MPI_COMM_WORLD, rc);
+	   exit(rc);
+	}
+	#endif
+}
+
+    /* Delete any search trees */
+    rc = MB_SearchTree_Delete(&tree_ptr_2d_xxx);
+
+    rc = MB_Clear(b_xxx);
+    #ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not clear 'xxx' board\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'xxx' board is invalid\n");
+               break;
+           case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'xxx' board is locked\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+           default:
+               fprintf(stderr, "\t MB_Clear returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+
+       }
+
+       MPI_Abort(MPI_COMM_WORLD, rc);
+       exit(rc);
+    }
+    #endif
+
+
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start freeIndv\n");
+	current_xmachine_indv_holder = indv_03_state->agents;
+	while(current_xmachine_indv_holder)
+	{
+		temp_xmachine_indv_holder = current_xmachine_indv_holder->next;
+		current_xmachine_indv = current_xmachine_indv_holder->agent;
+		current_xmachine_indv_next_state = indv_04_state;
+		/* For backwards compatibility set current_xmachine */
+		current_xmachine->xmachine_indv = NULL;
+		current_xmachine->xmachine_clan = NULL;
+		current_xmachine->xmachine_patch = NULL;
+		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
+		current_xmachine->xmachine_indv = current_xmachine_indv;
+
+		if(FLAME_condition_indv_freeIndv_03_04(current_xmachine_indv)==1)
+		{
+
+		
+
+			i = freeIndv();
+
+		
+
+			if(i == 1)
+			{
+				free_indv_agent(current_xmachine_indv_holder, indv_03_state);
+			}
+			else
+			{
+				transition_indv_agent(current_xmachine_indv_holder, indv_03_state, indv_04_state);
+			}
+		}
+
+		current_xmachine_indv = NULL;
+
+		current_xmachine_indv_holder = temp_xmachine_indv_holder;
+	}
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish freeIndv\n");
+
+	if(FLAME_ancestor_message_board_write == 1)
+	{
+
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncStart(b_ancestor)\n");
+		rc = MB_SyncStart(b_ancestor);
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finish MB_SyncStart(b_ancestor)\n");
+		#ifdef ERRCHECK
+		if (rc != MB_SUCCESS)
+		{
+		   fprintf(stderr, "ERROR: Could not start sync of 'ancestor' board\n");
+		   switch(rc) {
+			   case MB_ERR_INVALID:
+				   fprintf(stderr, "\t reason: 'ancestor' board is invalid\n");
+				   break;
+			   case MB_ERR_LOCKED:
+				   fprintf(stderr, "\t reason: 'ancestor' board is locked\n");
+				   break;
+			   case MB_ERR_MEMALLOC:
+				   fprintf(stderr, "\t reason: out of memory\n");
+				   break;
+			   case MB_ERR_INTERNAL:
+				   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+				   break;
+			   default:
+				   fprintf(stderr, "\t MB_SyncStart returned error code: %d (see libmboard docs for details)\n", rc);
+				   break;
+		   }
+
+			MPI_Abort(MPI_COMM_WORLD, rc);
+			exit(rc);
+		}
+		#endif
+    }
+    
+
+
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start idle\n");
+	current_xmachine_indv_holder = indv_03_state->agents;
+	while(current_xmachine_indv_holder)
+	{
+		temp_xmachine_indv_holder = current_xmachine_indv_holder->next;
+		current_xmachine_indv = current_xmachine_indv_holder->agent;
+		current_xmachine_indv_next_state = indv_06_state;
+		/* For backwards compatibility set current_xmachine */
+		current_xmachine->xmachine_indv = NULL;
+		current_xmachine->xmachine_clan = NULL;
+		current_xmachine->xmachine_patch = NULL;
+		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
+		current_xmachine->xmachine_indv = current_xmachine_indv;
+
+		if(FLAME_condition_indv_idle_03_06(current_xmachine_indv)==1)
+		{
+
+		
+
+			i = idle();
+
+		
+
+			if(i == 1)
+			{
+				free_indv_agent(current_xmachine_indv_holder, indv_03_state);
+			}
+			else
+			{
+				transition_indv_agent(current_xmachine_indv_holder, indv_03_state, indv_06_state);
+			}
+		}
+
+		current_xmachine_indv = NULL;
+
+		current_xmachine_indv_holder = temp_xmachine_indv_holder;
+	}
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish idle\n");
+
+
+	/* If mb is not read then leave sync complete until last possible moment */
+	if(FLAME_yyy_message_board_read == 1)
+	{
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncComplete(b_yyy)\n");
+		rc = MB_SyncComplete(b_yyy);
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finsh MB_SyncComplete(b_yyy)\n");
+		#ifdef ERRCHECK
+		if (rc != MB_SUCCESS)
+		{
+		   fprintf(stderr, "ERROR: Could not complete sync of 'yyy' board\n");
+		   switch(rc) {
+				case MB_ERR_INVALID:
+				   fprintf(stderr, "\t reason: 'yyy' board is invalid\n");
+				   break;
+			   case MB_ERR_MEMALLOC:
+				   fprintf(stderr, "\t reason: out of memory\n");
+				   break;
+			   case MB_ERR_INTERNAL:
+				   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+				   break;
+			   default:
+				   fprintf(stderr, "\t MB_SyncComplete returned error code: %d (see libmboard docs for details)\n", rc);
+				   break;
+		   }
+	
+		   MPI_Abort(MPI_COMM_WORLD, rc);
+		   exit(rc);
+		}
+		#endif
+    
+    
+    
+	}
+	
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start proposal_acceptation\n");
+	current_xmachine_clan_holder = clan_05_state->agents;
+	while(current_xmachine_clan_holder)
+	{
+		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
+		current_xmachine_clan = current_xmachine_clan_holder->agent;
+		current_xmachine_clan_next_state = clan_06_state;
+		/* For backwards compatibility set current_xmachine */
+		current_xmachine->xmachine_indv = NULL;
+		current_xmachine->xmachine_clan = NULL;
+		current_xmachine->xmachine_patch = NULL;
+		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
+		current_xmachine->xmachine_clan = current_xmachine_clan;
+
+		
+
+		
+		
+          
+                  
+          
+		    rc = MB_Iterator_CreateFiltered(b_yyy, &i_yyy, &FLAME_filter_clan_proposal_acceptation_05_06_yyy, current_xmachine_clan);
+		    
+		  
+		
+		#ifdef ERRCHECK
+		if (rc != MB_SUCCESS)
+		{
+		   fprintf(stderr, "ERROR: Could not create Iterator for 'yyy'\n");
+		   switch(rc) {
+		       case MB_ERR_INVALID:
+		           fprintf(stderr, "\t reason: 'yyy' board is invalid\n");
+		           break;
+		       case MB_ERR_LOCKED:
+	               fprintf(stderr, "\t reason: 'yyy' board is locked\n");
+	               break;
+	           case MB_ERR_MEMALLOC:
+	               fprintf(stderr, "\t reason: out of memory\n");
+	               break;
+	           case MB_ERR_INTERNAL:
+	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+	               break;
+	           default:
+	           
+                   fprintf(stderr, "\t MB_Iterator_CreateFiltered returned error code: %d (see libmboard docs for details)\n", rc);
+               
+               
+                   break;
+		   }
+
+		   MPI_Abort(MPI_COMM_WORLD, rc);
+           exit(rc);
+		}
+		#endif
+		
+		
+
+			i = proposal_acceptation();
+
+		
+		    rc = MB_Iterator_Delete(&i_yyy);
+		    #ifdef ERRCHECK
+		    if (rc != MB_SUCCESS)
+		    {
+		       fprintf(stderr, "ERROR: Could not delete 'yyy' iterator\n");
+		       switch(rc) {
+		           case MB_ERR_INVALID:
+		               fprintf(stderr, "\t reason: 'yyy' iterator is invalid\n");
+		               break;
+		           case MB_ERR_INTERNAL:
+		               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+		               break;
+		           default:
+                       fprintf(stderr, "\t MB_Iterator_Delete returned error code: %d (see libmboard docs for details)\n", rc);
+                       break;
+		       }
+
+		       MPI_Abort(MPI_COMM_WORLD, rc);
+               exit(rc);
+		    }
+		    #endif
+		
+
+			if(i == 1)
+			{
+				free_clan_agent(current_xmachine_clan_holder, clan_05_state);
+			}
+			else
+			{
+				transition_clan_agent(current_xmachine_clan_holder, clan_05_state, clan_06_state);
+			}
+		
+
+		current_xmachine_clan = NULL;
+
+		current_xmachine_clan_holder = temp_xmachine_clan_holder;
+	}
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish proposal_acceptation\n");
+
+
+/* End of layer number 7 */
+
+/* Clear message boards that have finished being used
+ * and sync complete if doing late sync complete */
+
+if(FLAME_yyy_message_board_read == 0)
+{
+	/*printf("%d> yyy message board sync complete late as no agents reading any messages of this type\n", node_number);*/
+	
+	if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncComplete(b_yyy)\n");
+	rc = MB_SyncComplete(b_yyy);
+	if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finsh MB_SyncComplete(b_yyy)\n");
+	#ifdef ERRCHECK
+	if (rc != MB_SUCCESS)
+	{
+	   fprintf(stderr, "ERROR: Could not complete sync of 'yyy' board\n");
+	   switch(rc) {
+			case MB_ERR_INVALID:
+			   fprintf(stderr, "\t reason: 'yyy' board is invalid\n");
+			   break;
+		   case MB_ERR_MEMALLOC:
+			   fprintf(stderr, "\t reason: out of memory\n");
+			   break;
+		   case MB_ERR_INTERNAL:
+			   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+			   break;
+		   default:
+			   fprintf(stderr, "\t MB_SyncComplete returned error code: %d (see libmboard docs for details)\n", rc);
+			   break;
+	   }
+
+	   MPI_Abort(MPI_COMM_WORLD, rc);
+	   exit(rc);
+	}
+	#endif
+}
+
+    /* Delete any search trees */
+
+    rc = MB_Clear(b_yyy);
+    #ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not clear 'yyy' board\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'yyy' board is invalid\n");
+               break;
+           case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'yyy' board is locked\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+           default:
+               fprintf(stderr, "\t MB_Clear returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+
+       }
+
+       MPI_Abort(MPI_COMM_WORLD, rc);
+       exit(rc);
+    }
+    #endif
+
+
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start idle_clan\n");
+	current_xmachine_clan_holder = clan_06_state->agents;
+	while(current_xmachine_clan_holder)
+	{
+		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
+		current_xmachine_clan = current_xmachine_clan_holder->agent;
+		current_xmachine_clan_next_state = clan_07_state;
+		/* For backwards compatibility set current_xmachine */
+		current_xmachine->xmachine_indv = NULL;
+		current_xmachine->xmachine_clan = NULL;
+		current_xmachine->xmachine_patch = NULL;
+		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
+		current_xmachine->xmachine_clan = current_xmachine_clan;
+
+		if(FLAME_condition_clan_idle_clan_06_07(current_xmachine_clan)==1)
+		{
+
+		
+
+			i = idle_clan();
+
+		
+
+			if(i == 1)
+			{
+				free_clan_agent(current_xmachine_clan_holder, clan_06_state);
+			}
+			else
+			{
+				transition_clan_agent(current_xmachine_clan_holder, clan_06_state, clan_07_state);
+			}
+		}
+
+		current_xmachine_clan = NULL;
+
+		current_xmachine_clan_holder = temp_xmachine_clan_holder;
+	}
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish idle_clan\n");
+
+
+	/* If mb is not read then leave sync complete until last possible moment */
+	if(FLAME_guanacospatch_message_board_read == 1)
+	{
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncComplete(b_guanacospatch)\n");
+		rc = MB_SyncComplete(b_guanacospatch);
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finsh MB_SyncComplete(b_guanacospatch)\n");
+		#ifdef ERRCHECK
+		if (rc != MB_SUCCESS)
+		{
+		   fprintf(stderr, "ERROR: Could not complete sync of 'guanacospatch' board\n");
+		   switch(rc) {
+				case MB_ERR_INVALID:
+				   fprintf(stderr, "\t reason: 'guanacospatch' board is invalid\n");
+				   break;
+			   case MB_ERR_MEMALLOC:
+				   fprintf(stderr, "\t reason: out of memory\n");
+				   break;
+			   case MB_ERR_INTERNAL:
+				   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+				   break;
+			   default:
+				   fprintf(stderr, "\t MB_SyncComplete returned error code: %d (see libmboard docs for details)\n", rc);
+				   break;
+		   }
+	
+		   MPI_Abort(MPI_COMM_WORLD, rc);
+		   exit(rc);
+		}
+		#endif
+    /* Built 2d tree */
+    rc = MB_SearchTree_Create2D(b_guanacospatch, &tree_ptr_2d_guanacospatch,
+                           &guanacospatch_message_extract_x,
+                           &guanacospatch_message_extract_y);
+    #ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not create MB_SearchTree_Create2D for 'guanacospatch'\n");
+       MPI_Abort(MPI_COMM_WORLD, rc);
+       exit(rc);
+    }
+    #endif
+    
+    
+	}
+	
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start move_clan\n");
+	current_xmachine_clan_holder = clan_06_state->agents;
+	while(current_xmachine_clan_holder)
+	{
+		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
+		current_xmachine_clan = current_xmachine_clan_holder->agent;
+		current_xmachine_clan_next_state = clan_07_state;
+		/* For backwards compatibility set current_xmachine */
+		current_xmachine->xmachine_indv = NULL;
+		current_xmachine->xmachine_clan = NULL;
+		current_xmachine->xmachine_patch = NULL;
+		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
+		current_xmachine->xmachine_clan = current_xmachine_clan;
+
+		if(FLAME_condition_clan_move_clan_06_07(current_xmachine_clan)==1)
+		{
+
+		
+		
+          /* MB_Iterator 2d tree */
+          rc = MB_SearchTree_Search2D(tree_ptr_2d_guanacospatch, &i_guanacospatch,
+                           (double)current_xmachine_clan->x - (double)2.0,
+                           (double)current_xmachine_clan->x + (double)2.0,
+                           (double)current_xmachine_clan->y - (double)2.0,
+                           (double)current_xmachine_clan->y + (double)2.0);
+                  
+          
+		  
+		
+		#ifdef ERRCHECK
+		if (rc != MB_SUCCESS)
+		{
+		   fprintf(stderr, "ERROR: Could not create Iterator for 'guanacospatch'\n");
+		   switch(rc) {
+		       case MB_ERR_INVALID:
+		           fprintf(stderr, "\t reason: 'guanacospatch' board is invalid\n");
+		           break;
+		       case MB_ERR_LOCKED:
+	               fprintf(stderr, "\t reason: 'guanacospatch' board is locked\n");
+	               break;
+	           case MB_ERR_MEMALLOC:
+	               fprintf(stderr, "\t reason: out of memory\n");
+	               break;
+	           case MB_ERR_INTERNAL:
+	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+	               break;
+	           default:
+	           
+                   fprintf(stderr, "\t MB_Iterator_CreateFiltered returned error code: %d (see libmboard docs for details)\n", rc);
+               
+               
+                   break;
+		   }
+
+		   MPI_Abort(MPI_COMM_WORLD, rc);
+           exit(rc);
+		}
+		#endif
+		
+		
+
+			i = move_clan();
+
+		
+		    rc = MB_Iterator_Delete(&i_guanacospatch);
+		    #ifdef ERRCHECK
+		    if (rc != MB_SUCCESS)
+		    {
+		       fprintf(stderr, "ERROR: Could not delete 'guanacospatch' iterator\n");
+		       switch(rc) {
+		           case MB_ERR_INVALID:
+		               fprintf(stderr, "\t reason: 'guanacospatch' iterator is invalid\n");
+		               break;
+		           case MB_ERR_INTERNAL:
+		               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+		               break;
+		           default:
+                       fprintf(stderr, "\t MB_Iterator_Delete returned error code: %d (see libmboard docs for details)\n", rc);
+                       break;
+		       }
+
+		       MPI_Abort(MPI_COMM_WORLD, rc);
+               exit(rc);
+		    }
+		    #endif
+		
+
+			if(i == 1)
+			{
+				free_clan_agent(current_xmachine_clan_holder, clan_06_state);
+			}
+			else
+			{
+				transition_clan_agent(current_xmachine_clan_holder, clan_06_state, clan_07_state);
+			}
+		}
+
+		current_xmachine_clan = NULL;
+
+		current_xmachine_clan_holder = temp_xmachine_clan_holder;
+	}
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish move_clan\n");
+
+	if(FLAME_clanmove_message_board_write == 1)
+	{
+
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncStart(b_clanmove)\n");
+		rc = MB_SyncStart(b_clanmove);
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finish MB_SyncStart(b_clanmove)\n");
+		#ifdef ERRCHECK
+		if (rc != MB_SUCCESS)
+		{
+		   fprintf(stderr, "ERROR: Could not start sync of 'clanmove' board\n");
+		   switch(rc) {
+			   case MB_ERR_INVALID:
+				   fprintf(stderr, "\t reason: 'clanmove' board is invalid\n");
+				   break;
+			   case MB_ERR_LOCKED:
+				   fprintf(stderr, "\t reason: 'clanmove' board is locked\n");
+				   break;
+			   case MB_ERR_MEMALLOC:
+				   fprintf(stderr, "\t reason: out of memory\n");
+				   break;
+			   case MB_ERR_INTERNAL:
+				   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+				   break;
+			   default:
+				   fprintf(stderr, "\t MB_SyncStart returned error code: %d (see libmboard docs for details)\n", rc);
+				   break;
+		   }
+
+			MPI_Abort(MPI_COMM_WORLD, rc);
+			exit(rc);
+		}
+		#endif
+    }
+    
+
+
+/* End of layer number 8 */
+
+/* Clear message boards that have finished being used
+ * and sync complete if doing late sync complete */
+
+if(FLAME_guanacospatch_message_board_read == 0)
+{
+	/*printf("%d> guanacospatch message board sync complete late as no agents reading any messages of this type\n", node_number);*/
+	
+	if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncComplete(b_guanacospatch)\n");
+	rc = MB_SyncComplete(b_guanacospatch);
+	if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finsh MB_SyncComplete(b_guanacospatch)\n");
+	#ifdef ERRCHECK
+	if (rc != MB_SUCCESS)
+	{
+	   fprintf(stderr, "ERROR: Could not complete sync of 'guanacospatch' board\n");
+	   switch(rc) {
+			case MB_ERR_INVALID:
+			   fprintf(stderr, "\t reason: 'guanacospatch' board is invalid\n");
+			   break;
+		   case MB_ERR_MEMALLOC:
+			   fprintf(stderr, "\t reason: out of memory\n");
+			   break;
+		   case MB_ERR_INTERNAL:
+			   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+			   break;
+		   default:
+			   fprintf(stderr, "\t MB_SyncComplete returned error code: %d (see libmboard docs for details)\n", rc);
+			   break;
+	   }
+
+	   MPI_Abort(MPI_COMM_WORLD, rc);
+	   exit(rc);
+	}
+	#endif
+}
+
+    /* Delete any search trees */
+    rc = MB_SearchTree_Delete(&tree_ptr_2d_guanacospatch);
+
+    rc = MB_Clear(b_guanacospatch);
+    #ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not clear 'guanacospatch' board\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'guanacospatch' board is invalid\n");
+               break;
+           case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'guanacospatch' board is locked\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+           default:
+               fprintf(stderr, "\t MB_Clear returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+
+       }
+
+       MPI_Abort(MPI_COMM_WORLD, rc);
+       exit(rc);
+    }
+    #endif
+
+
+	/* If mb is not read then leave sync complete until last possible moment */
+	if(FLAME_ancestor_message_board_read == 1)
+	{
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncComplete(b_ancestor)\n");
+		rc = MB_SyncComplete(b_ancestor);
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finsh MB_SyncComplete(b_ancestor)\n");
+		#ifdef ERRCHECK
+		if (rc != MB_SUCCESS)
+		{
+		   fprintf(stderr, "ERROR: Could not complete sync of 'ancestor' board\n");
+		   switch(rc) {
+				case MB_ERR_INVALID:
+				   fprintf(stderr, "\t reason: 'ancestor' board is invalid\n");
+				   break;
+			   case MB_ERR_MEMALLOC:
+				   fprintf(stderr, "\t reason: out of memory\n");
+				   break;
+			   case MB_ERR_INTERNAL:
+				   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+				   break;
+			   default:
+				   fprintf(stderr, "\t MB_SyncComplete returned error code: %d (see libmboard docs for details)\n", rc);
+				   break;
+		   }
+	
+		   MPI_Abort(MPI_COMM_WORLD, rc);
+		   exit(rc);
+		}
+		#endif
+    
+    
+    
+	}
+	
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start marriable_indv\n");
+	current_xmachine_clan_holder = clan_07_state->agents;
+	while(current_xmachine_clan_holder)
+	{
+		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
+		current_xmachine_clan = current_xmachine_clan_holder->agent;
+		current_xmachine_clan_next_state = clan_08_state;
+		/* For backwards compatibility set current_xmachine */
+		current_xmachine->xmachine_indv = NULL;
+		current_xmachine->xmachine_clan = NULL;
+		current_xmachine->xmachine_patch = NULL;
+		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
+		current_xmachine->xmachine_clan = current_xmachine_clan;
+
+		
+
+		
+		
+          
+                  
+          
+		    rc = MB_Iterator_CreateFiltered(b_ancestor, &i_ancestor, &FLAME_filter_clan_marriable_indv_07_08_ancestor, current_xmachine_clan);
+		    
+		  
+		
+		#ifdef ERRCHECK
+		if (rc != MB_SUCCESS)
+		{
+		   fprintf(stderr, "ERROR: Could not create Iterator for 'ancestor'\n");
+		   switch(rc) {
+		       case MB_ERR_INVALID:
+		           fprintf(stderr, "\t reason: 'ancestor' board is invalid\n");
+		           break;
+		       case MB_ERR_LOCKED:
+	               fprintf(stderr, "\t reason: 'ancestor' board is locked\n");
+	               break;
+	           case MB_ERR_MEMALLOC:
+	               fprintf(stderr, "\t reason: out of memory\n");
+	               break;
+	           case MB_ERR_INTERNAL:
+	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+	               break;
+	           default:
+	           
+                   fprintf(stderr, "\t MB_Iterator_CreateFiltered returned error code: %d (see libmboard docs for details)\n", rc);
+               
+               
+                   break;
+		   }
+
+		   MPI_Abort(MPI_COMM_WORLD, rc);
+           exit(rc);
+		}
+		#endif
+		
+		
+
+			i = marriable_indv();
+
+		
+		    rc = MB_Iterator_Delete(&i_ancestor);
+		    #ifdef ERRCHECK
+		    if (rc != MB_SUCCESS)
+		    {
+		       fprintf(stderr, "ERROR: Could not delete 'ancestor' iterator\n");
+		       switch(rc) {
+		           case MB_ERR_INVALID:
+		               fprintf(stderr, "\t reason: 'ancestor' iterator is invalid\n");
+		               break;
+		           case MB_ERR_INTERNAL:
+		               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+		               break;
+		           default:
+                       fprintf(stderr, "\t MB_Iterator_Delete returned error code: %d (see libmboard docs for details)\n", rc);
+                       break;
+		       }
+
+		       MPI_Abort(MPI_COMM_WORLD, rc);
+               exit(rc);
+		    }
+		    #endif
+		
+
+			if(i == 1)
+			{
+				free_clan_agent(current_xmachine_clan_holder, clan_07_state);
+			}
+			else
+			{
+				transition_clan_agent(current_xmachine_clan_holder, clan_07_state, clan_08_state);
+			}
+		
+
+		current_xmachine_clan = NULL;
+
+		current_xmachine_clan_holder = temp_xmachine_clan_holder;
+	}
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish marriable_indv\n");
 
 
 	/* If mb is not read then leave sync complete until last possible moment */
@@ -4953,6 +6063,7 @@ if(FLAME_adultospatch_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_patch = current_xmachine_patch;
 
 		
@@ -5041,10 +6152,70 @@ if(FLAME_adultospatch_message_board_read == 0)
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish clans_move\n");
 
 
-/* End of layer number 6 */
+/* End of layer number 9 */
 
 /* Clear message boards that have finished being used
  * and sync complete if doing late sync complete */
+
+if(FLAME_ancestor_message_board_read == 0)
+{
+	/*printf("%d> ancestor message board sync complete late as no agents reading any messages of this type\n", node_number);*/
+	
+	if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncComplete(b_ancestor)\n");
+	rc = MB_SyncComplete(b_ancestor);
+	if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finsh MB_SyncComplete(b_ancestor)\n");
+	#ifdef ERRCHECK
+	if (rc != MB_SUCCESS)
+	{
+	   fprintf(stderr, "ERROR: Could not complete sync of 'ancestor' board\n");
+	   switch(rc) {
+			case MB_ERR_INVALID:
+			   fprintf(stderr, "\t reason: 'ancestor' board is invalid\n");
+			   break;
+		   case MB_ERR_MEMALLOC:
+			   fprintf(stderr, "\t reason: out of memory\n");
+			   break;
+		   case MB_ERR_INTERNAL:
+			   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+			   break;
+		   default:
+			   fprintf(stderr, "\t MB_SyncComplete returned error code: %d (see libmboard docs for details)\n", rc);
+			   break;
+	   }
+
+	   MPI_Abort(MPI_COMM_WORLD, rc);
+	   exit(rc);
+	}
+	#endif
+}
+
+    /* Delete any search trees */
+
+    rc = MB_Clear(b_ancestor);
+    #ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not clear 'ancestor' board\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'ancestor' board is invalid\n");
+               break;
+           case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'ancestor' board is locked\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+           default:
+               fprintf(stderr, "\t MB_Clear returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+
+       }
+
+       MPI_Abort(MPI_COMM_WORLD, rc);
+       exit(rc);
+    }
+    #endif
 
 if(FLAME_clanmove_message_board_read == 0)
 {
@@ -5107,61 +6278,61 @@ if(FLAME_clanmove_message_board_read == 0)
     #endif
 
 
-	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start freeIndv\n");
-	current_xmachine_indv_holder = indv_03_state->agents;
-	while(current_xmachine_indv_holder)
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start send_girls\n");
+	current_xmachine_clan_holder = clan_08_state->agents;
+	while(current_xmachine_clan_holder)
 	{
-		temp_xmachine_indv_holder = current_xmachine_indv_holder->next;
-		current_xmachine_indv = current_xmachine_indv_holder->agent;
-		current_xmachine_indv_next_state = indv_04_state;
+		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
+		current_xmachine_clan = current_xmachine_clan_holder->agent;
+		current_xmachine_clan_next_state = clan_09_state;
 		/* For backwards compatibility set current_xmachine */
 		current_xmachine->xmachine_indv = NULL;
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
-		current_xmachine->xmachine_indv = current_xmachine_indv;
-
-		if(FLAME_condition_indv_freeIndv_03_04(current_xmachine_indv)==1)
-		{
+		current_xmachine->xmachine_hunting = NULL;
+		current_xmachine->xmachine_clan = current_xmachine_clan;
 
 		
 
-			i = freeIndv();
+		
+
+			i = send_girls();
 
 		
 
 			if(i == 1)
 			{
-				free_indv_agent(current_xmachine_indv_holder, indv_03_state);
+				free_clan_agent(current_xmachine_clan_holder, clan_08_state);
 			}
 			else
 			{
-				transition_indv_agent(current_xmachine_indv_holder, indv_03_state, indv_04_state);
+				transition_clan_agent(current_xmachine_clan_holder, clan_08_state, clan_09_state);
 			}
-		}
+		
 
-		current_xmachine_indv = NULL;
+		current_xmachine_clan = NULL;
 
-		current_xmachine_indv_holder = temp_xmachine_indv_holder;
+		current_xmachine_clan_holder = temp_xmachine_clan_holder;
 	}
-	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish freeIndv\n");
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish send_girls\n");
 
-	if(FLAME_ancestor_message_board_write == 1)
+	if(FLAME_freeGirls_message_board_write == 1)
 	{
 
-		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncStart(b_ancestor)\n");
-		rc = MB_SyncStart(b_ancestor);
-		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finish MB_SyncStart(b_ancestor)\n");
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncStart(b_freeGirls)\n");
+		rc = MB_SyncStart(b_freeGirls);
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finish MB_SyncStart(b_freeGirls)\n");
 		#ifdef ERRCHECK
 		if (rc != MB_SUCCESS)
 		{
-		   fprintf(stderr, "ERROR: Could not start sync of 'ancestor' board\n");
+		   fprintf(stderr, "ERROR: Could not start sync of 'freeGirls' board\n");
 		   switch(rc) {
 			   case MB_ERR_INVALID:
-				   fprintf(stderr, "\t reason: 'ancestor' board is invalid\n");
+				   fprintf(stderr, "\t reason: 'freeGirls' board is invalid\n");
 				   break;
 			   case MB_ERR_LOCKED:
-				   fprintf(stderr, "\t reason: 'ancestor' board is locked\n");
+				   fprintf(stderr, "\t reason: 'freeGirls' board is locked\n");
 				   break;
 			   case MB_ERR_MEMALLOC:
 				   fprintf(stderr, "\t reason: out of memory\n");
@@ -5194,6 +6365,7 @@ if(FLAME_clanmove_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_patch = current_xmachine_patch;
 
 		if(FLAME_condition_patch_idle_patch_7_end(current_xmachine_patch)==1)
@@ -5220,46 +6392,6 @@ if(FLAME_clanmove_message_board_read == 0)
 		current_xmachine_patch_holder = temp_xmachine_patch_holder;
 	}
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish idle_patch\n");
-
-
-	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start idle\n");
-	current_xmachine_indv_holder = indv_03_state->agents;
-	while(current_xmachine_indv_holder)
-	{
-		temp_xmachine_indv_holder = current_xmachine_indv_holder->next;
-		current_xmachine_indv = current_xmachine_indv_holder->agent;
-		current_xmachine_indv_next_state = indv_06_state;
-		/* For backwards compatibility set current_xmachine */
-		current_xmachine->xmachine_indv = NULL;
-		current_xmachine->xmachine_clan = NULL;
-		current_xmachine->xmachine_patch = NULL;
-		current_xmachine->xmachine_manada_guanacos = NULL;
-		current_xmachine->xmachine_indv = current_xmachine_indv;
-
-		if(FLAME_condition_indv_idle_03_06(current_xmachine_indv)==1)
-		{
-
-		
-
-			i = idle();
-
-		
-
-			if(i == 1)
-			{
-				free_indv_agent(current_xmachine_indv_holder, indv_03_state);
-			}
-			else
-			{
-				transition_indv_agent(current_xmachine_indv_holder, indv_03_state, indv_06_state);
-			}
-		}
-
-		current_xmachine_indv = NULL;
-
-		current_xmachine_indv_holder = temp_xmachine_indv_holder;
-	}
-	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish idle\n");
 
 
 	/* If mb is not read then leave sync complete until last possible moment */
@@ -5308,6 +6440,7 @@ if(FLAME_clanmove_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_patch = current_xmachine_patch;
 
 		if(FLAME_condition_patch_reproduccion_guanacos_7_end(current_xmachine_patch)==1)
@@ -5397,7 +6530,7 @@ if(FLAME_clanmove_message_board_read == 0)
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish reproduccion_guanacos\n");
 
 
-/* End of layer number 7 */
+/* End of layer number 10 */
 
 /* Clear message boards that have finished being used
  * and sync complete if doing late sync complete */
@@ -5464,286 +6597,6 @@ if(FLAME_reproduccionguanacos_message_board_read == 0)
 
 
 	/* If mb is not read then leave sync complete until last possible moment */
-	if(FLAME_ancestor_message_board_read == 1)
-	{
-		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncComplete(b_ancestor)\n");
-		rc = MB_SyncComplete(b_ancestor);
-		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finsh MB_SyncComplete(b_ancestor)\n");
-		#ifdef ERRCHECK
-		if (rc != MB_SUCCESS)
-		{
-		   fprintf(stderr, "ERROR: Could not complete sync of 'ancestor' board\n");
-		   switch(rc) {
-				case MB_ERR_INVALID:
-				   fprintf(stderr, "\t reason: 'ancestor' board is invalid\n");
-				   break;
-			   case MB_ERR_MEMALLOC:
-				   fprintf(stderr, "\t reason: out of memory\n");
-				   break;
-			   case MB_ERR_INTERNAL:
-				   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
-				   break;
-			   default:
-				   fprintf(stderr, "\t MB_SyncComplete returned error code: %d (see libmboard docs for details)\n", rc);
-				   break;
-		   }
-	
-		   MPI_Abort(MPI_COMM_WORLD, rc);
-		   exit(rc);
-		}
-		#endif
-    
-    
-    
-	}
-	
-	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start marriable_indv\n");
-	current_xmachine_clan_holder = clan_04_state->agents;
-	while(current_xmachine_clan_holder)
-	{
-		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
-		current_xmachine_clan = current_xmachine_clan_holder->agent;
-		current_xmachine_clan_next_state = clan_05_state;
-		/* For backwards compatibility set current_xmachine */
-		current_xmachine->xmachine_indv = NULL;
-		current_xmachine->xmachine_clan = NULL;
-		current_xmachine->xmachine_patch = NULL;
-		current_xmachine->xmachine_manada_guanacos = NULL;
-		current_xmachine->xmachine_clan = current_xmachine_clan;
-
-		
-
-		
-		
-          
-                  
-          
-		    rc = MB_Iterator_CreateFiltered(b_ancestor, &i_ancestor, &FLAME_filter_clan_marriable_indv_04_05_ancestor, current_xmachine_clan);
-		    
-		  
-		
-		#ifdef ERRCHECK
-		if (rc != MB_SUCCESS)
-		{
-		   fprintf(stderr, "ERROR: Could not create Iterator for 'ancestor'\n");
-		   switch(rc) {
-		       case MB_ERR_INVALID:
-		           fprintf(stderr, "\t reason: 'ancestor' board is invalid\n");
-		           break;
-		       case MB_ERR_LOCKED:
-	               fprintf(stderr, "\t reason: 'ancestor' board is locked\n");
-	               break;
-	           case MB_ERR_MEMALLOC:
-	               fprintf(stderr, "\t reason: out of memory\n");
-	               break;
-	           case MB_ERR_INTERNAL:
-	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
-	               break;
-	           default:
-	           
-                   fprintf(stderr, "\t MB_Iterator_CreateFiltered returned error code: %d (see libmboard docs for details)\n", rc);
-               
-               
-                   break;
-		   }
-
-		   MPI_Abort(MPI_COMM_WORLD, rc);
-           exit(rc);
-		}
-		#endif
-		
-		
-
-			i = marriable_indv();
-
-		
-		    rc = MB_Iterator_Delete(&i_ancestor);
-		    #ifdef ERRCHECK
-		    if (rc != MB_SUCCESS)
-		    {
-		       fprintf(stderr, "ERROR: Could not delete 'ancestor' iterator\n");
-		       switch(rc) {
-		           case MB_ERR_INVALID:
-		               fprintf(stderr, "\t reason: 'ancestor' iterator is invalid\n");
-		               break;
-		           case MB_ERR_INTERNAL:
-		               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
-		               break;
-		           default:
-                       fprintf(stderr, "\t MB_Iterator_Delete returned error code: %d (see libmboard docs for details)\n", rc);
-                       break;
-		       }
-
-		       MPI_Abort(MPI_COMM_WORLD, rc);
-               exit(rc);
-		    }
-		    #endif
-		
-
-			if(i == 1)
-			{
-				free_clan_agent(current_xmachine_clan_holder, clan_04_state);
-			}
-			else
-			{
-				transition_clan_agent(current_xmachine_clan_holder, clan_04_state, clan_05_state);
-			}
-		
-
-		current_xmachine_clan = NULL;
-
-		current_xmachine_clan_holder = temp_xmachine_clan_holder;
-	}
-	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish marriable_indv\n");
-
-
-/* End of layer number 8 */
-
-/* Clear message boards that have finished being used
- * and sync complete if doing late sync complete */
-
-if(FLAME_ancestor_message_board_read == 0)
-{
-	/*printf("%d> ancestor message board sync complete late as no agents reading any messages of this type\n", node_number);*/
-	
-	if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncComplete(b_ancestor)\n");
-	rc = MB_SyncComplete(b_ancestor);
-	if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finsh MB_SyncComplete(b_ancestor)\n");
-	#ifdef ERRCHECK
-	if (rc != MB_SUCCESS)
-	{
-	   fprintf(stderr, "ERROR: Could not complete sync of 'ancestor' board\n");
-	   switch(rc) {
-			case MB_ERR_INVALID:
-			   fprintf(stderr, "\t reason: 'ancestor' board is invalid\n");
-			   break;
-		   case MB_ERR_MEMALLOC:
-			   fprintf(stderr, "\t reason: out of memory\n");
-			   break;
-		   case MB_ERR_INTERNAL:
-			   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
-			   break;
-		   default:
-			   fprintf(stderr, "\t MB_SyncComplete returned error code: %d (see libmboard docs for details)\n", rc);
-			   break;
-	   }
-
-	   MPI_Abort(MPI_COMM_WORLD, rc);
-	   exit(rc);
-	}
-	#endif
-}
-
-    /* Delete any search trees */
-
-    rc = MB_Clear(b_ancestor);
-    #ifdef ERRCHECK
-    if (rc != MB_SUCCESS)
-    {
-       fprintf(stderr, "ERROR: Could not clear 'ancestor' board\n");
-       switch(rc) {
-           case MB_ERR_INVALID:
-               fprintf(stderr, "\t reason: 'ancestor' board is invalid\n");
-               break;
-           case MB_ERR_LOCKED:
-               fprintf(stderr, "\t reason: 'ancestor' board is locked\n");
-               break;
-           case MB_ERR_INTERNAL:
-               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
-               break;
-           default:
-               fprintf(stderr, "\t MB_Clear returned error code: %d (see libmboard docs for details)\n", rc);
-               break;
-
-       }
-
-       MPI_Abort(MPI_COMM_WORLD, rc);
-       exit(rc);
-    }
-    #endif
-
-
-	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start send_girls\n");
-	current_xmachine_clan_holder = clan_05_state->agents;
-	while(current_xmachine_clan_holder)
-	{
-		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
-		current_xmachine_clan = current_xmachine_clan_holder->agent;
-		current_xmachine_clan_next_state = clan_06_state;
-		/* For backwards compatibility set current_xmachine */
-		current_xmachine->xmachine_indv = NULL;
-		current_xmachine->xmachine_clan = NULL;
-		current_xmachine->xmachine_patch = NULL;
-		current_xmachine->xmachine_manada_guanacos = NULL;
-		current_xmachine->xmachine_clan = current_xmachine_clan;
-
-		
-
-		
-
-			i = send_girls();
-
-		
-
-			if(i == 1)
-			{
-				free_clan_agent(current_xmachine_clan_holder, clan_05_state);
-			}
-			else
-			{
-				transition_clan_agent(current_xmachine_clan_holder, clan_05_state, clan_06_state);
-			}
-		
-
-		current_xmachine_clan = NULL;
-
-		current_xmachine_clan_holder = temp_xmachine_clan_holder;
-	}
-	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish send_girls\n");
-
-	if(FLAME_freeGirls_message_board_write == 1)
-	{
-
-		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncStart(b_freeGirls)\n");
-		rc = MB_SyncStart(b_freeGirls);
-		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finish MB_SyncStart(b_freeGirls)\n");
-		#ifdef ERRCHECK
-		if (rc != MB_SUCCESS)
-		{
-		   fprintf(stderr, "ERROR: Could not start sync of 'freeGirls' board\n");
-		   switch(rc) {
-			   case MB_ERR_INVALID:
-				   fprintf(stderr, "\t reason: 'freeGirls' board is invalid\n");
-				   break;
-			   case MB_ERR_LOCKED:
-				   fprintf(stderr, "\t reason: 'freeGirls' board is locked\n");
-				   break;
-			   case MB_ERR_MEMALLOC:
-				   fprintf(stderr, "\t reason: out of memory\n");
-				   break;
-			   case MB_ERR_INTERNAL:
-				   fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
-				   break;
-			   default:
-				   fprintf(stderr, "\t MB_SyncStart returned error code: %d (see libmboard docs for details)\n", rc);
-				   break;
-		   }
-
-			MPI_Abort(MPI_COMM_WORLD, rc);
-			exit(rc);
-		}
-		#endif
-    }
-    
-
-
-/* End of layer number 9 */
-
-/* Clear message boards that have finished being used
- * and sync complete if doing late sync complete */
-
-
-	/* If mb is not read then leave sync complete until last possible moment */
 	if(FLAME_freeGirls_message_board_read == 1)
 	{
 		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncComplete(b_freeGirls)\n");
@@ -5789,17 +6642,18 @@ if(FLAME_ancestor_message_board_read == 0)
 	}
 	
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start match\n");
-	current_xmachine_clan_holder = clan_06_state->agents;
+	current_xmachine_clan_holder = clan_09_state->agents;
 	while(current_xmachine_clan_holder)
 	{
 		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
 		current_xmachine_clan = current_xmachine_clan_holder->agent;
-		current_xmachine_clan_next_state = clan_07_state;
+		current_xmachine_clan_next_state = clan_10_state;
 		/* For backwards compatibility set current_xmachine */
 		current_xmachine->xmachine_indv = NULL;
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_clan = current_xmachine_clan;
 
 		
@@ -5876,11 +6730,11 @@ if(FLAME_ancestor_message_board_read == 0)
 
 			if(i == 1)
 			{
-				free_clan_agent(current_xmachine_clan_holder, clan_06_state);
+				free_clan_agent(current_xmachine_clan_holder, clan_09_state);
 			}
 			else
 			{
-				transition_clan_agent(current_xmachine_clan_holder, clan_06_state, clan_07_state);
+				transition_clan_agent(current_xmachine_clan_holder, clan_09_state, clan_10_state);
 			}
 		
 
@@ -5926,7 +6780,7 @@ if(FLAME_ancestor_message_board_read == 0)
     
 
 
-/* End of layer number 10 */
+/* End of layer number 11 */
 
 /* Clear message boards that have finished being used
  * and sync complete if doing late sync complete */
@@ -6028,17 +6882,18 @@ if(FLAME_freeGirls_message_board_read == 0)
 	}
 	
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start aceptar_prop\n");
-	current_xmachine_clan_holder = clan_07_state->agents;
+	current_xmachine_clan_holder = clan_10_state->agents;
 	while(current_xmachine_clan_holder)
 	{
 		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
 		current_xmachine_clan = current_xmachine_clan_holder->agent;
-		current_xmachine_clan_next_state = clan_08_state;
+		current_xmachine_clan_next_state = clan_11_state;
 		/* For backwards compatibility set current_xmachine */
 		current_xmachine->xmachine_indv = NULL;
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_clan = current_xmachine_clan;
 
 		
@@ -6048,7 +6903,7 @@ if(FLAME_freeGirls_message_board_read == 0)
           
                   
           
-		    rc = MB_Iterator_CreateFiltered(b_propuesta, &i_propuesta, &FLAME_filter_clan_aceptar_prop_07_08_propuesta, current_xmachine_clan);
+		    rc = MB_Iterator_CreateFiltered(b_propuesta, &i_propuesta, &FLAME_filter_clan_aceptar_prop_10_11_propuesta, current_xmachine_clan);
 		    
 		  
 		
@@ -6112,11 +6967,11 @@ if(FLAME_freeGirls_message_board_read == 0)
 
 			if(i == 1)
 			{
-				free_clan_agent(current_xmachine_clan_holder, clan_07_state);
+				free_clan_agent(current_xmachine_clan_holder, clan_10_state);
 			}
 			else
 			{
-				transition_clan_agent(current_xmachine_clan_holder, clan_07_state, clan_08_state);
+				transition_clan_agent(current_xmachine_clan_holder, clan_10_state, clan_11_state);
 			}
 		
 
@@ -6162,7 +7017,7 @@ if(FLAME_freeGirls_message_board_read == 0)
     
 
 
-/* End of layer number 11 */
+/* End of layer number 12 */
 
 /* Clear message boards that have finished being used
  * and sync complete if doing late sync complete */
@@ -6263,17 +7118,18 @@ if(FLAME_propuesta_message_board_read == 0)
 	}
 	
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start recive_conf\n");
-	current_xmachine_clan_holder = clan_08_state->agents;
+	current_xmachine_clan_holder = clan_11_state->agents;
 	while(current_xmachine_clan_holder)
 	{
 		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
 		current_xmachine_clan = current_xmachine_clan_holder->agent;
-		current_xmachine_clan_next_state = clan_09_state;
+		current_xmachine_clan_next_state = clan_12_state;
 		/* For backwards compatibility set current_xmachine */
 		current_xmachine->xmachine_indv = NULL;
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_clan = current_xmachine_clan;
 
 		
@@ -6283,7 +7139,7 @@ if(FLAME_propuesta_message_board_read == 0)
           
                   
           
-		    rc = MB_Iterator_CreateFiltered(b_confirProp, &i_confirProp, &FLAME_filter_clan_recive_conf_08_09_confirProp, current_xmachine_clan);
+		    rc = MB_Iterator_CreateFiltered(b_confirProp, &i_confirProp, &FLAME_filter_clan_recive_conf_11_12_confirProp, current_xmachine_clan);
 		    
 		  
 		
@@ -6347,11 +7203,11 @@ if(FLAME_propuesta_message_board_read == 0)
 
 			if(i == 1)
 			{
-				free_clan_agent(current_xmachine_clan_holder, clan_08_state);
+				free_clan_agent(current_xmachine_clan_holder, clan_11_state);
 			}
 			else
 			{
-				transition_clan_agent(current_xmachine_clan_holder, clan_08_state, clan_09_state);
+				transition_clan_agent(current_xmachine_clan_holder, clan_11_state, clan_12_state);
 			}
 		
 
@@ -6397,7 +7253,7 @@ if(FLAME_propuesta_message_board_read == 0)
     
 
 
-/* End of layer number 12 */
+/* End of layer number 13 */
 
 /* Clear message boards that have finished being used
  * and sync complete if doing late sync complete */
@@ -6509,6 +7365,7 @@ if(FLAME_confirProp_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_indv = current_xmachine_indv;
 
 		if(FLAME_condition_indv_casamiento_male_04_06(current_xmachine_indv)==1)
@@ -6645,6 +7502,7 @@ if(FLAME_confirProp_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_indv = current_xmachine_indv;
 
 		if(FLAME_condition_indv_casamiento_female_04_05(current_xmachine_indv)==1)
@@ -6734,7 +7592,7 @@ if(FLAME_confirProp_message_board_read == 0)
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish casamiento_female\n");
 
 
-/* End of layer number 13 */
+/* End of layer number 14 */
 
 /* Clear message boards that have finished being used
  * and sync complete if doing late sync complete */
@@ -6812,6 +7670,7 @@ if(FLAME_marriage_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_indv = current_xmachine_indv;
 
 		if(FLAME_condition_indv_idle_05_06(current_xmachine_indv)==1)
@@ -6886,6 +7745,7 @@ if(FLAME_marriage_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_indv = current_xmachine_indv;
 
 		if(FLAME_condition_indv_info_husband_05_06(current_xmachine_indv)==1)
@@ -6975,7 +7835,7 @@ if(FLAME_marriage_message_board_read == 0)
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish info_husband\n");
 
 
-/* End of layer number 14 */
+/* End of layer number 15 */
 
 /* Clear message boards that have finished being used
  * and sync complete if doing late sync complete */
@@ -7053,6 +7913,7 @@ if(FLAME_family_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_indv = current_xmachine_indv;
 
 		if(FLAME_condition_indv_idle_06_07(current_xmachine_indv)==1)
@@ -7093,6 +7954,7 @@ if(FLAME_family_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_indv = current_xmachine_indv;
 
 		if(FLAME_condition_indv_pregnancy_06_09(current_xmachine_indv)==1)
@@ -7121,7 +7983,7 @@ if(FLAME_family_message_board_read == 0)
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish pregnancy\n");
 
 
-/* End of layer number 15 */
+/* End of layer number 16 */
 
 /* Clear message boards that have finished being used
  * and sync complete if doing late sync complete */
@@ -7139,6 +8001,7 @@ if(FLAME_family_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_indv = current_xmachine_indv;
 
 		if(FLAME_condition_indv_child_inf_07_08(current_xmachine_indv)==1)
@@ -7214,6 +8077,7 @@ if(FLAME_family_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_indv = current_xmachine_indv;
 
 		if(FLAME_condition_indv_idle_07_09(current_xmachine_indv)==1)
@@ -7242,7 +8106,7 @@ if(FLAME_family_message_board_read == 0)
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish idle\n");
 
 
-/* End of layer number 16 */
+/* End of layer number 17 */
 
 /* Clear message boards that have finished being used
  * and sync complete if doing late sync complete */
@@ -7283,17 +8147,18 @@ if(FLAME_family_message_board_read == 0)
 	}
 	
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start repartir_id\n");
-	current_xmachine_clan_holder = clan_09_state->agents;
+	current_xmachine_clan_holder = clan_12_state->agents;
 	while(current_xmachine_clan_holder)
 	{
 		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
 		current_xmachine_clan = current_xmachine_clan_holder->agent;
-		current_xmachine_clan_next_state = clan_10_state;
+		current_xmachine_clan_next_state = clan_13_state;
 		/* For backwards compatibility set current_xmachine */
 		current_xmachine->xmachine_indv = NULL;
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_clan = current_xmachine_clan;
 
 		
@@ -7303,7 +8168,7 @@ if(FLAME_family_message_board_read == 0)
           
                   
           
-		    rc = MB_Iterator_CreateFiltered(b_peticionID, &i_peticionID, &FLAME_filter_clan_repartir_id_09_10_peticionID, current_xmachine_clan);
+		    rc = MB_Iterator_CreateFiltered(b_peticionID, &i_peticionID, &FLAME_filter_clan_repartir_id_12_13_peticionID, current_xmachine_clan);
 		    
 		  
 		
@@ -7367,11 +8232,11 @@ if(FLAME_family_message_board_read == 0)
 
 			if(i == 1)
 			{
-				free_clan_agent(current_xmachine_clan_holder, clan_09_state);
+				free_clan_agent(current_xmachine_clan_holder, clan_12_state);
 			}
 			else
 			{
-				transition_clan_agent(current_xmachine_clan_holder, clan_09_state, clan_10_state);
+				transition_clan_agent(current_xmachine_clan_holder, clan_12_state, clan_13_state);
 			}
 		
 
@@ -7417,7 +8282,7 @@ if(FLAME_family_message_board_read == 0)
     
 
 
-/* End of layer number 17 */
+/* End of layer number 18 */
 
 /* Clear message boards that have finished being used
  * and sync complete if doing late sync complete */
@@ -7529,6 +8394,7 @@ if(FLAME_peticionID_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_indv = current_xmachine_indv;
 
 		
@@ -7617,7 +8483,7 @@ if(FLAME_peticionID_message_board_read == 0)
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish birth\n");
 
 
-/* End of layer number 18 */
+/* End of layer number 19 */
 
 /* Clear message boards that have finished being used
  * and sync complete if doing late sync complete */
@@ -7695,6 +8561,7 @@ if(FLAME_respuestaID_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_indv = current_xmachine_indv;
 
 		
@@ -7792,7 +8659,7 @@ if(FLAME_respuestaID_message_board_read == 0)
     
 
 
-/* End of layer number 19 */
+/* End of layer number 20 */
 
 /* Clear message boards that have finished being used
  * and sync complete if doing late sync complete */
@@ -7844,6 +8711,7 @@ if(FLAME_respuestaID_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_indv = current_xmachine_indv;
 
 		
@@ -7967,17 +8835,18 @@ if(FLAME_respuestaID_message_board_read == 0)
 	}
 	
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start new_leader\n");
-	current_xmachine_clan_holder = clan_10_state->agents;
+	current_xmachine_clan_holder = clan_13_state->agents;
 	while(current_xmachine_clan_holder)
 	{
 		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
 		current_xmachine_clan = current_xmachine_clan_holder->agent;
-		current_xmachine_clan_next_state = clan_11_state;
+		current_xmachine_clan_next_state = clan_14_state;
 		/* For backwards compatibility set current_xmachine */
 		current_xmachine->xmachine_indv = NULL;
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_clan = current_xmachine_clan;
 
 		
@@ -7987,7 +8856,7 @@ if(FLAME_respuestaID_message_board_read == 0)
           
                   
           
-		    rc = MB_Iterator_CreateFiltered(b_leader, &i_leader, &FLAME_filter_clan_new_leader_10_11_leader, current_xmachine_clan);
+		    rc = MB_Iterator_CreateFiltered(b_leader, &i_leader, &FLAME_filter_clan_new_leader_13_14_leader, current_xmachine_clan);
 		    
 		  
 		
@@ -8051,11 +8920,11 @@ if(FLAME_respuestaID_message_board_read == 0)
 
 			if(i == 1)
 			{
-				free_clan_agent(current_xmachine_clan_holder, clan_10_state);
+				free_clan_agent(current_xmachine_clan_holder, clan_13_state);
 			}
 			else
 			{
-				transition_clan_agent(current_xmachine_clan_holder, clan_10_state, clan_11_state);
+				transition_clan_agent(current_xmachine_clan_holder, clan_13_state, clan_14_state);
 			}
 		
 
@@ -8066,7 +8935,7 @@ if(FLAME_respuestaID_message_board_read == 0)
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish new_leader\n");
 
 
-/* End of layer number 20 */
+/* End of layer number 21 */
 
 /* Clear message boards that have finished being used
  * and sync complete if doing late sync complete */
@@ -8204,6 +9073,7 @@ if(FLAME_death_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_indv = current_xmachine_indv;
 
 		if(FLAME_condition_indv_husband_request_11_12(current_xmachine_indv)==1)
@@ -8279,6 +9149,7 @@ if(FLAME_death_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_indv = current_xmachine_indv;
 
 		if(FLAME_condition_indv_idle_11_12(current_xmachine_indv)==1)
@@ -8307,7 +9178,7 @@ if(FLAME_death_message_board_read == 0)
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish idle\n");
 
 
-/* End of layer number 21 */
+/* End of layer number 22 */
 
 /* Clear message boards that have finished being used
  * and sync complete if doing late sync complete */
@@ -8348,17 +9219,18 @@ if(FLAME_death_message_board_read == 0)
 	}
 	
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start again_marriable\n");
-	current_xmachine_clan_holder = clan_11_state->agents;
+	current_xmachine_clan_holder = clan_14_state->agents;
 	while(current_xmachine_clan_holder)
 	{
 		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
 		current_xmachine_clan = current_xmachine_clan_holder->agent;
-		current_xmachine_clan_next_state = clan_12_state;
+		current_xmachine_clan_next_state = clan_15_state;
 		/* For backwards compatibility set current_xmachine */
 		current_xmachine->xmachine_indv = NULL;
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_clan = current_xmachine_clan;
 
 		
@@ -8368,7 +9240,7 @@ if(FLAME_death_message_board_read == 0)
           
                   
           
-		    rc = MB_Iterator_CreateFiltered(b_widow, &i_widow, &FLAME_filter_clan_again_marriable_11_12_widow, current_xmachine_clan);
+		    rc = MB_Iterator_CreateFiltered(b_widow, &i_widow, &FLAME_filter_clan_again_marriable_14_15_widow, current_xmachine_clan);
 		    
 		  
 		
@@ -8432,11 +9304,11 @@ if(FLAME_death_message_board_read == 0)
 
 			if(i == 1)
 			{
-				free_clan_agent(current_xmachine_clan_holder, clan_11_state);
+				free_clan_agent(current_xmachine_clan_holder, clan_14_state);
 			}
 			else
 			{
-				transition_clan_agent(current_xmachine_clan_holder, clan_11_state, clan_12_state);
+				transition_clan_agent(current_xmachine_clan_holder, clan_14_state, clan_15_state);
 			}
 		
 
@@ -8494,6 +9366,7 @@ if(FLAME_death_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_indv = current_xmachine_indv;
 
 		if(FLAME_condition_indv_idle_12_13(current_xmachine_indv)==1)
@@ -8522,7 +9395,7 @@ if(FLAME_death_message_board_read == 0)
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish idle\n");
 
 
-/* End of layer number 22 */
+/* End of layer number 23 */
 
 /* Clear message boards that have finished being used
  * and sync complete if doing late sync complete */
@@ -8589,20 +9462,21 @@ if(FLAME_widow_message_board_read == 0)
 
 
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start dividir_clan\n");
-	current_xmachine_clan_holder = clan_12_state->agents;
+	current_xmachine_clan_holder = clan_15_state->agents;
 	while(current_xmachine_clan_holder)
 	{
 		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
 		current_xmachine_clan = current_xmachine_clan_holder->agent;
-		current_xmachine_clan_next_state = clan_13_state;
+		current_xmachine_clan_next_state = clan_16_state;
 		/* For backwards compatibility set current_xmachine */
 		current_xmachine->xmachine_indv = NULL;
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_clan = current_xmachine_clan;
 
-		if(FLAME_condition_clan_dividir_clan_12_13(current_xmachine_clan)==1)
+		if(FLAME_condition_clan_dividir_clan_15_16(current_xmachine_clan)==1)
 		{
 
 		
@@ -8613,11 +9487,11 @@ if(FLAME_widow_message_board_read == 0)
 
 			if(i == 1)
 			{
-				free_clan_agent(current_xmachine_clan_holder, clan_12_state);
+				free_clan_agent(current_xmachine_clan_holder, clan_15_state);
 			}
 			else
 			{
-				transition_clan_agent(current_xmachine_clan_holder, clan_12_state, clan_13_state);
+				transition_clan_agent(current_xmachine_clan_holder, clan_15_state, clan_16_state);
 			}
 		}
 
@@ -8664,20 +9538,21 @@ if(FLAME_widow_message_board_read == 0)
 
 
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start idle\n");
-	current_xmachine_clan_holder = clan_12_state->agents;
+	current_xmachine_clan_holder = clan_15_state->agents;
 	while(current_xmachine_clan_holder)
 	{
 		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
 		current_xmachine_clan = current_xmachine_clan_holder->agent;
-		current_xmachine_clan_next_state = clan_14_state;
+		current_xmachine_clan_next_state = clan_end_state;
 		/* For backwards compatibility set current_xmachine */
 		current_xmachine->xmachine_indv = NULL;
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_clan = current_xmachine_clan;
 
-		if(FLAME_condition_clan_idle_12_14(current_xmachine_clan)==1)
+		if(FLAME_condition_clan_idle_15_end(current_xmachine_clan)==1)
 		{
 
 		
@@ -8688,11 +9563,52 @@ if(FLAME_widow_message_board_read == 0)
 
 			if(i == 1)
 			{
-				free_clan_agent(current_xmachine_clan_holder, clan_12_state);
+				free_clan_agent(current_xmachine_clan_holder, clan_15_state);
 			}
 			else
 			{
-				transition_clan_agent(current_xmachine_clan_holder, clan_12_state, clan_14_state);
+				transition_clan_agent(current_xmachine_clan_holder, clan_15_state, clan_end_state);
+			}
+		}
+
+		current_xmachine_clan = NULL;
+
+		current_xmachine_clan_holder = temp_xmachine_clan_holder;
+	}
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish idle\n");
+
+
+	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start idle\n");
+	current_xmachine_clan_holder = clan_15_state->agents;
+	while(current_xmachine_clan_holder)
+	{
+		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
+		current_xmachine_clan = current_xmachine_clan_holder->agent;
+		current_xmachine_clan_next_state = clan_17_state;
+		/* For backwards compatibility set current_xmachine */
+		current_xmachine->xmachine_indv = NULL;
+		current_xmachine->xmachine_clan = NULL;
+		current_xmachine->xmachine_patch = NULL;
+		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
+		current_xmachine->xmachine_clan = current_xmachine_clan;
+
+		if(FLAME_condition_clan_idle_15_17(current_xmachine_clan)==1)
+		{
+
+		
+
+			i = idle();
+
+		
+
+			if(i == 1)
+			{
+				free_clan_agent(current_xmachine_clan_holder, clan_15_state);
+			}
+			else
+			{
+				transition_clan_agent(current_xmachine_clan_holder, clan_15_state, clan_17_state);
 			}
 		}
 
@@ -8749,6 +9665,7 @@ if(FLAME_widow_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_indv = current_xmachine_indv;
 
 		if(FLAME_condition_indv_local_marriage_12_13(current_xmachine_indv)==1)
@@ -8838,7 +9755,7 @@ if(FLAME_widow_message_board_read == 0)
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish local_marriage\n");
 
 
-/* End of layer number 23 */
+/* End of layer number 24 */
 
 /* Clear message boards that have finished being used
  * and sync complete if doing late sync complete */
@@ -8950,6 +9867,7 @@ if(FLAME_lmarriage_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_indv = current_xmachine_indv;
 
 		
@@ -9073,7 +9991,7 @@ if(FLAME_lmarriage_message_board_read == 0)
     
 
 
-/* End of layer number 24 */
+/* End of layer number 25 */
 
 /* Clear message boards that have finished being used
  * and sync complete if doing late sync complete */
@@ -9174,17 +10092,18 @@ if(FLAME_warningDivide_message_board_read == 0)
 	}
 	
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start creacion_clan\n");
-	current_xmachine_clan_holder = clan_13_state->agents;
+	current_xmachine_clan_holder = clan_16_state->agents;
 	while(current_xmachine_clan_holder)
 	{
 		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
 		current_xmachine_clan = current_xmachine_clan_holder->agent;
-		current_xmachine_clan_next_state = clan_14_state;
+		current_xmachine_clan_next_state = clan_17_state;
 		/* For backwards compatibility set current_xmachine */
 		current_xmachine->xmachine_indv = NULL;
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_clan = current_xmachine_clan;
 
 		
@@ -9195,7 +10114,7 @@ if(FLAME_warningDivide_message_board_read == 0)
                   
           
 		    
-		    rc = MB_Iterator_CreateFilteredSorted(b_informationDivide, &i_informationDivide, &FLAME_filter_clan_creacion_clan_13_14_informationDivide, current_xmachine_clan, &FLAME_sort_clan_creacion_clan_13_14_informationDivide);
+		    rc = MB_Iterator_CreateFilteredSorted(b_informationDivide, &i_informationDivide, &FLAME_filter_clan_creacion_clan_16_17_informationDivide, current_xmachine_clan, &FLAME_sort_clan_creacion_clan_16_17_informationDivide);
 		  
 		
 		#ifdef ERRCHECK
@@ -9258,11 +10177,11 @@ if(FLAME_warningDivide_message_board_read == 0)
 
 			if(i == 1)
 			{
-				free_clan_agent(current_xmachine_clan_holder, clan_13_state);
+				free_clan_agent(current_xmachine_clan_holder, clan_16_state);
 			}
 			else
 			{
-				transition_clan_agent(current_xmachine_clan_holder, clan_13_state, clan_14_state);
+				transition_clan_agent(current_xmachine_clan_holder, clan_16_state, clan_17_state);
 			}
 		
 
@@ -9308,7 +10227,7 @@ if(FLAME_warningDivide_message_board_read == 0)
     
 
 
-/* End of layer number 25 */
+/* End of layer number 26 */
 
 /* Clear message boards that have finished being used
  * and sync complete if doing late sync complete */
@@ -9374,48 +10293,8 @@ if(FLAME_informationDivide_message_board_read == 0)
     #endif
 
 
-	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start idle\n");
-	current_xmachine_clan_holder = clan_14_state->agents;
-	while(current_xmachine_clan_holder)
-	{
-		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
-		current_xmachine_clan = current_xmachine_clan_holder->agent;
-		current_xmachine_clan_next_state = clan_end_state;
-		/* For backwards compatibility set current_xmachine */
-		current_xmachine->xmachine_indv = NULL;
-		current_xmachine->xmachine_clan = NULL;
-		current_xmachine->xmachine_patch = NULL;
-		current_xmachine->xmachine_manada_guanacos = NULL;
-		current_xmachine->xmachine_clan = current_xmachine_clan;
-
-		if(FLAME_condition_clan_idle_14_end(current_xmachine_clan)==1)
-		{
-
-		
-
-			i = idle();
-
-		
-
-			if(i == 1)
-			{
-				free_clan_agent(current_xmachine_clan_holder, clan_14_state);
-			}
-			else
-			{
-				transition_clan_agent(current_xmachine_clan_holder, clan_14_state, clan_end_state);
-			}
-		}
-
-		current_xmachine_clan = NULL;
-
-		current_xmachine_clan_holder = temp_xmachine_clan_holder;
-	}
-	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish idle\n");
-
-
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("start vocabulary_review\n");
-	current_xmachine_clan_holder = clan_14_state->agents;
+	current_xmachine_clan_holder = clan_17_state->agents;
 	while(current_xmachine_clan_holder)
 	{
 		temp_xmachine_clan_holder = current_xmachine_clan_holder->next;
@@ -9426,9 +10305,10 @@ if(FLAME_informationDivide_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_clan = current_xmachine_clan;
 
-		if(FLAME_condition_clan_vocabulary_review_14_end(current_xmachine_clan)==1)
+		if(FLAME_condition_clan_vocabulary_review_17_end(current_xmachine_clan)==1)
 		{
 
 		
@@ -9439,11 +10319,11 @@ if(FLAME_informationDivide_message_board_read == 0)
 
 			if(i == 1)
 			{
-				free_clan_agent(current_xmachine_clan_holder, clan_14_state);
+				free_clan_agent(current_xmachine_clan_holder, clan_17_state);
 			}
 			else
 			{
-				transition_clan_agent(current_xmachine_clan_holder, clan_14_state, clan_end_state);
+				transition_clan_agent(current_xmachine_clan_holder, clan_17_state, clan_end_state);
 			}
 		}
 
@@ -9500,6 +10380,7 @@ if(FLAME_informationDivide_message_board_read == 0)
 		current_xmachine->xmachine_clan = NULL;
 		current_xmachine->xmachine_patch = NULL;
 		current_xmachine->xmachine_manada_guanacos = NULL;
+		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_indv = current_xmachine_indv;
 
 		
@@ -9588,7 +10469,7 @@ if(FLAME_informationDivide_message_board_read == 0)
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish dividir_transfer\n");
 
 
-/* End of layer number 26 */
+/* End of layer number 27 */
 
 /* Clear message boards that have finished being used
  * and sync complete if doing late sync complete */
@@ -9706,6 +10587,15 @@ if(FLAME_transfer_message_board_read == 0)
 	/*printf("clan_end_state->count = %d\n", clan_end_state->count);*/
 	clan_end_state->count = 0;
 
+	/*printf("clan_17_state->count = %d\n", clan_17_state->count);*/
+	clan_17_state->count = 0;
+
+	/*printf("clan_16_state->count = %d\n", clan_16_state->count);*/
+	clan_16_state->count = 0;
+
+	/*printf("clan_15_state->count = %d\n", clan_15_state->count);*/
+	clan_15_state->count = 0;
+
 	/*printf("clan_14_state->count = %d\n", clan_14_state->count);*/
 	clan_14_state->count = 0;
 
@@ -9793,6 +10683,12 @@ if(FLAME_transfer_message_board_read == 0)
 	/*printf("manada_guanacos_start_state->count = %d\n", manada_guanacos_start_state->count);*/
 	manada_guanacos_start_state->count = 0;
 
+	/*printf("hunting_end_state->count = %d\n", hunting_end_state->count);*/
+	hunting_end_state->count = 0;
+
+	/*printf("hunting_start_state->count = %d\n", hunting_start_state->count);*/
+	hunting_start_state->count = 0;
+
 	/* Move agents to their start states */
 
 	current_xmachine_indv_holder = indv_end_state->agents;
@@ -9829,6 +10725,15 @@ if(FLAME_transfer_message_board_read == 0)
 		transition_manada_guanacos_agent(current_xmachine_manada_guanacos_holder, manada_guanacos_end_state, manada_guanacos_start_state);
 
 		current_xmachine_manada_guanacos_holder = temp_xmachine_manada_guanacos_holder;
+	}
+
+	current_xmachine_hunting_holder = hunting_end_state->agents;
+	while(current_xmachine_hunting_holder)
+	{
+		temp_xmachine_hunting_holder = current_xmachine_hunting_holder->next;
+		transition_hunting_agent(current_xmachine_hunting_holder, hunting_end_state, hunting_start_state);
+
+		current_xmachine_hunting_holder = temp_xmachine_hunting_holder;
 	}
 
     if(iteration_loop%output_frequency == output_offset)

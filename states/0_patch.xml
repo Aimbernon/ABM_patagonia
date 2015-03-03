@@ -13,7 +13,7 @@
     <type>environment</type>
 	</import>
 	<import>
-		<location>0_clans.xml</location>
+		<location>pcaz.xml</location>
 		<format>xml</format>
 		<type>agent</type>
 	</import>

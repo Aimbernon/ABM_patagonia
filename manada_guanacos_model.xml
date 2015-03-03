@@ -191,7 +191,26 @@
 					<description>la manada no hace nada</description>
 					<currentState>3</currentState>
 					<nextState>end</nextState>
+					<condition>
+					<time>
+					<period>weekly</period>
+					<phase>0</phase>
+					</time>
+					</condition>
 				</function>
+	<function>
+					<name>idle</name>
+					<description>la manada no hace nada</description>
+					<currentState>3</currentState>
+					<nextState>end</nextState>
+					<condition>
+					<not><time>
+					<period>weekly</period>
+					<phase>0</phase>
+					</time></not>
+					</condition>
+				</function>
+
 			</functions>
 		</xagent>
 	</agents>
@@ -245,6 +264,11 @@
 					<type>int</type>
 					<name>familia</name>
 					<description>indica si son familias o no(0 no son, 1 son familia)</description>
+				</variable>
+				<variable>
+					<type>int</type>
+					<name>adultos</name>
+					<description>adultos</description>
 				</variable>
 			</variables>
 		</message>

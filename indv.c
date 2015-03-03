@@ -170,7 +170,7 @@ int child_inf ()
 // creacion del nuevo individuo
 int birth ()
 {
-	int id=-1, aux[2];
+	int id=-1, aux[4]={-1,-1,-1,-1};
 	// se recive del clan un id libre para el hijo
 	START_RESPUESTAID_MESSAGE_LOOP
 		id = respuestaID_message->freeID;
@@ -178,7 +178,9 @@ int birth ()
 	// se crea el array ancestros que tendra el hijo
 	int ancestors[7] = {id,get_pareja(),get_indvID(),get_husband_info()[0],get_husband_info()[1],get_ancestors()[0],get_ancestors()[1]};
 	int ancestorsClan[7] ={get_cID(),get_cID(),get_cID(),get_husband_info()[2],get_husband_info()[3]};
-	add_indv_agent (id,get_cID(),0,0,0,1,1,0,0,0,ancestors,ancestorsClan,0,0,0,0,get_indvID(),aux,0);
+	// se determina el genero del hijo
+	int sex = rand () %2;
+	add_indv_agent (id,get_cID(),0,0,0,1,sex,0,0,0,ancestors,ancestorsClan,0,-1,0,0,get_indvID(),aux,0);
 
 	//inclemento un mes mas para que no vuelva a entrar y que comienze los 5 meses de reposo
 	set_month (get_month()+1);
@@ -220,9 +222,8 @@ int update_status ()
 			set_widow (1);
 			set_embarazable(0);
 		}
-		else
-			set_married(0);
-		set_pareja (-1);
+		set_married(0);
+		//set_pareja (-1);
 	FINISH_DEATH_MESSAGE_LOOP
 	return 0;
 }

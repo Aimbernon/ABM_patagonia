@@ -2806,6 +2806,286 @@ m_clanmove * get_next_clanmove_message(m_clanmove * current)
 
 
 /* Box filtering functions */
+double xxx_message_extract_x(void *msg_ptr) { return (double)((m_xxx*)msg_ptr)->x; }
+double xxx_message_extract_y(void *msg_ptr) { return (double)((m_xxx*)msg_ptr)->y; }
+
+
+union pu_xxx 
+{
+    m_xxx *ptr;
+    void *ptr_anon;
+};
+
+/** \fn void add_xxx_message(int clanID, int x, int y, int linguistics, int needCooperation)
+ * \brief Add xxx message by calling internal and processing.
+ * \param clanID Message variable.
+ * \param x Message variable.
+ * \param y Message variable.
+ * \param linguistics Message variable.
+ * \param needCooperation Message variable.
+ */
+void add_xxx_message(int clanID, int x, int y, int linguistics[], int needCooperation)
+{
+    int rc;
+	m_xxx msg;
+    
+    msg.clanID = clanID;
+    msg.x = x;
+    msg.y = y;
+    memcpy(msg.linguistics, linguistics, 100*sizeof(int));
+    msg.needCooperation = needCooperation;
+    
+    
+    rc = MB_AddMessage(b_xxx, &msg);
+    #ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not add message to 'xxx' board\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'xxx' board has not been created?\n");
+               break;
+           case MB_ERR_MEMALLOC:
+               fprintf(stderr, "\t reason: out of memory\n");
+               break;
+           case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'xxx' board is locked\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	       default:
+               fprintf(stderr, "\t MB_AddMessage returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+	   }
+	      
+	   MPI_Abort(MPI_COMM_WORLD, rc);
+       exit(rc);
+    }
+    #endif
+}
+
+inline static m_xxx* getInternalMessage_xxx(void)
+{
+    static m_xxx *msg_prev = NULL;
+    union pu_xxx msg_pu;
+    int rc;
+    
+    /* deallocate previously returned message */
+    if (msg_prev != NULL) 
+    {
+        free(msg_prev);
+    }
+    else 
+    {
+        rc = MB_Iterator_Rewind(i_xxx); 
+        #ifdef ERRCHECK
+        if (rc != MB_SUCCESS)
+        {
+            fprintf(stderr, "ERROR: Could not rewind 'xxx' Iterator\n");
+            switch(rc) {
+                case MB_ERR_INVALID:
+                    fprintf(stderr, "\t reason: 'xxx' Iterator has not been created?\n");
+                    break;
+	            default:
+                    fprintf(stderr, "\t MB_Iterator_Rewind returned error code: %d (see libmboard docs for details)\n", rc);
+                    break;
+	        }
+	       
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+        }
+        #endif
+    }
+    
+    /* get next message from iterator */
+    rc = MB_Iterator_GetMessage(i_xxx, &(msg_pu.ptr_anon));
+    #ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not get message from 'xxx' Iterator\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'xxx' Iterator has not been created?\n");
+               break;
+           case MB_ERR_MEMALLOC:
+               fprintf(stderr, "\t reason: out of memory\n");
+               break;
+	       default:
+               fprintf(stderr, "\t MB_Iterator_GetMessage returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+	       }
+	       
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+    }
+    #endif
+    
+    /* store pointer so memory can be deallocated later */
+    msg_prev = msg_pu.ptr;
+    
+    return msg_pu.ptr;
+}
+
+/** \fn xmachine_message_xxx * get_first_xxx_message()
+ * \brief Get the first xxx message in the xxx message list.
+ * \return The first message in the list.
+ */
+m_xxx * get_first_xxx_message()
+{
+	return getInternalMessage_xxx();
+}
+
+/** \fn xmachine_message_xxx * get_next_xxx_message(xmachine_message_xxx * current)
+ * \brief Get the next xxx message in the xxx message list after the current message.
+ * \param current The current message in the list.
+ * \return The next message in the list.
+ */
+m_xxx * get_next_xxx_message(m_xxx * current)
+{
+	return getInternalMessage_xxx();
+}
+
+
+/* Box filtering functions */
+
+
+
+
+union pu_yyy 
+{
+    m_yyy *ptr;
+    void *ptr_anon;
+};
+
+/** \fn void add_yyy_message(int clanID, int coopClanID, int needCooperation)
+ * \brief Add yyy message by calling internal and processing.
+ * \param clanID Message variable.
+ * \param coopClanID Message variable.
+ * \param needCooperation Message variable.
+ */
+void add_yyy_message(int clanID, int coopClanID, int needCooperation)
+{
+    int rc;
+	m_yyy msg;
+    
+    msg.clanID = clanID;
+    msg.coopClanID = coopClanID;
+    msg.needCooperation = needCooperation;
+    
+    
+    rc = MB_AddMessage(b_yyy, &msg);
+    #ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not add message to 'yyy' board\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'yyy' board has not been created?\n");
+               break;
+           case MB_ERR_MEMALLOC:
+               fprintf(stderr, "\t reason: out of memory\n");
+               break;
+           case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'yyy' board is locked\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	       default:
+               fprintf(stderr, "\t MB_AddMessage returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+	   }
+	      
+	   MPI_Abort(MPI_COMM_WORLD, rc);
+       exit(rc);
+    }
+    #endif
+}
+
+inline static m_yyy* getInternalMessage_yyy(void)
+{
+    static m_yyy *msg_prev = NULL;
+    union pu_yyy msg_pu;
+    int rc;
+    
+    /* deallocate previously returned message */
+    if (msg_prev != NULL) 
+    {
+        free(msg_prev);
+    }
+    else 
+    {
+        rc = MB_Iterator_Rewind(i_yyy); 
+        #ifdef ERRCHECK
+        if (rc != MB_SUCCESS)
+        {
+            fprintf(stderr, "ERROR: Could not rewind 'yyy' Iterator\n");
+            switch(rc) {
+                case MB_ERR_INVALID:
+                    fprintf(stderr, "\t reason: 'yyy' Iterator has not been created?\n");
+                    break;
+	            default:
+                    fprintf(stderr, "\t MB_Iterator_Rewind returned error code: %d (see libmboard docs for details)\n", rc);
+                    break;
+	        }
+	       
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+        }
+        #endif
+    }
+    
+    /* get next message from iterator */
+    rc = MB_Iterator_GetMessage(i_yyy, &(msg_pu.ptr_anon));
+    #ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not get message from 'yyy' Iterator\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'yyy' Iterator has not been created?\n");
+               break;
+           case MB_ERR_MEMALLOC:
+               fprintf(stderr, "\t reason: out of memory\n");
+               break;
+	       default:
+               fprintf(stderr, "\t MB_Iterator_GetMessage returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+	       }
+	       
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+    }
+    #endif
+    
+    /* store pointer so memory can be deallocated later */
+    msg_prev = msg_pu.ptr;
+    
+    return msg_pu.ptr;
+}
+
+/** \fn xmachine_message_yyy * get_first_yyy_message()
+ * \brief Get the first yyy message in the yyy message list.
+ * \return The first message in the list.
+ */
+m_yyy * get_first_yyy_message()
+{
+	return getInternalMessage_yyy();
+}
+
+/** \fn xmachine_message_yyy * get_next_yyy_message(xmachine_message_yyy * current)
+ * \brief Get the next yyy message in the yyy message list after the current message.
+ * \param current The current message in the list.
+ * \return The next message in the list.
+ */
+m_yyy * get_next_yyy_message(m_yyy * current)
+{
+	return getInternalMessage_yyy();
+}
+
+
+/* Box filtering functions */
 double clanspatch_message_extract_x(void *msg_ptr) { return (double)((m_clanspatch*)msg_ptr)->x; }
 double clanspatch_message_extract_y(void *msg_ptr) { return (double)((m_clanspatch*)msg_ptr)->y; }
 
@@ -3234,14 +3514,15 @@ union pu_reproduccionguanacos
     void *ptr_anon;
 };
 
-/** \fn void add_reproduccionguanacos_message(int x, int y, int count, int familia)
+/** \fn void add_reproduccionguanacos_message(int x, int y, int count, int familia, int adultos)
  * \brief Add reproduccionguanacos message by calling internal and processing.
  * \param x Message variable.
  * \param y Message variable.
  * \param count Message variable.
  * \param familia Message variable.
+ * \param adultos Message variable.
  */
-void add_reproduccionguanacos_message(int x, int y, int count, int familia)
+void add_reproduccionguanacos_message(int x, int y, int count, int familia, int adultos)
 {
     int rc;
 	m_reproduccionguanacos msg;
@@ -3250,6 +3531,7 @@ void add_reproduccionguanacos_message(int x, int y, int count, int familia)
     msg.y = y;
     msg.count = count;
     msg.familia = familia;
+    msg.adultos = adultos;
     
     
     rc = MB_AddMessage(b_reproduccionguanacos, &msg);

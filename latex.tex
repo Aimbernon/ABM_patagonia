@@ -217,6 +217,10 @@
 \parbox{5cm}{\url{int} \url{targetX}} \index{\url{targetX}} & \parbox{10cm}{coordinate X for the next movement} \\
 \midrule
 \parbox{5cm}{\url{int} \url{targetY}} \index{\url{targetY}} & \parbox{10cm}{coordinate Y for the next movement} \\
+\midrule
+\parbox{5cm}{\url{int} \url{cooperation}} \index{\url{cooperation}} & \parbox{10cm}{1 if clan need cooperation for get calories, 0 if not} \\
+\midrule
+\parbox{5cm}{\url{int} \url{hunting}} \index{\url{hunting}} & \parbox{10cm}{} \\
 \end{longtable}
 \begin{longtable}[H!]{ll}
 \caption{{\bfseries List of functions for clan agent.}}
@@ -242,9 +246,17 @@
 \midrule
 \parbox{5cm}{\url{distribute_calories}} \index{\url{distribute_calories}} & \parbox{10cm}{now the clan should distribute calories among its members} \\
 \midrule
+\parbox{5cm}{\url{start_cooperation}} \index{\url{start_cooperation}} & \parbox{10cm}{clan looking other clan for cooperate} \\
+\midrule
+\parbox{5cm}{\url{idle}} \index{\url{idle}} & \parbox{10cm}{} \\
+\midrule
+\parbox{5cm}{\url{send_proposal}} \index{\url{send_proposal}} & \parbox{10cm}{clan looking other clan for cooperate} \\
+\midrule
+\parbox{5cm}{\url{proposal_acceptation}} \index{\url{proposal_acceptation}} & \parbox{10cm}{clan looking other clan for cooperate} \\
+\midrule
 \parbox{5cm}{\url{move_clan}} \index{\url{move_clan}} & \parbox{10cm}{clan moves} \\
 \midrule
-\parbox{5cm}{\url{idle}} \index{\url{idle}} & \parbox{10cm}{clan idle} \\
+\parbox{5cm}{\url{idle_clan}} \index{\url{idle_clan}} & \parbox{10cm}{clan idle} \\
 \midrule
 \parbox{5cm}{\url{marriable_indv}} \index{\url{marriable_indv}} & \parbox{10cm}{informacion de los individuos que estan en edad de casarse} \\
 \midrule
@@ -258,7 +270,7 @@
 \midrule
 \parbox{5cm}{\url{repartir_id}} \index{\url{repartir_id}} & \parbox{10cm}{obtencion de un nuevo id} \\
 \midrule
-\parbox{5cm}{\url{new_leader}} \index{\url{new_leader}} & \parbox{10cm}{Some individuals may die, maybe the leader, so after this step all survivors send a message to the clan in order to decide if there should be a new leader... it can be because the leader has died, but also because the leader is too old and a new male becomes the leader} \\
+\parbox{5cm}{\url{new_leader}} \index{\url{new_leader}} & \parbox{10cm}{Some individuals may die, maybe the leader, so after this step all survivors send a message to the clan in order to decide 					if there should be a new leader... it can be because the leader has died, but also because the leader is too old and a new male becomes 					the leader} \\
 \midrule
 \parbox{5cm}{\url{again_marriable}} \index{\url{again_marriable}} & \parbox{10cm}{recibe peticiones de las mujeres que su marido a muerto y las intenta emparejar con un hombre del clan} \\
 \midrule
@@ -432,6 +444,57 @@
 \parbox{5cm}{\url{manada_idle2}} \index{\url{manada_idle2}} & \parbox{10cm}{la manada no hace nada} \\
 \midrule
 \parbox{5cm}{\url{surviveGuanacos}} \index{\url{surviveGuanacos}} & \parbox{10cm}{la manada no hace nada} \\
+\midrule
+\parbox{5cm}{\url{idle}} \index{\url{idle}} & \parbox{10cm}{la manada no hace nada} \\
+\end{longtable}
+
+\subsection{hunting}
+
+\begin{longtable}[H!]{ll}
+\caption{{\bfseries List of memory variables for hunting agent.}}
+\label{Table: hunting Memory}\\
+\toprule 
+\bfseries Name & \bfseries Description \\ \hline 
+\midrule
+\endfirsthead
+\multicolumn{2}{c}%
+{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+\toprule
+\bfseries Name & \bfseries Description \\ \hline 
+\midrule
+\endhead
+\multicolumn{2}{r}{{\emph{Continued on next page}}} \\
+\endfoot
+\bottomrule
+\endlastfoot
+\midrule
+\parbox{5cm}{\url{int} \url{calores}} \index{\url{calores}} & \parbox{10cm}{calorias obtenidas en la caza} \\
+\midrule
+\parbox{5cm}{\url{int} \url{isuccess}} \index{\url{isuccess}} & \parbox{10cm}{index de exito de la caza} \\
+\midrule
+\parbox{5cm}{\url{int} \url{skill_level}} \index{\url{skill_level}} & \parbox{10cm}{power of huntering} \\
+\midrule
+\parbox{5cm}{\url{int} \url{clans}} \index{\url{clans}} & \parbox{10cm}{id de los clanes que participan} \\
+\end{longtable}
+\begin{longtable}[H!]{ll}
+\caption{{\bfseries List of functions for hunting agent.}}
+\label{Table: hunting Functions}\\
+\toprule 
+\bfseries Name & \bfseries Description \\ \hline 
+\midrule
+\endfirsthead
+\multicolumn{2}{c}%
+{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+\toprule
+\bfseries Name & \bfseries Description \\ \hline 
+\midrule
+\endhead
+\multicolumn{2}{r}{{\emph{Continued on next page}}} \\
+\endfoot
+\bottomrule
+\endlastfoot
+\midrule
+\parbox{5cm}{\url{get_hunters}} \index{\url{get_hunters}} & \parbox{10cm}{gets individual hunter info for start hunting } \\
 \end{longtable}
 \subsection{Messages}
 See Table \ref{Table: Messages}.\begin{longtable}[H!]{ll}
@@ -570,6 +633,18 @@ See Table \ref{Table: Messages}.\begin{longtable}[H!]{ll}
     \url{int} \url{y} \index{\url{y}} & \parbox{10cm}{coordinate y where clan goes}\\
     \url{int} \url{sentido} \index{\url{sentido}} & \parbox{10cm}{if clan goes(1) or leaves(0) }\\
 \midrule
+\url{xxx} & \parbox{10cm}{}\\
+    \url{int} \url{clanID} \index{\url{clanID}} & \parbox{10cm}{}\\
+    \url{int} \url{x} \index{\url{x}} & \parbox{10cm}{coordinate x where clan goes}\\
+    \url{int} \url{y} \index{\url{y}} & \parbox{10cm}{coordinate y where clan goes}\\
+    \url{int} \url{linguistics} \index{\url{linguistics}} & \parbox{10cm}{}\\
+    \url{int} \url{needCooperation} \index{\url{needCooperation}} & \parbox{10cm}{}\\
+\midrule
+\url{yyy} & \parbox{10cm}{}\\
+    \url{int} \url{clanID} \index{\url{clanID}} & \parbox{10cm}{}\\
+    \url{int} \url{coopClanID} \index{\url{coopClanID}} & \parbox{10cm}{}\\
+    \url{int} \url{needCooperation} \index{\url{needCooperation}} & \parbox{10cm}{}\\
+\midrule
 \url{clanspatch} & \parbox{10cm}{sends clan coordinates and the number of clans in patch}\\
     \url{int} \url{x} \index{\url{x}} & \parbox{10cm}{coordinate x of the patch}\\
     \url{int} \url{y} \index{\url{y}} & \parbox{10cm}{coordinate y of the patch}\\
@@ -592,6 +667,7 @@ See Table \ref{Table: Messages}.\begin{longtable}[H!]{ll}
     \url{int} \url{y} \index{\url{y}} & \parbox{10cm}{posicion y de la manada de guanacos}\\
     \url{int} \url{count} \index{\url{count}} & \parbox{10cm}{numero de guanacos (incluido crias)}\\
     \url{int} \url{familia} \index{\url{familia}} & \parbox{10cm}{indica si son familias o no(0 no son, 1 son familia)}\\
+    \url{int} \url{adultos} \index{\url{adultos}} & \parbox{10cm}{adultos}\\
 \end{longtable}
 \subsection{Constants}
 \begin{longtable}[H!]{ll}

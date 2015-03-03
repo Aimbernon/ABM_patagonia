@@ -54,3 +54,9 @@
 /** \def TARGETY
  * \brief Direct access to targetY of clan agent memory variable. */
 #define TARGETY (current_xmachine_clan->targetY)
+/** \def COOPERATION
+ * \brief Direct access to cooperation of clan agent memory variable. */
+#define COOPERATION (current_xmachine_clan->cooperation)
+/** \def HUNTING
+ * \brief Direct access to hunting of clan agent memory variable. */
+#define HUNTING (current_xmachine_clan->hunting)

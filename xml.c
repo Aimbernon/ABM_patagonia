@@ -729,6 +729,7 @@ int readAgentXML(char * location,
 	int in_clan_agent = 0;
 	int in_patch_agent = 0;
 	int in_manada_guanacos_agent = 0;
+	int in_hunting_agent = 0;
 	
 	int in_indvID = 0;
 	int in_cID = 0;
@@ -765,6 +766,8 @@ int readAgentXML(char * location,
 	int in_irecord = 0;
 	int in_targetX = 0;
 	int in_targetY = 0;
+	int in_cooperation = 0;
+	int in_hunting = 0;
 	int in_pcalories = 0;
 	int in_gcalories = 0;
 	int in_repo = 0;
@@ -777,11 +780,16 @@ int readAgentXML(char * location,
 	int in_familia = 0;
 	int in_count = 0;
 	int in_calorias = 0;
+	int in_calores = 0;
+	int in_isuccess = 0;
+	int in_skill_level = 0;
+	int in_clans = 0;
 	
 	xmachine_memory_indv * current_indv_agent = NULL;
 	xmachine_memory_clan * current_clan_agent = NULL;
 	xmachine_memory_patch * current_patch_agent = NULL;
 	xmachine_memory_manada_guanacos * current_manada_guanacos_agent = NULL;
+	xmachine_memory_hunting * current_hunting_agent = NULL;
 	
 	/* Things for round-robin partitioning */
 	int geometric = 1;
@@ -1017,6 +1025,55 @@ int readAgentXML(char * location,
 						}
 					}
 				}
+				else if(strcmp(agentname, "hunting") == 0)
+				{
+					if(current_hunting_agent == NULL) { printf("Memory error reading hunting agent\n"); exit(0); }
+					
+					posx = (double)0.0;
+					posy = (double)0.0;
+					posz = (double)0.0;
+					
+					/* If flag is zero just read the data. We'll partition later.
+					 * If flag is not zero we aleady have partition data so can read and distribute to the current node.*/
+					if( flag == 0 )
+					{
+						/* Next line should be commented out? */
+						add_hunting_agent_internal(current_hunting_agent, hunting_start_state);
+
+						/* Update the cloud data */
+						if ( posx < cloud_data[0] ) cloud_data[0] = posx;
+						if ( posx > cloud_data[1] ) cloud_data[1] = posx;
+						if ( posy < cloud_data[2] ) cloud_data[2] = posy;
+						if ( posy > cloud_data[3] ) cloud_data[3] = posy;
+						if ( posz < cloud_data[2] ) cloud_data[4] = posz;
+						if ( posz > cloud_data[3] ) cloud_data[5] = posz;
+					}
+					else
+					{
+						if(partition_method == geometric)
+						{
+							if (
+								((current_node->partition_data[0] == SPINF) || (current_node->partition_data[0] != SPINF && posx >= current_node->partition_data[0])) &&
+								((current_node->partition_data[1] == SPINF) || (current_node->partition_data[1] != SPINF && posx < current_node->partition_data[1])) &&
+								((current_node->partition_data[2] == SPINF) || (current_node->partition_data[2] != SPINF && posy >= current_node->partition_data[2])) &&
+								((current_node->partition_data[3] == SPINF) || (current_node->partition_data[3] != SPINF && posy < current_node->partition_data[3])) &&
+								((current_node->partition_data[4] == SPINF) || (current_node->partition_data[4] != SPINF && posz >= current_node->partition_data[4])) &&
+								((current_node->partition_data[5] == SPINF) || (current_node->partition_data[5] != SPINF && posz < current_node->partition_data[5]))
+							)
+							{
+								add_hunting_agent_internal(current_hunting_agent, hunting_start_state);
+							}
+						}
+						else if (partition_method == other)
+						{
+							if (agent_count % number_partitions == 0)
+							{
+								add_hunting_agent_internal(current_hunting_agent, hunting_start_state);
+							}
+							++agent_count;
+						}
+					}
+				}
 				else
 				{
 					printf("Warning: agent name undefined - '%s'\n", agentname);
@@ -1028,6 +1085,7 @@ int readAgentXML(char * location,
 				in_clan_agent = 0;
 				in_patch_agent = 0;
 				in_manada_guanacos_agent = 0;
+				in_hunting_agent = 0;
 				
 			}
 			if(strcmp(buffer, "name") == 0) FLAME_in_name = 1;
@@ -1102,6 +1160,10 @@ int readAgentXML(char * location,
 			if(strcmp(buffer, "/targetX") == 0) { in_targetX = 0; }
 			if(strcmp(buffer, "targetY") == 0) { in_targetY = 1; }
 			if(strcmp(buffer, "/targetY") == 0) { in_targetY = 0; }
+			if(strcmp(buffer, "cooperation") == 0) { in_cooperation = 1; }
+			if(strcmp(buffer, "/cooperation") == 0) { in_cooperation = 0; }
+			if(strcmp(buffer, "hunting") == 0) { in_hunting = 1; }
+			if(strcmp(buffer, "/hunting") == 0) { in_hunting = 0; }
 			if(strcmp(buffer, "pcalories") == 0) { in_pcalories = 1; }
 			if(strcmp(buffer, "/pcalories") == 0) { in_pcalories = 0; }
 			if(strcmp(buffer, "gcalories") == 0) { in_gcalories = 1; }
@@ -1126,6 +1188,14 @@ int readAgentXML(char * location,
 			if(strcmp(buffer, "/count") == 0) { in_count = 0; }
 			if(strcmp(buffer, "calorias") == 0) { in_calorias = 1; }
 			if(strcmp(buffer, "/calorias") == 0) { in_calorias = 0; }
+			if(strcmp(buffer, "calores") == 0) { in_calores = 1; }
+			if(strcmp(buffer, "/calores") == 0) { in_calores = 0; }
+			if(strcmp(buffer, "isuccess") == 0) { in_isuccess = 1; }
+			if(strcmp(buffer, "/isuccess") == 0) { in_isuccess = 0; }
+			if(strcmp(buffer, "skill_level") == 0) { in_skill_level = 1; }
+			if(strcmp(buffer, "/skill_level") == 0) { in_skill_level = 0; }
+			if(strcmp(buffer, "clans") == 0) { in_clans = 1; }
+			if(strcmp(buffer, "/clans") == 0) { in_clans = 0; }
 			
 			index = 0;
 			buffer[index] = '\0';
@@ -1160,6 +1230,11 @@ int readAgentXML(char * location,
 					{
 						current_manada_guanacos_agent = init_manada_guanacos_agent();
 						in_manada_guanacos_agent = 1;
+					}
+					else if(strcmp(agentname, "hunting") == 0)
+					{
+						current_hunting_agent = init_hunting_agent();
+						in_hunting_agent = 1;
 					}
 					else
 					{
@@ -1221,6 +1296,8 @@ int readAgentXML(char * location,
 					if(in_irecord) { current_clan_agent->irecord = atoi(buffer); }
 					if(in_targetX) { current_clan_agent->targetX = atoi(buffer); }
 					if(in_targetY) { current_clan_agent->targetY = atoi(buffer); }
+					if(in_cooperation) { current_clan_agent->cooperation = atoi(buffer); }
+					if(in_hunting) { current_clan_agent->hunting = atoi(buffer); }
 				 }else if(in_patch_agent == 1)
 				{
 					if(in_patchID) { current_patch_agent->patchID = atoi(buffer); }
@@ -1246,6 +1323,14 @@ int readAgentXML(char * location,
 					if(in_calorias) { current_manada_guanacos_agent->calorias = atoi(buffer); }
 					if(in_adultos) { current_manada_guanacos_agent->adultos = atoi(buffer); }
 					if(in_season) { current_manada_guanacos_agent->season = atoi(buffer); }
+				 }else if(in_hunting_agent == 1)
+				{
+					if(in_calores) { current_hunting_agent->calores = atoi(buffer); }
+					if(in_isuccess) { current_hunting_agent->isuccess = atoi(buffer); }
+					if(in_skill_level) { current_hunting_agent->skill_level = atoi(buffer); }
+					if(in_clans) { j = 0;
+						rc = read_int_static_array(buffer, index, &j, current_hunting_agent->clans, 2);
+						if(rc != 0) { printf("Error: reading 'hunting' agent variable 'clans' of type 'int'\n"); exit(0); } }
 				 }
 			}
 			index = 0;
@@ -1536,6 +1621,7 @@ void readprepartitionedinitialstates(char * fileroot, char * filelocation, int *
 						else if(strcmp("clan", buffer) == 0) current_FLAME_output->type = 2;
 						else if(strcmp("patch", buffer) == 0) current_FLAME_output->type = 3;
 						else if(strcmp("manada_guanacos", buffer) == 0) current_FLAME_output->type = 4;
+						else if(strcmp("hunting", buffer) == 0) current_FLAME_output->type = 5;
 						else 
 						{
 							printf("Error: output name is not an agent name: '%s'\n", buffer);
@@ -1609,6 +1695,7 @@ void readprepartitionedinitialstates(char * fileroot, char * filelocation, int *
 		else if(current_FLAME_output->type == 2) printf("agent' name='clan");
 		else if(current_FLAME_output->type == 3) printf("agent' name='patch");
 		else if(current_FLAME_output->type == 4) printf("agent' name='manada_guanacos");
+		else if(current_FLAME_output->type == 5) printf("agent' name='hunting");
 		else printf("undefined");
 		printf("' format='");
 		if(current_FLAME_output->format == 0) printf("xml");
@@ -1893,6 +1980,7 @@ void readinitialstates(char * filename, char * filelocation, int * itno, double 
 						else if(strcmp("clan", buffer) == 0) current_FLAME_output->type = 2;
 						else if(strcmp("patch", buffer) == 0) current_FLAME_output->type = 3;
 						else if(strcmp("manada_guanacos", buffer) == 0) current_FLAME_output->type = 4;
+						else if(strcmp("hunting", buffer) == 0) current_FLAME_output->type = 5;
 						else 
 						{
 							printf("Error: output name is not an agent name: '%s'\n", buffer);
@@ -1966,6 +2054,7 @@ void readinitialstates(char * filename, char * filelocation, int * itno, double 
 		else if(current_FLAME_output->type == 2) printf("agent' name='clan");
 		else if(current_FLAME_output->type == 3) printf("agent' name='patch");
 		else if(current_FLAME_output->type == 4) printf("agent' name='manada_guanacos");
+		else if(current_FLAME_output->type == 5) printf("agent' name='hunting");
 		else printf("undefined");
 		printf("' format='");
 		if(current_FLAME_output->format == 0) printf("xml");
@@ -2376,6 +2465,14 @@ void write_clan_agent(FILE *file, xmachine_memory_clan * current)
 	sprintf(data, "%i", current->targetY);
 	fputs(data, file);
 	fputs("</targetY>\n", file);
+		fputs("<cooperation>", file);
+	sprintf(data, "%i", current->cooperation);
+	fputs(data, file);
+	fputs("</cooperation>\n", file);
+		fputs("<hunting>", file);
+	sprintf(data, "%i", current->hunting);
+	fputs(data, file);
+	fputs("</hunting>\n", file);
 
 	fputs("</xagent>\n", file);
 }
@@ -2478,6 +2575,30 @@ void write_manada_guanacos_agent(FILE *file, xmachine_memory_manada_guanacos * c
 	sprintf(data, "%i", current->season);
 	fputs(data, file);
 	fputs("</season>\n", file);
+
+	fputs("</xagent>\n", file);
+}
+
+void write_hunting_agent(FILE *file, xmachine_memory_hunting * current)
+{
+	char data[1000];
+	fputs("<xagent>\n" , file);
+	fputs("<name>hunting</name>\n", file);
+		fputs("<calores>", file);
+	sprintf(data, "%i", current->calores);
+	fputs(data, file);
+	fputs("</calores>\n", file);
+		fputs("<isuccess>", file);
+	sprintf(data, "%i", current->isuccess);
+	fputs(data, file);
+	fputs("</isuccess>\n", file);
+		fputs("<skill_level>", file);
+	sprintf(data, "%i", current->skill_level);
+	fputs(data, file);
+	fputs("</skill_level>\n", file);
+		fputs("<clans>", file);
+	write_int_static_array(file, current->clans, 2);
+	fputs("</clans>\n", file);
 
 	fputs("</xagent>\n", file);
 }
@@ -2602,6 +2723,17 @@ void FLAME_write_xml(char * location, int iteration_number, int * output_types, 
 			}
 	}
 	
+	if(FLAME_integer_in_array(0, output_types, output_type_size) || FLAME_integer_in_array(5, output_types, output_type_size))
+	{
+		current_xmachine_hunting_holder = hunting_start_state->agents;
+			while(current_xmachine_hunting_holder)
+			{
+				write_hunting_agent(file, current_xmachine_hunting_holder->agent);
+
+				current_xmachine_hunting_holder = current_xmachine_hunting_holder->next;
+			}
+	}
+	
 	if(node_number == totalnodes-1) fputs("</states>\n" , file);
 
 	/* Close the file */
@@ -2703,6 +2835,24 @@ void saveiterationdata(int iteration_number)
 					/* Reinitialise agent size */
 					output_type_size = 0;
 					output_types[0] = 4;
+					
+					current_FLAME_output->flag = 1;
+					for(current_FLAME_output2 = FLAME_outputs; current_FLAME_output2 != NULL; current_FLAME_output2 = current_FLAME_output2->next)
+					{
+						if(current_FLAME_output2->flag == 0 && strcmp(current_FLAME_output->location, current_FLAME_output2->location) == 0)
+						{
+							output_types[++output_type_size] = current_FLAME_output2->type;
+							
+							current_FLAME_output2->flag = 1;
+						}
+					}
+					
+					FLAME_write_xml(current_FLAME_output->location, iteration_number, output_types, output_type_size);
+				}if(current_FLAME_output->type == 5)
+				{
+					/* Reinitialise agent size */
+					output_type_size = 0;
+					output_types[0] = 5;
 					
 					current_FLAME_output->flag = 1;
 					for(current_FLAME_output2 = FLAME_outputs; current_FLAME_output2 != NULL; current_FLAME_output2 = current_FLAME_output2->next)

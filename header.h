@@ -199,6 +199,18 @@
 /** \def FINISH_CLANMOVE_MESSAGE_LOOP
  * \brief Finish of loop to process clanmove messages. */
 #define FINISH_CLANMOVE_MESSAGE_LOOP }
+/** \def START_XXX_MESSAGE_LOOP
+ * \brief Start of loop to process xxx messages. */
+#define START_XXX_MESSAGE_LOOP  for(xxx_message = get_first_xxx_message(); xxx_message != NULL; xxx_message = get_next_xxx_message(xxx_message)) {
+/** \def FINISH_XXX_MESSAGE_LOOP
+ * \brief Finish of loop to process xxx messages. */
+#define FINISH_XXX_MESSAGE_LOOP }
+/** \def START_YYY_MESSAGE_LOOP
+ * \brief Start of loop to process yyy messages. */
+#define START_YYY_MESSAGE_LOOP  for(yyy_message = get_first_yyy_message(); yyy_message != NULL; yyy_message = get_next_yyy_message(yyy_message)) {
+/** \def FINISH_YYY_MESSAGE_LOOP
+ * \brief Finish of loop to process yyy messages. */
+#define FINISH_YYY_MESSAGE_LOOP }
 /** \def START_CLANSPATCH_MESSAGE_LOOP
  * \brief Start of loop to process clanspatch messages. */
 #define START_CLANSPATCH_MESSAGE_LOOP  for(clanspatch_message = get_first_clanspatch_message(); clanspatch_message != NULL; clanspatch_message = get_next_clanspatch_message(clanspatch_message)) {
@@ -227,7 +239,7 @@
 
 struct FLAME_output
 {
-	int type; /* 0=snapshot 1=indv 2=clan 3=patch 4=manada_guanacos */
+	int type; /* 0=snapshot 1=indv 2=clan 3=patch 4=manada_guanacos 5=hunting */
 	int format; /* 0=XML */
 	char * location;
 	int period;
@@ -444,6 +456,8 @@ struct xmachine_memory_clan
 	int irecord;	/**< X-machine memory variable irecord of type int. */
 	int targetX;	/**< X-machine memory variable targetX of type int. */
 	int targetY;	/**< X-machine memory variable targetY of type int. */
+	int cooperation;	/**< X-machine memory variable cooperation of type int. */
+	int hunting;	/**< X-machine memory variable hunting of type int. */
 };
 
 /** \struct xmachine_memory_clan_holder
@@ -544,6 +558,38 @@ struct xmachine_memory_manada_guanacos_state
 	int count;	/**< Number of agents that were in this state.  */
 };
 
+/** \struct xmachine_memory_hunting
+ * \brief Holds memory of xmachine hunting.
+ */
+struct xmachine_memory_hunting
+{
+	int calores;	/**< X-machine memory variable calores of type int. */
+	int isuccess;	/**< X-machine memory variable isuccess of type int. */
+	int skill_level;	/**< X-machine memory variable skill_level of type int. */
+	int clans[2];	/**< X-machine memory variable clans of type int. */
+};
+
+/** \struct xmachine_memory_hunting_holder
+ * \brief Holds struct of memory of xmachine hunting.
+ */
+struct xmachine_memory_hunting_holder
+{
+	/*@dependent@*/ struct xmachine_memory_hunting * agent;	/**< Pointer to X-machine memory hunting. */
+
+	/*@dependent@*/ struct xmachine_memory_hunting_holder * prev;	/**< Pointer to previous hunting agent in the list.  */
+	/*@dependent@*/ struct xmachine_memory_hunting_holder * next;	/**< Pointer to next hunting agent in the list.  */
+};
+
+/** \struct xmachine_memory_hunting_holder
+ * \brief Holds struct of memory of xmachine hunting.
+ */
+struct xmachine_memory_hunting_state
+{
+	/*@dependent@*/ struct xmachine_memory_hunting_holder * agents;	/**< Pointer to X-machine memory hunting. */
+
+	int count;	/**< Number of agents that were in this state.  */
+};
+
 /** \struct xmachine
  * \brief Holds xmachines.
  */
@@ -553,6 +599,7 @@ struct xmachine
 	/*@dependent@*/ /*@null@*/ /*@out@*/ struct xmachine_memory_clan * xmachine_clan;	/**< Pointer to X-machine memory of type clan.  */
 	/*@dependent@*/ /*@null@*/ /*@out@*/ struct xmachine_memory_patch * xmachine_patch;	/**< Pointer to X-machine memory of type patch.  */
 	/*@dependent@*/ /*@null@*/ /*@out@*/ struct xmachine_memory_manada_guanacos * xmachine_manada_guanacos;	/**< Pointer to X-machine memory of type manada_guanacos.  */
+	/*@dependent@*/ /*@null@*/ /*@out@*/ struct xmachine_memory_hunting * xmachine_hunting;	/**< Pointer to X-machine memory of type hunting.  */
 };
 
 /** \var void* FLAME_m_information_composite_params\n
@@ -854,6 +901,36 @@ struct m_clanmove
 	int sentido;	/**< Message memory variable sentido of type int. */
 };
 
+/** \var void* FLAME_m_xxx_composite_params\n
+ * \brief Pointer to message sync agent composite params */
+void* FLAME_m_xxx_composite_params;
+
+/** \struct m_xxx
+ * \brief Holds message of type xxx_message.
+ */
+struct m_xxx
+{
+	int clanID;	/**< Message memory variable clanID of type int. */
+	int x;	/**< Message memory variable x of type int. */
+	int y;	/**< Message memory variable y of type int. */
+	int linguistics[100];	/**< Message memory variable linguistics of type int. */
+	int needCooperation;	/**< Message memory variable needCooperation of type int. */
+};
+
+/** \var void* FLAME_m_yyy_composite_params\n
+ * \brief Pointer to message sync agent composite params */
+void* FLAME_m_yyy_composite_params;
+
+/** \struct m_yyy
+ * \brief Holds message of type yyy_message.
+ */
+struct m_yyy
+{
+	int clanID;	/**< Message memory variable clanID of type int. */
+	int coopClanID;	/**< Message memory variable coopClanID of type int. */
+	int needCooperation;	/**< Message memory variable needCooperation of type int. */
+};
+
 /** \var void* FLAME_m_clanspatch_composite_params\n
  * \brief Pointer to message sync agent composite params */
 void* FLAME_m_clanspatch_composite_params;
@@ -911,6 +988,7 @@ struct m_reproduccionguanacos
 	int y;	/**< Message memory variable y of type int. */
 	int count;	/**< Message memory variable count of type int. */
 	int familia;	/**< Message memory variable familia of type int. */
+	int adultos;	/**< Message memory variable adultos of type int. */
 };
 
 /** \typedef struct xmachine xmachine
@@ -965,6 +1043,18 @@ typedef struct xmachine_memory_manada_guanacos_holder xmachine_memory_manada_gua
  * \brief Typedef for xmachine_memory_manada_guanacos struct.
  */
 typedef struct xmachine_memory_manada_guanacos_state xmachine_memory_manada_guanacos_state;
+/** \var typedef xmachine_memory_hunting xmachine_memory_hunting
+ * \brief Typedef for xmachine_memory_hunting struct.
+ */
+typedef struct xmachine_memory_hunting xmachine_memory_hunting;
+/** \var typedef xmachine_memory_hunting xmachine_memory_hunting
+ * \brief Typedef for xmachine_memory_hunting struct.
+ */
+typedef struct xmachine_memory_hunting_holder xmachine_memory_hunting_holder;
+/** \var typedef xmachine_memory_hunting xmachine_memory_hunting
+ * \brief Typedef for xmachine_memory_hunting struct.
+ */
+typedef struct xmachine_memory_hunting_state xmachine_memory_hunting_state;
 /** \typedef m_information m_information
  * \brief Typedef for m_information struct.
  */
@@ -1065,6 +1155,16 @@ typedef struct m_transfer m_transfer;
  */
 typedef struct m_clanmove m_clanmove;
 
+/** \typedef m_xxx m_xxx
+ * \brief Typedef for m_xxx struct.
+ */
+typedef struct m_xxx m_xxx;
+
+/** \typedef m_yyy m_yyy
+ * \brief Typedef for m_yyy struct.
+ */
+typedef struct m_yyy m_yyy;
+
 /** \typedef m_clanspatch m_clanspatch
  * \brief Typedef for m_clanspatch struct.
  */
@@ -1126,6 +1226,8 @@ struct node_information
 	struct m_warningDivide * warningDivide_messages;	/**< Pointer to warningDivide message list. */
 	struct m_transfer * transfer_messages;	/**< Pointer to transfer message list. */
 	struct m_clanmove * clanmove_messages;	/**< Pointer to clanmove message list. */
+	struct m_xxx * xxx_messages;	/**< Pointer to xxx message list. */
+	struct m_yyy * yyy_messages;	/**< Pointer to yyy message list. */
 	struct m_clanspatch * clanspatch_messages;	/**< Pointer to clanspatch message list. */
 	struct m_guanacospatch * guanacospatch_messages;	/**< Pointer to guanacospatch message list. */
 	struct m_adultospatch * adultospatch_messages;	/**< Pointer to adultospatch message list. */
@@ -1150,6 +1252,8 @@ struct node_information
 	int warningDivide_message_no;	/**< Number of warningDivide messages in list to send. */
 	int transfer_message_no;	/**< Number of transfer messages in list to send. */
 	int clanmove_message_no;	/**< Number of clanmove messages in list to send. */
+	int xxx_message_no;	/**< Number of xxx messages in list to send. */
+	int yyy_message_no;	/**< Number of yyy messages in list to send. */
 	int clanspatch_message_no;	/**< Number of clanspatch messages in list to send. */
 	int guanacospatch_message_no;	/**< Number of guanacospatch messages in list to send. */
 	int adultospatch_message_no;	/**< Number of adultospatch messages in list to send. */
@@ -1162,6 +1266,8 @@ struct node_information
 	int patch_agent_no;	/**< Number of patch agents in list to send. */
 	struct xmachine * manada_guanacos_agents;	/**< Pointer to manada_guanacos agent list. */
 	int manada_guanacos_agent_no;	/**< Number of manada_guanacos agents in list to send. */
+	struct xmachine * hunting_agents;	/**< Pointer to hunting agent list. */
+	int hunting_agent_no;	/**< Number of hunting agents in list to send. */
 
 	struct node_information * next;	/**< Pointer to next node on the list. */
 };
@@ -1287,6 +1393,12 @@ m_transfer * temp_transfer_message;
 /** \var m_clanmove * temp_clanmove_message
 * \brief Pointer to m_clanmove to initialise linked list. */
 m_clanmove * temp_clanmove_message;
+/** \var m_xxx * temp_xxx_message
+* \brief Pointer to m_xxx to initialise linked list. */
+m_xxx * temp_xxx_message;
+/** \var m_yyy * temp_yyy_message
+* \brief Pointer to m_yyy to initialise linked list. */
+m_yyy * temp_yyy_message;
 /** \var m_clanspatch * temp_clanspatch_message
 * \brief Pointer to m_clanspatch to initialise linked list. */
 m_clanspatch * temp_clanspatch_message;
@@ -1381,6 +1493,15 @@ xmachine_memory_clan_state * current_xmachine_clan_next_state; /* New agents add
 /* Pointer to list of clan agents in state end state */
 //xmachine_memory_clan * temp_xmachine_clan_end;
 xmachine_memory_clan_state * clan_end_state;
+/* Pointer to list of clan agents in state 17 state */
+//xmachine_memory_clan * temp_xmachine_clan_17;
+xmachine_memory_clan_state * clan_17_state;
+/* Pointer to list of clan agents in state 16 state */
+//xmachine_memory_clan * temp_xmachine_clan_16;
+xmachine_memory_clan_state * clan_16_state;
+/* Pointer to list of clan agents in state 15 state */
+//xmachine_memory_clan * temp_xmachine_clan_15;
+xmachine_memory_clan_state * clan_15_state;
 /* Pointer to list of clan agents in state 14 state */
 //xmachine_memory_clan * temp_xmachine_clan_14;
 xmachine_memory_clan_state * clan_14_state;
@@ -1478,6 +1599,17 @@ xmachine_memory_manada_guanacos_state * manada_guanacos_1_state;
 /* Pointer to list of manada_guanacos agents in state start state */
 //xmachine_memory_manada_guanacos * temp_xmachine_manada_guanacos_start;
 xmachine_memory_manada_guanacos_state * manada_guanacos_start_state;
+/* Pointer to current $agent_name agent */
+/*@dependent@*/ /*@null@*/ /*@out@*/ xmachine_memory_hunting * current_xmachine_hunting;
+/*@dependent@*/ xmachine_memory_hunting_holder * temp_xmachine_hunting_holder;
+/*@dependent@*/ /*@null@*/ /*@out@*/ xmachine_memory_hunting_holder * current_xmachine_hunting_holder;
+xmachine_memory_hunting_state * current_xmachine_hunting_next_state; /* New agents added to this state */
+/* Pointer to list of hunting agents in state end state */
+//xmachine_memory_hunting * temp_xmachine_hunting_end;
+xmachine_memory_hunting_state * hunting_end_state;
+/* Pointer to list of hunting agents in state start state */
+//xmachine_memory_hunting * temp_xmachine_hunting_start;
+xmachine_memory_hunting_state * hunting_start_state;
 
 
 
@@ -1540,6 +1672,12 @@ MBt_Iterator i_transfer;
 
 MBt_Board b_clanmove;
 MBt_Iterator i_clanmove;
+
+MBt_Board b_xxx;
+MBt_Iterator i_xxx;
+
+MBt_Board b_yyy;
+MBt_Iterator i_yyy;
 
 MBt_Board b_clanspatch;
 MBt_Iterator i_clanspatch;
@@ -1614,6 +1752,12 @@ m_transfer * transfer_message;
 /** \var m_clanmove * clanmove_message
 * \brief Pointer to message struct for looping through clanmove message list */
 m_clanmove * clanmove_message;
+/** \var m_xxx * xxx_message
+* \brief Pointer to message struct for looping through xxx message list */
+m_xxx * xxx_message;
+/** \var m_yyy * yyy_message
+* \brief Pointer to message struct for looping through yyy message list */
+m_yyy * yyy_message;
 /** \var m_clanspatch * clanspatch_message
 * \brief Pointer to message struct for looping through clanspatch message list */
 m_clanspatch * clanspatch_message;
@@ -1658,6 +1802,10 @@ MPI_Datatype spacePartitionType;
 /** \var MPI_Datatype xmachinemanada_guanacosType
 * \brief MPI ", manada_guanacos xmachine */
 /* MPI_Datatype xmachinemanada_guanacosType; */
+
+/** \var MPI_Datatype xmachinehuntingType
+* \brief MPI ", hunting xmachine */
+/* MPI_Datatype xmachinehuntingType; */
 
 
 /** \var MPI_Datatype messageinformationType
@@ -1739,6 +1887,14 @@ MPI_Datatype spacePartitionType;
 /** \var MPI_Datatype messageclanmoveType
 * \brief MPI ", clanmove message */
 /* MPI_Datatype messageclanmoveType; */
+
+/** \var MPI_Datatype messagexxxType
+* \brief MPI ", xxx message */
+/* MPI_Datatype messagexxxType; */
+
+/** \var MPI_Datatype messageyyyType
+* \brief MPI ", yyy message */
+/* MPI_Datatype messageyyyType; */
 
 /** \var MPI_Datatype messageclanspatchType
 * \brief MPI ", clanspatch message */
@@ -1906,7 +2062,7 @@ xmachine_memory_clan * init_clan_agent();
 void free_clan_agent(xmachine_memory_clan_holder * tmp, xmachine_memory_clan_state * state);
 void transition_clan_agent(xmachine_memory_clan_holder * tmp, xmachine_memory_clan_state * from_state, xmachine_memory_clan_state * to_state);
 void add_clan_agent_internal(xmachine_memory_clan * agent, xmachine_memory_clan_state * state);
-void add_clan_agent(int cID, int cal_need, int cal_got, int cal_stored, int x, int y, int tcalories, int leaderID, members_needs mneeds, indv_free ifree, int indexID, int members, int linguistics[], int exchange_record[], int irecord, int targetX, int targetY);
+void add_clan_agent(int cID, int cal_need, int cal_got, int cal_stored, int x, int y, int tcalories, int leaderID, members_needs mneeds, indv_free ifree, int indexID, int members, int linguistics[], int exchange_record[], int irecord, int targetX, int targetY, int cooperation, int hunting);
 void unittest_init_clan_agent();
 void unittest_free_clan_agent();
 xmachine_memory_patch_state * init_patch_state();
@@ -1925,6 +2081,14 @@ void add_manada_guanacos_agent_internal(xmachine_memory_manada_guanacos * agent,
 void add_manada_guanacos_agent(int familia, int x, int y, int targetX, int targetY, int count, int calorias, int adultos, int season);
 void unittest_init_manada_guanacos_agent();
 void unittest_free_manada_guanacos_agent();
+xmachine_memory_hunting_state * init_hunting_state();
+xmachine_memory_hunting * init_hunting_agent();
+void free_hunting_agent(xmachine_memory_hunting_holder * tmp, xmachine_memory_hunting_state * state);
+void transition_hunting_agent(xmachine_memory_hunting_holder * tmp, xmachine_memory_hunting_state * from_state, xmachine_memory_hunting_state * to_state);
+void add_hunting_agent_internal(xmachine_memory_hunting * agent, xmachine_memory_hunting_state * state);
+void add_hunting_agent(int calores, int isuccess, int skill_level, int clans[]);
+void unittest_init_hunting_agent();
+void unittest_free_hunting_agent();
 
 void add_information_message(int id, int clanID, int cal, int age, int pregnant);
 m_information * add_information_message_internal(void);
@@ -2046,6 +2210,18 @@ m_clanmove * get_first_clanmove_message(void);
 m_clanmove * get_next_clanmove_message(m_clanmove * current);
 void freeclanmovemessages(void);
 
+void add_xxx_message(int clanID, int x, int y, int linguistics[], int needCooperation);
+m_xxx * add_xxx_message_internal(void);
+m_xxx * get_first_xxx_message(void);
+m_xxx * get_next_xxx_message(m_xxx * current);
+void freexxxmessages(void);
+
+void add_yyy_message(int clanID, int coopClanID, int needCooperation);
+m_yyy * add_yyy_message_internal(void);
+m_yyy * get_first_yyy_message(void);
+m_yyy * get_next_yyy_message(m_yyy * current);
+void freeyyymessages(void);
+
 void add_clanspatch_message(int x, int y, int pclans);
 m_clanspatch * add_clanspatch_message_internal(void);
 m_clanspatch * get_first_clanspatch_message(void);
@@ -2064,7 +2240,7 @@ m_adultospatch * get_first_adultospatch_message(void);
 m_adultospatch * get_next_adultospatch_message(m_adultospatch * current);
 void freeadultospatchmessages(void);
 
-void add_reproduccionguanacos_message(int x, int y, int count, int familia);
+void add_reproduccionguanacos_message(int x, int y, int count, int familia, int adultos);
 m_reproduccionguanacos * add_reproduccionguanacos_message_internal(void);
 m_reproduccionguanacos * get_first_reproduccionguanacos_message(void);
 m_reproduccionguanacos * get_next_reproduccionguanacos_message(m_reproduccionguanacos * current);
@@ -2134,6 +2310,10 @@ void set_targetX(int targetX);
 int get_targetX();
 void set_targetY(int targetY);
 int get_targetY();
+void set_cooperation(int cooperation);
+int get_cooperation();
+void set_hunting(int hunting);
+int get_hunting();
 void set_pcalories(int pcalories);
 int get_pcalories();
 void set_gcalories(int gcalories);
@@ -2158,6 +2338,13 @@ void set_count(int count);
 int get_count();
 void set_calorias(int calorias);
 int get_calorias();
+void set_calores(int calores);
+int get_calores();
+void set_isuccess(int isuccess);
+int get_isuccess();
+void set_skill_level(int skill_level);
+int get_skill_level();
+int * get_clans();
 int agent_get_id(void);
 double agent_get_x(void);
 double agent_get_y(void);
@@ -2247,6 +2434,14 @@ m_transfer * get_next_message_transfer_in_range(m_transfer * current);
 
 
 m_clanmove * get_next_message_clanmove_in_range(m_clanmove * current);
+
+
+
+m_xxx * get_next_message_xxx_in_range(m_xxx * current);
+double xxx_message_extract_x(void *msg_ptr);
+double xxx_message_extract_y(void *msg_ptr);
+
+m_yyy * get_next_message_yyy_in_range(m_yyy * current);
 
 
 
@@ -2342,37 +2537,45 @@ int FLAME_filter_clan_clan_Information_start_01_information(const void *msg, con
 int clan_extract_calories(void);
 int FLAME_filter_clan_clan_extract_calories_01_02_clangetcalories(const void *msg, const void *params);
 int distribute_calories(void);
-int move_clan(void);
-int FLAME_condition_clan_move_clan_03_04(xmachine_memory_clan *a);
-int FLAME_filter_clan_move_clan_03_04_guanacospatch(const void *msg, const void *params);
+int start_cooperation(void);
+int FLAME_condition_clan_start_cooperation_03_04(xmachine_memory_clan *a);
 
 int FLAME_condition_clan_idle_03_04(xmachine_memory_clan *a);
+int send_proposal(void);
+int FLAME_filter_clan_send_proposal_04_05_xxx(const void *msg, const void *params);
+int proposal_acceptation(void);
+int FLAME_filter_clan_proposal_acceptation_05_06_yyy(const void *msg, const void *params);
+int move_clan(void);
+int FLAME_condition_clan_move_clan_06_07(xmachine_memory_clan *a);
+int FLAME_filter_clan_move_clan_06_07_guanacospatch(const void *msg, const void *params);
+int idle_clan(void);
+int FLAME_condition_clan_idle_clan_06_07(xmachine_memory_clan *a);
 int marriable_indv(void);
-int FLAME_filter_clan_marriable_indv_04_05_ancestor(const void *msg, const void *params);
+int FLAME_filter_clan_marriable_indv_07_08_ancestor(const void *msg, const void *params);
 int send_girls(void);
 int match(void);
-int FLAME_filter_clan_match_06_07_freeGirls(const void *msg, const void *params);
+int FLAME_filter_clan_match_09_10_freeGirls(const void *msg, const void *params);
 int aceptar_prop(void);
-int FLAME_filter_clan_aceptar_prop_07_08_propuesta(const void *msg, const void *params);
+int FLAME_filter_clan_aceptar_prop_10_11_propuesta(const void *msg, const void *params);
 int recive_conf(void);
-int FLAME_filter_clan_recive_conf_08_09_confirProp(const void *msg, const void *params);
+int FLAME_filter_clan_recive_conf_11_12_confirProp(const void *msg, const void *params);
 int repartir_id(void);
-int FLAME_filter_clan_repartir_id_09_10_peticionID(const void *msg, const void *params);
+int FLAME_filter_clan_repartir_id_12_13_peticionID(const void *msg, const void *params);
 int new_leader(void);
-int FLAME_filter_clan_new_leader_10_11_leader(const void *msg, const void *params);
+int FLAME_filter_clan_new_leader_13_14_leader(const void *msg, const void *params);
 int again_marriable(void);
-int FLAME_filter_clan_again_marriable_11_12_widow(const void *msg, const void *params);
+int FLAME_filter_clan_again_marriable_14_15_widow(const void *msg, const void *params);
 int dividir_clan(void);
-int FLAME_condition_clan_dividir_clan_12_13(xmachine_memory_clan *a);
+int FLAME_condition_clan_dividir_clan_15_16(xmachine_memory_clan *a);
 
-int FLAME_condition_clan_idle_12_14(xmachine_memory_clan *a);
+int FLAME_condition_clan_idle_15_17(xmachine_memory_clan *a);
 int creacion_clan(void);
-int FLAME_filter_clan_creacion_clan_13_14_informationDivide(const void *msg, const void *params);
-int FLAME_sort_clan_creacion_clan_13_14_informationDivide();
+int FLAME_filter_clan_creacion_clan_16_17_informationDivide(const void *msg, const void *params);
+int FLAME_sort_clan_creacion_clan_16_17_informationDivide();
 int vocabulary_review(void);
-int FLAME_condition_clan_vocabulary_review_14_end(xmachine_memory_clan *a);
+int FLAME_condition_clan_vocabulary_review_17_end(xmachine_memory_clan *a);
 
-int FLAME_condition_clan_idle_14_end(xmachine_memory_clan *a);
+int FLAME_condition_clan_idle_15_end(xmachine_memory_clan *a);
 int patchtype(void);
 int FLAME_condition_patch_patchtype_start_1(xmachine_memory_patch *a);
 int infoClansInPatch(void);
@@ -2414,4 +2617,8 @@ int FLAME_condition_manada_guanacos_reproduccion_2_3(xmachine_memory_manada_guan
 int manada_idle2(void);
 int FLAME_condition_manada_guanacos_manada_idle2_2_3(xmachine_memory_manada_guanacos *a);
 int surviveGuanacos(void);
+int FLAME_condition_manada_guanacos_surviveGuanacos_3_end(xmachine_memory_manada_guanacos *a);
+
+int FLAME_condition_manada_guanacos_idle_3_end(xmachine_memory_manada_guanacos *a);
+int get_hunters(void);
 #endif

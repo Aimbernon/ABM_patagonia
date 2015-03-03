@@ -257,14 +257,14 @@ int FLAME_condition_indv_idle_12_13(xmachine_memory_indv *a)
 }
 
 
-/** \fn int FLAME_condition_clan_move_clan_03_04(xmachine_memory_clan *a)
+/** \fn int FLAME_condition_clan_start_cooperation_03_04(xmachine_memory_clan *a)
  * \brief The condition function for an agent function.
  * \param a The agent memory.
  * \return The success (1) or failure (0) of the condition.
  */
-int FLAME_condition_clan_move_clan_03_04(xmachine_memory_clan *a)
+int FLAME_condition_clan_start_cooperation_03_04(xmachine_memory_clan *a)
 {
-	if((iteration_loop%45 == 0)) return 1;
+	if((a->cooperation == 1)) return 1;
 	else return 0;
 }
 
@@ -276,53 +276,77 @@ int FLAME_condition_clan_move_clan_03_04(xmachine_memory_clan *a)
  */
 int FLAME_condition_clan_idle_03_04(xmachine_memory_clan *a)
 {
+	if(!(a->cooperation == 1)) return 1;
+	else return 0;
+}
+
+
+/** \fn int FLAME_condition_clan_move_clan_06_07(xmachine_memory_clan *a)
+ * \brief The condition function for an agent function.
+ * \param a The agent memory.
+ * \return The success (1) or failure (0) of the condition.
+ */
+int FLAME_condition_clan_move_clan_06_07(xmachine_memory_clan *a)
+{
+	if((iteration_loop%45 == 0)) return 1;
+	else return 0;
+}
+
+
+/** \fn int FLAME_condition_clan_idle_clan_06_07(xmachine_memory_clan *a)
+ * \brief The condition function for an agent function.
+ * \param a The agent memory.
+ * \return The success (1) or failure (0) of the condition.
+ */
+int FLAME_condition_clan_idle_clan_06_07(xmachine_memory_clan *a)
+{
 	if(!(iteration_loop%45 == 0)) return 1;
 	else return 0;
 }
 
 
-/** \fn int FLAME_condition_clan_dividir_clan_12_13(xmachine_memory_clan *a)
+/** \fn int FLAME_condition_clan_dividir_clan_15_16(xmachine_memory_clan *a)
  * \brief The condition function for an agent function.
  * \param a The agent memory.
  * \return The success (1) or failure (0) of the condition.
  */
-int FLAME_condition_clan_dividir_clan_12_13(xmachine_memory_clan *a)
+int FLAME_condition_clan_dividir_clan_15_16(xmachine_memory_clan *a)
 {
 	if((a->members >= 30)) return 1;
 	else return 0;
 }
 
 
-/** \fn int FLAME_condition_clan_idle_12_14(xmachine_memory_clan *a)
+/** \fn int FLAME_condition_clan_idle_15_17(xmachine_memory_clan *a)
  * \brief The condition function for an agent function.
  * \param a The agent memory.
  * \return The success (1) or failure (0) of the condition.
  */
-int FLAME_condition_clan_idle_12_14(xmachine_memory_clan *a)
+int FLAME_condition_clan_idle_15_17(xmachine_memory_clan *a)
 {
 	if(!(a->members >= 30)) return 1;
 	else return 0;
 }
 
 
-/** \fn int FLAME_condition_clan_vocabulary_review_14_end(xmachine_memory_clan *a)
+/** \fn int FLAME_condition_clan_vocabulary_review_17_end(xmachine_memory_clan *a)
  * \brief The condition function for an agent function.
  * \param a The agent memory.
  * \return The success (1) or failure (0) of the condition.
  */
-int FLAME_condition_clan_vocabulary_review_14_end(xmachine_memory_clan *a)
+int FLAME_condition_clan_vocabulary_review_17_end(xmachine_memory_clan *a)
 {
 	if((iteration_loop%360 == 348)) return 1;
 	else return 0;
 }
 
 
-/** \fn int FLAME_condition_clan_idle_14_end(xmachine_memory_clan *a)
+/** \fn int FLAME_condition_clan_idle_15_end(xmachine_memory_clan *a)
  * \brief The condition function for an agent function.
  * \param a The agent memory.
  * \return The success (1) or failure (0) of the condition.
  */
-int FLAME_condition_clan_idle_14_end(xmachine_memory_clan *a)
+int FLAME_condition_clan_idle_15_end(xmachine_memory_clan *a)
 {
 	if(!(iteration_loop%360 == 348)) return 1;
 	else return 0;
@@ -517,6 +541,30 @@ int FLAME_condition_manada_guanacos_reproduccion_2_3(xmachine_memory_manada_guan
 int FLAME_condition_manada_guanacos_manada_idle2_2_3(xmachine_memory_manada_guanacos *a)
 {
 	if(!(iteration_loop%360 == 0)) return 1;
+	else return 0;
+}
+
+
+/** \fn int FLAME_condition_manada_guanacos_surviveGuanacos_3_end(xmachine_memory_manada_guanacos *a)
+ * \brief The condition function for an agent function.
+ * \param a The agent memory.
+ * \return The success (1) or failure (0) of the condition.
+ */
+int FLAME_condition_manada_guanacos_surviveGuanacos_3_end(xmachine_memory_manada_guanacos *a)
+{
+	if((iteration_loop%7 == 0)) return 1;
+	else return 0;
+}
+
+
+/** \fn int FLAME_condition_manada_guanacos_idle_3_end(xmachine_memory_manada_guanacos *a)
+ * \brief The condition function for an agent function.
+ * \param a The agent memory.
+ * \return The success (1) or failure (0) of the condition.
+ */
+int FLAME_condition_manada_guanacos_idle_3_end(xmachine_memory_manada_guanacos *a)
+{
+	if(!(iteration_loop%7 == 0)) return 1;
 	else return 0;
 }
 
@@ -742,15 +790,35 @@ int FLAME_filter_clan_clan_extract_calories_01_02_clangetcalories(const void *ms
 	else return 0;
 }
 
-/** \fn int FLAME_filter_clan_marriable_indv_04_05_ancestor(const void *msg, const void *params)
+/** \fn int FLAME_filter_clan_proposal_acceptation_05_06_yyy(const void *msg, const void *params)
  * \brief The filter function for a message input used in serial for each agent.
  * \param msg The pointer to the message to be filtered.
  * \param params The pointer to the agent memory.
  * \return The success (1) or failure (0) of the filter on the message.
  */
-int FLAME_filter_clan_marriable_indv_04_05_ancestor(const void *msg, const void *params)
+int FLAME_filter_clan_proposal_acceptation_05_06_yyy(const void *msg, const void *params)
 {
-	//printf("**** FLAME_filter_clan_marriable_indv_04_05_ancestor(const void *msg, const void *params)\n");
+	//printf("**** FLAME_filter_clan_proposal_acceptation_05_06_yyy(const void *msg, const void *params)\n");
+	
+	/* Cast the message pointer to the correct message type */
+	m_yyy *m = (m_yyy*)msg;
+	/* Cast the params pointer to the correct agent type */
+	xmachine_memory_clan *a = (xmachine_memory_clan *)params;
+
+	/* The filter */
+	if((a->cID == m->coopClanID)) return 1;
+	else return 0;
+}
+
+/** \fn int FLAME_filter_clan_marriable_indv_07_08_ancestor(const void *msg, const void *params)
+ * \brief The filter function for a message input used in serial for each agent.
+ * \param msg The pointer to the message to be filtered.
+ * \param params The pointer to the agent memory.
+ * \return The success (1) or failure (0) of the filter on the message.
+ */
+int FLAME_filter_clan_marriable_indv_07_08_ancestor(const void *msg, const void *params)
+{
+	//printf("**** FLAME_filter_clan_marriable_indv_07_08_ancestor(const void *msg, const void *params)\n");
 	
 	/* Cast the message pointer to the correct message type */
 	m_ancestor *m = (m_ancestor*)msg;
@@ -762,15 +830,15 @@ int FLAME_filter_clan_marriable_indv_04_05_ancestor(const void *msg, const void 
 	else return 0;
 }
 
-/** \fn int FLAME_filter_clan_aceptar_prop_07_08_propuesta(const void *msg, const void *params)
+/** \fn int FLAME_filter_clan_aceptar_prop_10_11_propuesta(const void *msg, const void *params)
  * \brief The filter function for a message input used in serial for each agent.
  * \param msg The pointer to the message to be filtered.
  * \param params The pointer to the agent memory.
  * \return The success (1) or failure (0) of the filter on the message.
  */
-int FLAME_filter_clan_aceptar_prop_07_08_propuesta(const void *msg, const void *params)
+int FLAME_filter_clan_aceptar_prop_10_11_propuesta(const void *msg, const void *params)
 {
-	//printf("**** FLAME_filter_clan_aceptar_prop_07_08_propuesta(const void *msg, const void *params)\n");
+	//printf("**** FLAME_filter_clan_aceptar_prop_10_11_propuesta(const void *msg, const void *params)\n");
 	
 	/* Cast the message pointer to the correct message type */
 	m_propuesta *m = (m_propuesta*)msg;
@@ -782,15 +850,15 @@ int FLAME_filter_clan_aceptar_prop_07_08_propuesta(const void *msg, const void *
 	else return 0;
 }
 
-/** \fn int FLAME_filter_clan_recive_conf_08_09_confirProp(const void *msg, const void *params)
+/** \fn int FLAME_filter_clan_recive_conf_11_12_confirProp(const void *msg, const void *params)
  * \brief The filter function for a message input used in serial for each agent.
  * \param msg The pointer to the message to be filtered.
  * \param params The pointer to the agent memory.
  * \return The success (1) or failure (0) of the filter on the message.
  */
-int FLAME_filter_clan_recive_conf_08_09_confirProp(const void *msg, const void *params)
+int FLAME_filter_clan_recive_conf_11_12_confirProp(const void *msg, const void *params)
 {
-	//printf("**** FLAME_filter_clan_recive_conf_08_09_confirProp(const void *msg, const void *params)\n");
+	//printf("**** FLAME_filter_clan_recive_conf_11_12_confirProp(const void *msg, const void *params)\n");
 	
 	/* Cast the message pointer to the correct message type */
 	m_confirProp *m = (m_confirProp*)msg;
@@ -802,15 +870,15 @@ int FLAME_filter_clan_recive_conf_08_09_confirProp(const void *msg, const void *
 	else return 0;
 }
 
-/** \fn int FLAME_filter_clan_repartir_id_09_10_peticionID(const void *msg, const void *params)
+/** \fn int FLAME_filter_clan_repartir_id_12_13_peticionID(const void *msg, const void *params)
  * \brief The filter function for a message input used in serial for each agent.
  * \param msg The pointer to the message to be filtered.
  * \param params The pointer to the agent memory.
  * \return The success (1) or failure (0) of the filter on the message.
  */
-int FLAME_filter_clan_repartir_id_09_10_peticionID(const void *msg, const void *params)
+int FLAME_filter_clan_repartir_id_12_13_peticionID(const void *msg, const void *params)
 {
-	//printf("**** FLAME_filter_clan_repartir_id_09_10_peticionID(const void *msg, const void *params)\n");
+	//printf("**** FLAME_filter_clan_repartir_id_12_13_peticionID(const void *msg, const void *params)\n");
 	
 	/* Cast the message pointer to the correct message type */
 	m_peticionID *m = (m_peticionID*)msg;
@@ -822,15 +890,15 @@ int FLAME_filter_clan_repartir_id_09_10_peticionID(const void *msg, const void *
 	else return 0;
 }
 
-/** \fn int FLAME_filter_clan_new_leader_10_11_leader(const void *msg, const void *params)
+/** \fn int FLAME_filter_clan_new_leader_13_14_leader(const void *msg, const void *params)
  * \brief The filter function for a message input used in serial for each agent.
  * \param msg The pointer to the message to be filtered.
  * \param params The pointer to the agent memory.
  * \return The success (1) or failure (0) of the filter on the message.
  */
-int FLAME_filter_clan_new_leader_10_11_leader(const void *msg, const void *params)
+int FLAME_filter_clan_new_leader_13_14_leader(const void *msg, const void *params)
 {
-	//printf("**** FLAME_filter_clan_new_leader_10_11_leader(const void *msg, const void *params)\n");
+	//printf("**** FLAME_filter_clan_new_leader_13_14_leader(const void *msg, const void *params)\n");
 	
 	/* Cast the message pointer to the correct message type */
 	m_leader *m = (m_leader*)msg;
@@ -842,15 +910,15 @@ int FLAME_filter_clan_new_leader_10_11_leader(const void *msg, const void *param
 	else return 0;
 }
 
-/** \fn int FLAME_filter_clan_again_marriable_11_12_widow(const void *msg, const void *params)
+/** \fn int FLAME_filter_clan_again_marriable_14_15_widow(const void *msg, const void *params)
  * \brief The filter function for a message input used in serial for each agent.
  * \param msg The pointer to the message to be filtered.
  * \param params The pointer to the agent memory.
  * \return The success (1) or failure (0) of the filter on the message.
  */
-int FLAME_filter_clan_again_marriable_11_12_widow(const void *msg, const void *params)
+int FLAME_filter_clan_again_marriable_14_15_widow(const void *msg, const void *params)
 {
-	//printf("**** FLAME_filter_clan_again_marriable_11_12_widow(const void *msg, const void *params)\n");
+	//printf("**** FLAME_filter_clan_again_marriable_14_15_widow(const void *msg, const void *params)\n");
 	
 	/* Cast the message pointer to the correct message type */
 	m_widow *m = (m_widow*)msg;
@@ -862,15 +930,15 @@ int FLAME_filter_clan_again_marriable_11_12_widow(const void *msg, const void *p
 	else return 0;
 }
 
-/** \fn int FLAME_filter_clan_creacion_clan_13_14_informationDivide(const void *msg, const void *params)
+/** \fn int FLAME_filter_clan_creacion_clan_16_17_informationDivide(const void *msg, const void *params)
  * \brief The filter function for a message input used in serial for each agent.
  * \param msg The pointer to the message to be filtered.
  * \param params The pointer to the agent memory.
  * \return The success (1) or failure (0) of the filter on the message.
  */
-int FLAME_filter_clan_creacion_clan_13_14_informationDivide(const void *msg, const void *params)
+int FLAME_filter_clan_creacion_clan_16_17_informationDivide(const void *msg, const void *params)
 {
-	//printf("**** FLAME_filter_clan_creacion_clan_13_14_informationDivide(const void *msg, const void *params)\n");
+	//printf("**** FLAME_filter_clan_creacion_clan_16_17_informationDivide(const void *msg, const void *params)\n");
 	
 	/* Cast the message pointer to the correct message type */
 	m_informationDivide *m = (m_informationDivide*)msg;
@@ -963,7 +1031,7 @@ int FLAME_filter_patch_reproduccion_guanacos_7_end_reproduccionguanacos(const vo
 }
 
 
-int FLAME_sort_clan_creacion_clan_13_14_informationDivide(const void *x, const void *y)
+int FLAME_sort_clan_creacion_clan_16_17_informationDivide(const void *x, const void *y)
 {
 	if( ((m_informationDivide *)x)->age > ((m_informationDivide *)y)->age ) return -1;
 	else if( ((m_informationDivide *)x)->age < ((m_informationDivide *)y)->age ) return 1;
