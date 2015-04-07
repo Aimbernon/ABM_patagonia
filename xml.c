@@ -619,11 +619,13 @@ int readEnvironmentXML(char * location)
 	int in_lang_threshold = 0;
 	int in_genoma = 0;
 	int in_record_size = 0;
+	int in_grecord_size = 0;
 	int in_max_manada = 0;
 	int in_max_familia = 0;
 	int in_cal_adulto = 0;
 	int in_surviveChanceAdult = 0;
 	int in_surviveChanceChild = 0;
+	int in_speed = 0;
 	
 
 	buffer[0] = '\0';
@@ -659,6 +661,8 @@ int readEnvironmentXML(char * location)
 			if(strcmp(buffer, "/genoma") == 0) in_genoma = 0;
 			if(strcmp(buffer, "record_size") == 0) in_record_size = 1;
 			if(strcmp(buffer, "/record_size") == 0) in_record_size = 0;
+			if(strcmp(buffer, "grecord_size") == 0) in_grecord_size = 1;
+			if(strcmp(buffer, "/grecord_size") == 0) in_grecord_size = 0;
 			if(strcmp(buffer, "max_manada") == 0) in_max_manada = 1;
 			if(strcmp(buffer, "/max_manada") == 0) in_max_manada = 0;
 			if(strcmp(buffer, "max_familia") == 0) in_max_familia = 1;
@@ -669,6 +673,8 @@ int readEnvironmentXML(char * location)
 			if(strcmp(buffer, "/surviveChanceAdult") == 0) in_surviveChanceAdult = 0;
 			if(strcmp(buffer, "surviveChanceChild") == 0) in_surviveChanceChild = 1;
 			if(strcmp(buffer, "/surviveChanceChild") == 0) in_surviveChanceChild = 0;
+			if(strcmp(buffer, "speed") == 0) in_speed = 1;
+			if(strcmp(buffer, "/speed") == 0) in_speed = 0;
 			
 			index = 0;
 			buffer[index] = '\0';
@@ -685,11 +691,13 @@ int readEnvironmentXML(char * location)
 				if(in_lang_threshold == 1) { FLAME_environment_variable_lang_threshold = atoi(buffer); }
 				if(in_genoma == 1) { FLAME_environment_variable_genoma = atoi(buffer); }
 				if(in_record_size == 1) { FLAME_environment_variable_record_size = atoi(buffer); }
+				if(in_grecord_size == 1) { FLAME_environment_variable_grecord_size = atoi(buffer); }
 				if(in_max_manada == 1) { FLAME_environment_variable_max_manada = atoi(buffer); }
 				if(in_max_familia == 1) { FLAME_environment_variable_max_familia = atoi(buffer); }
 				if(in_cal_adulto == 1) { FLAME_environment_variable_cal_adulto = atoi(buffer); }
 				if(in_surviveChanceAdult == 1) { FLAME_environment_variable_surviveChanceAdult = atoi(buffer); }
 				if(in_surviveChanceChild == 1) { FLAME_environment_variable_surviveChanceChild = atoi(buffer); }
+				if(in_speed == 1) { FLAME_environment_variable_speed = atoi(buffer); }
 				
 			}
 			index = 0;
@@ -768,6 +776,8 @@ int readAgentXML(char * location,
 	int in_targetY = 0;
 	int in_cooperation = 0;
 	int in_hunting = 0;
+	int in_guanacos_record = 0;
+	int in_igrecord = 0;
 	int in_pcalories = 0;
 	int in_gcalories = 0;
 	int in_repo = 0;
@@ -784,6 +794,11 @@ int readAgentXML(char * location,
 	int in_isuccess = 0;
 	int in_skill_level = 0;
 	int in_clans = 0;
+	int in_guanacos = 0;
+	int in_destiny = 0;
+	int in_arrive = 0;
+	int in_start = 0;
+	int in_end = 0;
 	
 	xmachine_memory_indv * current_indv_agent = NULL;
 	xmachine_memory_clan * current_clan_agent = NULL;
@@ -1029,8 +1044,8 @@ int readAgentXML(char * location,
 				{
 					if(current_hunting_agent == NULL) { printf("Memory error reading hunting agent\n"); exit(0); }
 					
-					posx = (double)0.0;
-					posy = (double)0.0;
+					posx = (double)current_hunting_agent->x;
+					posy = (double)current_hunting_agent->y;
 					posz = (double)0.0;
 					
 					/* If flag is zero just read the data. We'll partition later.
@@ -1164,6 +1179,10 @@ int readAgentXML(char * location,
 			if(strcmp(buffer, "/cooperation") == 0) { in_cooperation = 0; }
 			if(strcmp(buffer, "hunting") == 0) { in_hunting = 1; }
 			if(strcmp(buffer, "/hunting") == 0) { in_hunting = 0; }
+			if(strcmp(buffer, "guanacos_record") == 0) { in_guanacos_record = 1; }
+			if(strcmp(buffer, "/guanacos_record") == 0) { in_guanacos_record = 0; }
+			if(strcmp(buffer, "igrecord") == 0) { in_igrecord = 1; }
+			if(strcmp(buffer, "/igrecord") == 0) { in_igrecord = 0; }
 			if(strcmp(buffer, "pcalories") == 0) { in_pcalories = 1; }
 			if(strcmp(buffer, "/pcalories") == 0) { in_pcalories = 0; }
 			if(strcmp(buffer, "gcalories") == 0) { in_gcalories = 1; }
@@ -1196,6 +1215,16 @@ int readAgentXML(char * location,
 			if(strcmp(buffer, "/skill_level") == 0) { in_skill_level = 0; }
 			if(strcmp(buffer, "clans") == 0) { in_clans = 1; }
 			if(strcmp(buffer, "/clans") == 0) { in_clans = 0; }
+			if(strcmp(buffer, "guanacos") == 0) { in_guanacos = 1; }
+			if(strcmp(buffer, "/guanacos") == 0) { in_guanacos = 0; }
+			if(strcmp(buffer, "destiny") == 0) { in_destiny = 1; }
+			if(strcmp(buffer, "/destiny") == 0) { in_destiny = 0; }
+			if(strcmp(buffer, "arrive") == 0) { in_arrive = 1; }
+			if(strcmp(buffer, "/arrive") == 0) { in_arrive = 0; }
+			if(strcmp(buffer, "start") == 0) { in_start = 1; }
+			if(strcmp(buffer, "/start") == 0) { in_start = 0; }
+			if(strcmp(buffer, "end") == 0) { in_end = 1; }
+			if(strcmp(buffer, "/end") == 0) { in_end = 0; }
 			
 			index = 0;
 			buffer[index] = '\0';
@@ -1298,6 +1327,10 @@ int readAgentXML(char * location,
 					if(in_targetY) { current_clan_agent->targetY = atoi(buffer); }
 					if(in_cooperation) { current_clan_agent->cooperation = atoi(buffer); }
 					if(in_hunting) { current_clan_agent->hunting = atoi(buffer); }
+					if(in_guanacos_record) { j = 0;
+						rc = read_int_static_array(buffer, index, &j, current_clan_agent->guanacos_record, 15);
+						if(rc != 0) { printf("Error: reading 'clan' agent variable 'guanacos_record' of type 'int'\n"); exit(0); } }
+					if(in_igrecord) { current_clan_agent->igrecord = atoi(buffer); }
 				 }else if(in_patch_agent == 1)
 				{
 					if(in_patchID) { current_patch_agent->patchID = atoi(buffer); }
@@ -1331,6 +1364,17 @@ int readAgentXML(char * location,
 					if(in_clans) { j = 0;
 						rc = read_int_static_array(buffer, index, &j, current_hunting_agent->clans, 2);
 						if(rc != 0) { printf("Error: reading 'hunting' agent variable 'clans' of type 'int'\n"); exit(0); } }
+					if(in_x) { current_hunting_agent->x = atoi(buffer); }
+					if(in_y) { current_hunting_agent->y = atoi(buffer); }
+					if(in_guanacos) { j = 0;
+						rc = read_int_static_array(buffer, index, &j, current_hunting_agent->guanacos, 30);
+						if(rc != 0) { printf("Error: reading 'hunting' agent variable 'guanacos' of type 'int'\n"); exit(0); } }
+					if(in_destiny) { j = 0;
+						rc = read_int_static_array(buffer, index, &j, current_hunting_agent->destiny, 2);
+						if(rc != 0) { printf("Error: reading 'hunting' agent variable 'destiny' of type 'int'\n"); exit(0); } }
+					if(in_arrive) { current_hunting_agent->arrive = atoi(buffer); }
+					if(in_start) { current_hunting_agent->start = atoi(buffer); }
+					if(in_end) { current_hunting_agent->end = atoi(buffer); }
 				 }
 			}
 			index = 0;
@@ -1436,11 +1480,13 @@ void readprepartitionedinitialstates(char * fileroot, char * filelocation, int *
 	FLAME_environment_variable_lang_threshold = 0;
 	FLAME_environment_variable_genoma = 0;
 	FLAME_environment_variable_record_size = 0;
+	FLAME_environment_variable_grecord_size = 0;
 	FLAME_environment_variable_max_manada = 0;
 	FLAME_environment_variable_max_familia = 0;
 	FLAME_environment_variable_cal_adulto = 0;
 	FLAME_environment_variable_surviveChanceAdult = 0;
 	FLAME_environment_variable_surviveChanceChild = 0;
+	FLAME_environment_variable_speed = 0;
 	
 
 	MPI_Comm_size (MPI_COMM_WORLD, &number_partitions);
@@ -1778,11 +1824,13 @@ void readinitialstates(char * filename, char * filelocation, int * itno, double 
 	FLAME_environment_variable_lang_threshold = 0;
 	FLAME_environment_variable_genoma = 0;
 	FLAME_environment_variable_record_size = 0;
+	FLAME_environment_variable_grecord_size = 0;
 	FLAME_environment_variable_max_manada = 0;
 	FLAME_environment_variable_max_familia = 0;
 	FLAME_environment_variable_cal_adulto = 0;
 	FLAME_environment_variable_surviveChanceAdult = 0;
 	FLAME_environment_variable_surviveChanceChild = 0;
+	FLAME_environment_variable_speed = 0;
 	
 
 	/* Open config file to read-only */
@@ -2473,6 +2521,13 @@ void write_clan_agent(FILE *file, xmachine_memory_clan * current)
 	sprintf(data, "%i", current->hunting);
 	fputs(data, file);
 	fputs("</hunting>\n", file);
+		fputs("<guanacos_record>", file);
+	write_int_static_array(file, current->guanacos_record, 15);
+	fputs("</guanacos_record>\n", file);
+		fputs("<igrecord>", file);
+	sprintf(data, "%i", current->igrecord);
+	fputs(data, file);
+	fputs("</igrecord>\n", file);
 
 	fputs("</xagent>\n", file);
 }
@@ -2599,6 +2654,32 @@ void write_hunting_agent(FILE *file, xmachine_memory_hunting * current)
 		fputs("<clans>", file);
 	write_int_static_array(file, current->clans, 2);
 	fputs("</clans>\n", file);
+		fputs("<x>", file);
+	sprintf(data, "%i", current->x);
+	fputs(data, file);
+	fputs("</x>\n", file);
+		fputs("<y>", file);
+	sprintf(data, "%i", current->y);
+	fputs(data, file);
+	fputs("</y>\n", file);
+		fputs("<guanacos>", file);
+	write_int_static_array(file, current->guanacos, 30);
+	fputs("</guanacos>\n", file);
+		fputs("<destiny>", file);
+	write_int_static_array(file, current->destiny, 2);
+	fputs("</destiny>\n", file);
+		fputs("<arrive>", file);
+	sprintf(data, "%i", current->arrive);
+	fputs(data, file);
+	fputs("</arrive>\n", file);
+		fputs("<start>", file);
+	sprintf(data, "%i", current->start);
+	fputs(data, file);
+	fputs("</start>\n", file);
+		fputs("<end>", file);
+	sprintf(data, "%i", current->end);
+	fputs(data, file);
+	fputs("</end>\n", file);
 
 	fputs("</xagent>\n", file);
 }
@@ -2655,6 +2736,10 @@ void FLAME_write_xml(char * location, int iteration_number, int * output_types, 
 		sprintf(data, "%i", FLAME_environment_variable_record_size);
 		fputs(data, file);
 		fputs("</record_size>\n", file);
+			fputs("<grecord_size>", file);
+		sprintf(data, "%i", FLAME_environment_variable_grecord_size);
+		fputs(data, file);
+		fputs("</grecord_size>\n", file);
 			fputs("<max_manada>", file);
 		sprintf(data, "%i", FLAME_environment_variable_max_manada);
 		fputs(data, file);
@@ -2675,6 +2760,10 @@ void FLAME_write_xml(char * location, int iteration_number, int * output_types, 
 		sprintf(data, "%i", FLAME_environment_variable_surviveChanceChild);
 		fputs(data, file);
 		fputs("</surviveChanceChild>\n", file);
+			fputs("<speed>", file);
+		sprintf(data, "%i", FLAME_environment_variable_speed);
+		fputs(data, file);
+		fputs("</speed>\n", file);
 			fputs("</environment>\n" , file);
 	}
 		}

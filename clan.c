@@ -461,7 +461,7 @@ int creacion_clan ()
 	for (i=0;i<new_clan.size;i++)
 		add_transfer_message (get_cID(), newClanID,new_clan.array[i]);
 	add_clan_agent (newClanID,0,0,0,get_x(),get_y(),0,new_clan.array[0],MNEEDS,IFREE,get_indexID(),new_clan.size,get_linguistics(),
-	get_exchange_record(),get_irecord(),get_targetX(),get_targetY(),0,0);
+	get_exchange_record(),get_irecord(),get_targetX(),get_targetY(),0,0,get_guanacos_record(),get_igrecord());
 
 	free_int_array(&ID_list);
 	free_int_array(&mom_list);
@@ -476,7 +476,7 @@ int vocabulary_review ()
 {
 	int i,random;
 
-	for (i=0;i<100;i++)
+	for (i=0;i<GENOMA;i++)
 	{
 		random = rand() % 10;
 		if (get_linguistics()[i] == 0){//aprender nueva palabra
@@ -527,6 +527,11 @@ int move_clan()
 				guanacos[4].x = guanacospatch_message->x;
 				guanacos[4].y = guanacospatch_message->y;
 				guanacos[4].guanacos = guanacospatch_message->adultos;
+				// Obtener los guanacos que habian en mi patch y añadirlos en el buffer circular
+				GUANACOS_RECORD[get_igrecord()]=get_x();
+				GUANACOS_RECORD[get_igrecord()+1]=get_y();
+				GUANACOS_RECORD[get_igrecord()+2]=guanacospatch_message->adultos;
+				set_igrecord(get_irecord()+1);
 			}if(guanacospatch_message->y == get_y() +1){
 				guanacos[7].x = guanacospatch_message->x;
 				guanacos[7].y = guanacospatch_message->y;
@@ -728,7 +733,7 @@ int send_proposal ()
 		}
 		// clan sends a proposal the cooperation to choosen clan
 		if (cooperation == 1)
-			add_yyy_message (get_cID(),id_clan,coop);
+			add_yyy_message (get_cID(),id_clan,coop,get_guanacos_record());
 	}
 	free_int_array (&clanID_list);
 	free_int_array (&linguistics_list);
@@ -737,11 +742,13 @@ int send_proposal ()
 }
 int proposal_acceptation ()
 {
-	int clansID[2],nacceptations=0,coop;
+	int clansID[2],nacceptations=0,coop,r_guanacos[30],i,destiny[2];
 	START_YYY_MESSAGE_LOOP
 		clansID[0] = yyy_message->clanID; // ID other clan
 		clansID[1] = yyy_message->coopClanID;// my ID
 		coop = yyy_message->needCooperation;
+		for (i=0;i<GRECORD_SIZE;i++)
+			r_guanacos[i]= yyy_message->guanaco_record[i];
 		nacceptations += 1;
 	FINISH_YYY_MESSAGE_LOOP
 	if (nacceptations > 0)
@@ -750,7 +757,10 @@ int proposal_acceptation ()
 		set_hunting(1);
 		if (coop == 1)// two clan needed cooperate
 			if (clansID[0] < get_cID())
-				add_hunting_agent (0,0,0,clansID);
+			{
+   				memcpy(r_guanacos+GRECORD_SIZE,get_guanacos_record(), sizeof(int) * GRECORD_SIZE); 
+				add_hunting_agent (0,0,0,clansID,get_x(),get_y(),r_guanacos,destiny,-1,-1,-1);
+			}
 	}
 	return 0;
 }

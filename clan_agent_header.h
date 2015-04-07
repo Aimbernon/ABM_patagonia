@@ -60,3 +60,9 @@
 /** \def HUNTING
  * \brief Direct access to hunting of clan agent memory variable. */
 #define HUNTING (current_xmachine_clan->hunting)
+/** \def GUANACOS_RECORD
+ * \brief Direct access to guanacos_record of clan agent memory variable. */
+#define GUANACOS_RECORD (current_xmachine_clan->guanacos_record)
+/** \def IGRECORD
+ * \brief Direct access to igrecord of clan agent memory variable. */
+#define IGRECORD (current_xmachine_clan->igrecord)

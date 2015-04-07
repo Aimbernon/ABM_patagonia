@@ -9,6 +9,11 @@
             <file>hunting.c</file>
         </functionFiles>
 	<constants>
+		<variable>
+			<type>int</type>
+			<name>speed</name>
+			<description>Velocidad de la partida</description>
+	    </variable>
 	</constants>
     </environment>
     <agents>
@@ -36,21 +41,229 @@
                     <name>clans[2]</name>
                     <description>id de los clanes que participan</description>
         		</variable>
+				<variable>
+					<type>int</type>
+					<name>x</name>
+                    <description>coordenada x</description>
+				</variable>
+				<variable>
+					<type>int</type>
+					<name>y</name>
+                    <description>coordenada y</description>
+				</variable>
+				<variable>
+					<type>int</type>
+					<name>guanacos[30]</name>
+                    <description>recuerdos de gunacos de los clanes</description>
+				</variable>
+				<variable>
+					<type>int</type>
+					<name>destiny[2]</name>
+                    <description>destino de la partida</description>
+				</variable>
+				<variable>
+					<type>int</type>
+					<name>arrive</name>
+                    <description>si se ha llegado al destino</description>
+				</variable>
+				<variable>
+					<type>int</type>
+					<name>start</name>
+                    <description>si se ha comenzado la caza</description>
+				</variable>
+				<variable>
+					<type>int</type>
+					<name>end</name>
+                    <description>si se ha acabado la cazeria</description>
+				</variable>
             </memory>
     	    <functions>
     			<function>
             	    <name>get_hunters</name>
             	    <description>gets individual hunter info for start hunting </description>
             	    <currentState>start</currentState>
+            	    <nextState>1</nextState>
+				</function>
+				<function>
+            	    <name>move_hunters</name>
+            	    <description>group it moves into target </description>
+            	    <currentState>1</currentState>
+            	    <nextState>2</nextState>
+					<condition>
+                    <time>
+                    	<period>monthly</period>
+                    	<phase>29</phase>
+                    </time>
+                    </condition>
+					<output>
+						<messageName>numGuanacos</messageName>
+					</output>
+				</function>
+				<function>
+            	    <name>idle_hunting</name>
+            	    <description>walking into patch</description>
+            	    <currentState>1</currentState>
+            	    <nextState>3</nextState>
+					<condition><not>
+                    <time><!--revisar !!!!!!!!!!!!!!!-->
+                    	<period>monthly</period>
+                    	<phase>29</phase>
+                    </time>
+                    </not></condition>
+				</function>
+                <function>
+                    <name>get_numGuanacos</name>
+                    <description>asks numbers guancos to the patch </description>
+                    <currentState>2</currentState>
+                    <nextState>3</nextState>
+                    <input>
+                        <messageName>infoGuanacos</messageName>
+                        <filter>
+                            <lhs>
+                                <lhs><value>a.x</value></lhs>
+                                <op>EQ</op>
+                                <rhs><value>m.x</value></rhs>
+                            </lhs>
+                            <op>AND</op>
+                            <rhs>
+                                <lhs><value>a.y</value></lhs>
+                                <op>EQ</op>
+                                <rhs><value>m.y</value></rhs>
+                            </rhs>
+                        </filter>
+                    </input>
+                </function>
+				<function>
+            	    <name>hunting</name>
+            	    <description>begin to hunt</description>
+            	    <currentState>3</currentState>
+            	    <nextState>4</nextState>
+					<condition>
+						<lhs><value>a.start</value></lhs>
+						<op>EQ</op>
+						<rhs><value>1</value></rhs>
+                    </condition>
+					<output>
+						<messageName>infoHunter</messageName>
+					</output>
+				</function>
+				<function>
+            	    <name>idle_hunting</name>
+            	    <description></description>
+            	    <currentState>3</currentState>
+            	    <nextState>4</nextState>
+					<condition><not>
+						<lhs><value>a.start</value></lhs>
+						<op>EQ</op>
+						<rhs><value>1</value></rhs>
+                    </not></condition>
+				</function>
+				<function>
+            	    <name>comprove_end</name>
+            	    <description></description>
+            	    <currentState>4</currentState>
             	    <nextState>end</nextState>
+					<condition>
+						<lhs><value>a.end</value></lhs>
+						<op>EQ</op>
+						<rhs><value>1</value></rhs>
+                    </condition>
+                    <input>
+                        <messageName>repCal</messageName>
+                        <filter>
+                            <lhs>
+                                <lhs><value>a.x</value></lhs>
+                                <op>EQ</op>
+                                <rhs><value>m.x</value></rhs>
+                            </lhs>
+                            <op>AND</op>
+                            <rhs>
+                                <lhs><value>a.y</value></lhs>
+                                <op>EQ</op>
+                                <rhs><value>m.y</value></rhs>
+                            </rhs>
+                        </filter>
+                    </input>
+				</function>
+				<function>
+            	    <name>idle_hunting</name>
+            	    <description></description>
+            	    <currentState>4</currentState>
+            	    <nextState>end</nextState>
+					<condition><not>
+						<lhs><value>a.end</value></lhs>
+						<op>EQ</op>
+						<rhs><value>1</value></rhs>
+                    </not></condition>
 				</function>
             </functions>
         </xagent>
     </agents>
-    <!--<messages>
+    <messages>
         <message>
-	</message>
-    </messages>-->
+			<name>numGuanacos</name>
+        	<description>Asks guanacos number to the new patch</description>
+        	<variables>
+            	<variable>
+            	    <type>int</type>
+            	    <name>x</name>
+            	    <description></description>
+            	</variable>
+            	<variable>
+            	    <type>int</type>
+            	    <name>y</name>
+            	    <description></description>
+            	</variable>
+        	</variables>
+		</message>
+        <message>
+            <name>infoHunter</name>
+            <description>Informa al patch que va ha cazar dentro de el</description>
+            <variables>
+                <variable>
+                    <type>int</type>
+                    <name>x</name>
+                    <description></description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>y</name>
+                    <description></description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>hunters</name>
+                    <description>numero de cazadores</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>clans[2]</name>
+                    <description></description>
+                </variable>
+            </variables>
+        </message>
+        <!--<message>
+            <name>resultHunt</name>
+            <description>Dar los resultados de la caza a los clanes</description>
+            <variables>
+                <variable>
+                    <type>int</type>
+                    <name>clanA</name>
+                    <description></description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>clanB</name>
+                    <description></description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>cal_per</name>
+                    <description></description>
+                </variable>
+            </variables>
+        </message>-->
+    </messages>
 </xmodel>
 
 	

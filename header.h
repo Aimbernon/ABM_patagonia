@@ -54,6 +54,9 @@
 /** \def RECORD_SIZE
  * \brief Provide access to environment variables in uppercase. */
 #define RECORD_SIZE (FLAME_get_environment_variable_record_size())
+/** \def GRECORD_SIZE
+ * \brief Provide access to environment variables in uppercase. */
+#define GRECORD_SIZE (FLAME_get_environment_variable_grecord_size())
 /** \def MAX_MANADA
  * \brief Provide access to environment variables in uppercase. */
 #define MAX_MANADA (FLAME_get_environment_variable_max_manada())
@@ -69,6 +72,9 @@
 /** \def SURVIVECHANCECHILD
  * \brief Provide access to environment variables in uppercase. */
 #define SURVIVECHANCECHILD (FLAME_get_environment_variable_surviveChanceChild())
+/** \def SPEED
+ * \brief Provide access to environment variables in uppercase. */
+#define SPEED (FLAME_get_environment_variable_speed())
 /** \def ARRAY_BLOCK_SIZE
  * \brief The block size to allocate to dynamic arrays. */
 #define ARRAY_BLOCK_SIZE 10
@@ -223,6 +229,18 @@
 /** \def FINISH_GUANACOSPATCH_MESSAGE_LOOP
  * \brief Finish of loop to process guanacospatch messages. */
 #define FINISH_GUANACOSPATCH_MESSAGE_LOOP }
+/** \def START_INFOGUANACOS_MESSAGE_LOOP
+ * \brief Start of loop to process infoGuanacos messages. */
+#define START_INFOGUANACOS_MESSAGE_LOOP  for(infoGuanacos_message = get_first_infoGuanacos_message(); infoGuanacos_message != NULL; infoGuanacos_message = get_next_infoGuanacos_message(infoGuanacos_message)) {
+/** \def FINISH_INFOGUANACOS_MESSAGE_LOOP
+ * \brief Finish of loop to process infoGuanacos messages. */
+#define FINISH_INFOGUANACOS_MESSAGE_LOOP }
+/** \def START_REPCAL_MESSAGE_LOOP
+ * \brief Start of loop to process repCal messages. */
+#define START_REPCAL_MESSAGE_LOOP  for(repCal_message = get_first_repCal_message(); repCal_message != NULL; repCal_message = get_next_repCal_message(repCal_message)) {
+/** \def FINISH_REPCAL_MESSAGE_LOOP
+ * \brief Finish of loop to process repCal messages. */
+#define FINISH_REPCAL_MESSAGE_LOOP }
 /** \def START_ADULTOSPATCH_MESSAGE_LOOP
  * \brief Start of loop to process adultospatch messages. */
 #define START_ADULTOSPATCH_MESSAGE_LOOP  for(adultospatch_message = get_first_adultospatch_message(); adultospatch_message != NULL; adultospatch_message = get_next_adultospatch_message(adultospatch_message)) {
@@ -235,6 +253,18 @@
 /** \def FINISH_REPRODUCCIONGUANACOS_MESSAGE_LOOP
  * \brief Finish of loop to process reproduccionguanacos messages. */
 #define FINISH_REPRODUCCIONGUANACOS_MESSAGE_LOOP }
+/** \def START_NUMGUANACOS_MESSAGE_LOOP
+ * \brief Start of loop to process numGuanacos messages. */
+#define START_NUMGUANACOS_MESSAGE_LOOP  for(numGuanacos_message = get_first_numGuanacos_message(); numGuanacos_message != NULL; numGuanacos_message = get_next_numGuanacos_message(numGuanacos_message)) {
+/** \def FINISH_NUMGUANACOS_MESSAGE_LOOP
+ * \brief Finish of loop to process numGuanacos messages. */
+#define FINISH_NUMGUANACOS_MESSAGE_LOOP }
+/** \def START_INFOHUNTER_MESSAGE_LOOP
+ * \brief Start of loop to process infoHunter messages. */
+#define START_INFOHUNTER_MESSAGE_LOOP  for(infoHunter_message = get_first_infoHunter_message(); infoHunter_message != NULL; infoHunter_message = get_next_infoHunter_message(infoHunter_message)) {
+/** \def FINISH_INFOHUNTER_MESSAGE_LOOP
+ * \brief Finish of loop to process infoHunter messages. */
+#define FINISH_INFOHUNTER_MESSAGE_LOOP }
 
 
 struct FLAME_output
@@ -458,6 +488,8 @@ struct xmachine_memory_clan
 	int targetY;	/**< X-machine memory variable targetY of type int. */
 	int cooperation;	/**< X-machine memory variable cooperation of type int. */
 	int hunting;	/**< X-machine memory variable hunting of type int. */
+	int guanacos_record[15];	/**< X-machine memory variable guanacos_record of type int. */
+	int igrecord;	/**< X-machine memory variable igrecord of type int. */
 };
 
 /** \struct xmachine_memory_clan_holder
@@ -567,6 +599,13 @@ struct xmachine_memory_hunting
 	int isuccess;	/**< X-machine memory variable isuccess of type int. */
 	int skill_level;	/**< X-machine memory variable skill_level of type int. */
 	int clans[2];	/**< X-machine memory variable clans of type int. */
+	int x;	/**< X-machine memory variable x of type int. */
+	int y;	/**< X-machine memory variable y of type int. */
+	int guanacos[30];	/**< X-machine memory variable guanacos of type int. */
+	int destiny[2];	/**< X-machine memory variable destiny of type int. */
+	int arrive;	/**< X-machine memory variable arrive of type int. */
+	int start;	/**< X-machine memory variable start of type int. */
+	int end;	/**< X-machine memory variable end of type int. */
 };
 
 /** \struct xmachine_memory_hunting_holder
@@ -929,6 +968,7 @@ struct m_yyy
 	int clanID;	/**< Message memory variable clanID of type int. */
 	int coopClanID;	/**< Message memory variable coopClanID of type int. */
 	int needCooperation;	/**< Message memory variable needCooperation of type int. */
+	int guanaco_record[15];	/**< Message memory variable guanaco_record of type int. */
 };
 
 /** \var void* FLAME_m_clanspatch_composite_params\n
@@ -960,6 +1000,34 @@ struct m_guanacospatch
 	int season;	/**< Message memory variable season of type int. */
 };
 
+/** \var void* FLAME_m_infoGuanacos_composite_params\n
+ * \brief Pointer to message sync agent composite params */
+void* FLAME_m_infoGuanacos_composite_params;
+
+/** \struct m_infoGuanacos
+ * \brief Holds message of type infoGuanacos_message.
+ */
+struct m_infoGuanacos
+{
+	int x;	/**< Message memory variable x of type int. */
+	int y;	/**< Message memory variable y of type int. */
+	int amount;	/**< Message memory variable amount of type int. */
+};
+
+/** \var void* FLAME_m_repCal_composite_params\n
+ * \brief Pointer to message sync agent composite params */
+void* FLAME_m_repCal_composite_params;
+
+/** \struct m_repCal
+ * \brief Holds message of type repCal_message.
+ */
+struct m_repCal
+{
+	int x;	/**< Message memory variable x of type int. */
+	int y;	/**< Message memory variable y of type int. */
+	int cal_per;	/**< Message memory variable cal_per of type int. */
+};
+
 /** \var void* FLAME_m_adultospatch_composite_params\n
  * \brief Pointer to message sync agent composite params */
 void* FLAME_m_adultospatch_composite_params;
@@ -989,6 +1057,34 @@ struct m_reproduccionguanacos
 	int count;	/**< Message memory variable count of type int. */
 	int familia;	/**< Message memory variable familia of type int. */
 	int adultos;	/**< Message memory variable adultos of type int. */
+};
+
+/** \var void* FLAME_m_numGuanacos_composite_params\n
+ * \brief Pointer to message sync agent composite params */
+void* FLAME_m_numGuanacos_composite_params;
+
+/** \struct m_numGuanacos
+ * \brief Holds message of type numGuanacos_message.
+ */
+struct m_numGuanacos
+{
+	int x;	/**< Message memory variable x of type int. */
+	int y;	/**< Message memory variable y of type int. */
+};
+
+/** \var void* FLAME_m_infoHunter_composite_params\n
+ * \brief Pointer to message sync agent composite params */
+void* FLAME_m_infoHunter_composite_params;
+
+/** \struct m_infoHunter
+ * \brief Holds message of type infoHunter_message.
+ */
+struct m_infoHunter
+{
+	int x;	/**< Message memory variable x of type int. */
+	int y;	/**< Message memory variable y of type int. */
+	int hunters;	/**< Message memory variable hunters of type int. */
+	int clans[2];	/**< Message memory variable clans of type int. */
 };
 
 /** \typedef struct xmachine xmachine
@@ -1175,6 +1271,16 @@ typedef struct m_clanspatch m_clanspatch;
  */
 typedef struct m_guanacospatch m_guanacospatch;
 
+/** \typedef m_infoGuanacos m_infoGuanacos
+ * \brief Typedef for m_infoGuanacos struct.
+ */
+typedef struct m_infoGuanacos m_infoGuanacos;
+
+/** \typedef m_repCal m_repCal
+ * \brief Typedef for m_repCal struct.
+ */
+typedef struct m_repCal m_repCal;
+
 /** \typedef m_adultospatch m_adultospatch
  * \brief Typedef for m_adultospatch struct.
  */
@@ -1184,6 +1290,16 @@ typedef struct m_adultospatch m_adultospatch;
  * \brief Typedef for m_reproduccionguanacos struct.
  */
 typedef struct m_reproduccionguanacos m_reproduccionguanacos;
+
+/** \typedef m_numGuanacos m_numGuanacos
+ * \brief Typedef for m_numGuanacos struct.
+ */
+typedef struct m_numGuanacos m_numGuanacos;
+
+/** \typedef m_infoHunter m_infoHunter
+ * \brief Typedef for m_infoHunter struct.
+ */
+typedef struct m_infoHunter m_infoHunter;
 
 
 /** \struct location
@@ -1230,8 +1346,12 @@ struct node_information
 	struct m_yyy * yyy_messages;	/**< Pointer to yyy message list. */
 	struct m_clanspatch * clanspatch_messages;	/**< Pointer to clanspatch message list. */
 	struct m_guanacospatch * guanacospatch_messages;	/**< Pointer to guanacospatch message list. */
+	struct m_infoGuanacos * infoGuanacos_messages;	/**< Pointer to infoGuanacos message list. */
+	struct m_repCal * repCal_messages;	/**< Pointer to repCal message list. */
 	struct m_adultospatch * adultospatch_messages;	/**< Pointer to adultospatch message list. */
 	struct m_reproduccionguanacos * reproduccionguanacos_messages;	/**< Pointer to reproduccionguanacos message list. */
+	struct m_numGuanacos * numGuanacos_messages;	/**< Pointer to numGuanacos message list. */
+	struct m_infoHunter * infoHunter_messages;	/**< Pointer to infoHunter message list. */
 	int information_message_no;	/**< Number of information messages in list to send. */
 	int indgetcalories_message_no;	/**< Number of indgetcalories messages in list to send. */
 	int leader_message_no;	/**< Number of leader messages in list to send. */
@@ -1256,8 +1376,12 @@ struct node_information
 	int yyy_message_no;	/**< Number of yyy messages in list to send. */
 	int clanspatch_message_no;	/**< Number of clanspatch messages in list to send. */
 	int guanacospatch_message_no;	/**< Number of guanacospatch messages in list to send. */
+	int infoGuanacos_message_no;	/**< Number of infoGuanacos messages in list to send. */
+	int repCal_message_no;	/**< Number of repCal messages in list to send. */
 	int adultospatch_message_no;	/**< Number of adultospatch messages in list to send. */
 	int reproduccionguanacos_message_no;	/**< Number of reproduccionguanacos messages in list to send. */
+	int numGuanacos_message_no;	/**< Number of numGuanacos messages in list to send. */
+	int infoHunter_message_no;	/**< Number of infoHunter messages in list to send. */
 	struct xmachine * indv_agents;	/**< Pointer to indv agent list. */
 	int indv_agent_no;	/**< Number of indv agents in list to send. */
 	struct xmachine * clan_agents;	/**< Pointer to clan agent list. */
@@ -1314,6 +1438,9 @@ int FLAME_environment_variable_genoma;
 /** \var int record_size
 * \brief A constant variable from the environment. */
 int FLAME_environment_variable_record_size;
+/** \var int grecord_size
+* \brief A constant variable from the environment. */
+int FLAME_environment_variable_grecord_size;
 /** \var int max_manada
 * \brief A constant variable from the environment. */
 int FLAME_environment_variable_max_manada;
@@ -1329,6 +1456,9 @@ int FLAME_environment_variable_surviveChanceAdult;
 /** \var int surviveChanceChild
 * \brief A constant variable from the environment. */
 int FLAME_environment_variable_surviveChanceChild;
+/** \var int speed
+* \brief A constant variable from the environment. */
+int FLAME_environment_variable_speed;
 /** \var xmachine * temp_xmachine
 * \brief Pointer to xmachine to initialise linked list. */
 xmachine * temp_xmachine;
@@ -1405,12 +1535,24 @@ m_clanspatch * temp_clanspatch_message;
 /** \var m_guanacospatch * temp_guanacospatch_message
 * \brief Pointer to m_guanacospatch to initialise linked list. */
 m_guanacospatch * temp_guanacospatch_message;
+/** \var m_infoGuanacos * temp_infoGuanacos_message
+* \brief Pointer to m_infoGuanacos to initialise linked list. */
+m_infoGuanacos * temp_infoGuanacos_message;
+/** \var m_repCal * temp_repCal_message
+* \brief Pointer to m_repCal to initialise linked list. */
+m_repCal * temp_repCal_message;
 /** \var m_adultospatch * temp_adultospatch_message
 * \brief Pointer to m_adultospatch to initialise linked list. */
 m_adultospatch * temp_adultospatch_message;
 /** \var m_reproduccionguanacos * temp_reproduccionguanacos_message
 * \brief Pointer to m_reproduccionguanacos to initialise linked list. */
 m_reproduccionguanacos * temp_reproduccionguanacos_message;
+/** \var m_numGuanacos * temp_numGuanacos_message
+* \brief Pointer to m_numGuanacos to initialise linked list. */
+m_numGuanacos * temp_numGuanacos_message;
+/** \var m_infoHunter * temp_infoHunter_message
+* \brief Pointer to m_infoHunter to initialise linked list. */
+m_infoHunter * temp_infoHunter_message;
 /** \var node_information * temp_node_info
 * \brief Pointer to node_information to initialise linked list. */
 node_information * temp_node_info;
@@ -1555,6 +1697,12 @@ xmachine_memory_patch_state * current_xmachine_patch_next_state; /* New agents a
 /* Pointer to list of patch agents in state end state */
 //xmachine_memory_patch * temp_xmachine_patch_end;
 xmachine_memory_patch_state * patch_end_state;
+/* Pointer to list of patch agents in state 9 state */
+//xmachine_memory_patch * temp_xmachine_patch_9;
+xmachine_memory_patch_state * patch_9_state;
+/* Pointer to list of patch agents in state 8 state */
+//xmachine_memory_patch * temp_xmachine_patch_8;
+xmachine_memory_patch_state * patch_8_state;
 /* Pointer to list of patch agents in state 7 state */
 //xmachine_memory_patch * temp_xmachine_patch_7;
 xmachine_memory_patch_state * patch_7_state;
@@ -1607,6 +1755,18 @@ xmachine_memory_hunting_state * current_xmachine_hunting_next_state; /* New agen
 /* Pointer to list of hunting agents in state end state */
 //xmachine_memory_hunting * temp_xmachine_hunting_end;
 xmachine_memory_hunting_state * hunting_end_state;
+/* Pointer to list of hunting agents in state 4 state */
+//xmachine_memory_hunting * temp_xmachine_hunting_4;
+xmachine_memory_hunting_state * hunting_4_state;
+/* Pointer to list of hunting agents in state 3 state */
+//xmachine_memory_hunting * temp_xmachine_hunting_3;
+xmachine_memory_hunting_state * hunting_3_state;
+/* Pointer to list of hunting agents in state 2 state */
+//xmachine_memory_hunting * temp_xmachine_hunting_2;
+xmachine_memory_hunting_state * hunting_2_state;
+/* Pointer to list of hunting agents in state 1 state */
+//xmachine_memory_hunting * temp_xmachine_hunting_1;
+xmachine_memory_hunting_state * hunting_1_state;
 /* Pointer to list of hunting agents in state start state */
 //xmachine_memory_hunting * temp_xmachine_hunting_start;
 xmachine_memory_hunting_state * hunting_start_state;
@@ -1685,11 +1845,23 @@ MBt_Iterator i_clanspatch;
 MBt_Board b_guanacospatch;
 MBt_Iterator i_guanacospatch;
 
+MBt_Board b_infoGuanacos;
+MBt_Iterator i_infoGuanacos;
+
+MBt_Board b_repCal;
+MBt_Iterator i_repCal;
+
 MBt_Board b_adultospatch;
 MBt_Iterator i_adultospatch;
 
 MBt_Board b_reproduccionguanacos;
 MBt_Iterator i_reproduccionguanacos;
+
+MBt_Board b_numGuanacos;
+MBt_Iterator i_numGuanacos;
+
+MBt_Board b_infoHunter;
+MBt_Iterator i_infoHunter;
 
 
 /** \var m_information * information_message
@@ -1764,12 +1936,24 @@ m_clanspatch * clanspatch_message;
 /** \var m_guanacospatch * guanacospatch_message
 * \brief Pointer to message struct for looping through guanacospatch message list */
 m_guanacospatch * guanacospatch_message;
+/** \var m_infoGuanacos * infoGuanacos_message
+* \brief Pointer to message struct for looping through infoGuanacos message list */
+m_infoGuanacos * infoGuanacos_message;
+/** \var m_repCal * repCal_message
+* \brief Pointer to message struct for looping through repCal message list */
+m_repCal * repCal_message;
 /** \var m_adultospatch * adultospatch_message
 * \brief Pointer to message struct for looping through adultospatch message list */
 m_adultospatch * adultospatch_message;
 /** \var m_reproduccionguanacos * reproduccionguanacos_message
 * \brief Pointer to message struct for looping through reproduccionguanacos message list */
 m_reproduccionguanacos * reproduccionguanacos_message;
+/** \var m_numGuanacos * numGuanacos_message
+* \brief Pointer to message struct for looping through numGuanacos message list */
+m_numGuanacos * numGuanacos_message;
+/** \var m_infoHunter * infoHunter_message
+* \brief Pointer to message struct for looping through infoHunter message list */
+m_infoHunter * infoHunter_message;
 /** \var FLAME_output ** FLAME_outputs
 * \brief Pointer to list of outputs */
 FLAME_output * FLAME_outputs;
@@ -1904,6 +2088,14 @@ MPI_Datatype spacePartitionType;
 * \brief MPI ", guanacospatch message */
 /* MPI_Datatype messageguanacospatchType; */
 
+/** \var MPI_Datatype messageinfoGuanacosType
+* \brief MPI ", infoGuanacos message */
+/* MPI_Datatype messageinfoGuanacosType; */
+
+/** \var MPI_Datatype messagerepCalType
+* \brief MPI ", repCal message */
+/* MPI_Datatype messagerepCalType; */
+
 /** \var MPI_Datatype messageadultospatchType
 * \brief MPI ", adultospatch message */
 /* MPI_Datatype messageadultospatchType; */
@@ -1911,6 +2103,14 @@ MPI_Datatype spacePartitionType;
 /** \var MPI_Datatype messagereproduccionguanacosType
 * \brief MPI ", reproduccionguanacos message */
 /* MPI_Datatype messagereproduccionguanacosType; */
+
+/** \var MPI_Datatype messagenumGuanacosType
+* \brief MPI ", numGuanacos message */
+/* MPI_Datatype messagenumGuanacosType; */
+
+/** \var MPI_Datatype messageinfoHunterType
+* \brief MPI ", infoHunter message */
+/* MPI_Datatype messageinfoHunterType; */
 
 /** \var int node_number\n
  * \brief Node number (identifier for node) */
@@ -2062,7 +2262,7 @@ xmachine_memory_clan * init_clan_agent();
 void free_clan_agent(xmachine_memory_clan_holder * tmp, xmachine_memory_clan_state * state);
 void transition_clan_agent(xmachine_memory_clan_holder * tmp, xmachine_memory_clan_state * from_state, xmachine_memory_clan_state * to_state);
 void add_clan_agent_internal(xmachine_memory_clan * agent, xmachine_memory_clan_state * state);
-void add_clan_agent(int cID, int cal_need, int cal_got, int cal_stored, int x, int y, int tcalories, int leaderID, members_needs mneeds, indv_free ifree, int indexID, int members, int linguistics[], int exchange_record[], int irecord, int targetX, int targetY, int cooperation, int hunting);
+void add_clan_agent(int cID, int cal_need, int cal_got, int cal_stored, int x, int y, int tcalories, int leaderID, members_needs mneeds, indv_free ifree, int indexID, int members, int linguistics[], int exchange_record[], int irecord, int targetX, int targetY, int cooperation, int hunting, int guanacos_record[], int igrecord);
 void unittest_init_clan_agent();
 void unittest_free_clan_agent();
 xmachine_memory_patch_state * init_patch_state();
@@ -2086,7 +2286,7 @@ xmachine_memory_hunting * init_hunting_agent();
 void free_hunting_agent(xmachine_memory_hunting_holder * tmp, xmachine_memory_hunting_state * state);
 void transition_hunting_agent(xmachine_memory_hunting_holder * tmp, xmachine_memory_hunting_state * from_state, xmachine_memory_hunting_state * to_state);
 void add_hunting_agent_internal(xmachine_memory_hunting * agent, xmachine_memory_hunting_state * state);
-void add_hunting_agent(int calores, int isuccess, int skill_level, int clans[]);
+void add_hunting_agent(int calores, int isuccess, int skill_level, int clans[], int x, int y, int guanacos[], int destiny[], int arrive, int start, int end);
 void unittest_init_hunting_agent();
 void unittest_free_hunting_agent();
 
@@ -2216,7 +2416,7 @@ m_xxx * get_first_xxx_message(void);
 m_xxx * get_next_xxx_message(m_xxx * current);
 void freexxxmessages(void);
 
-void add_yyy_message(int clanID, int coopClanID, int needCooperation);
+void add_yyy_message(int clanID, int coopClanID, int needCooperation, int guanaco_record[]);
 m_yyy * add_yyy_message_internal(void);
 m_yyy * get_first_yyy_message(void);
 m_yyy * get_next_yyy_message(m_yyy * current);
@@ -2234,6 +2434,18 @@ m_guanacospatch * get_first_guanacospatch_message(void);
 m_guanacospatch * get_next_guanacospatch_message(m_guanacospatch * current);
 void freeguanacospatchmessages(void);
 
+void add_infoGuanacos_message(int x, int y, int amount);
+m_infoGuanacos * add_infoGuanacos_message_internal(void);
+m_infoGuanacos * get_first_infoGuanacos_message(void);
+m_infoGuanacos * get_next_infoGuanacos_message(m_infoGuanacos * current);
+void freeinfoGuanacosmessages(void);
+
+void add_repCal_message(int x, int y, int cal_per);
+m_repCal * add_repCal_message_internal(void);
+m_repCal * get_first_repCal_message(void);
+m_repCal * get_next_repCal_message(m_repCal * current);
+void freerepCalmessages(void);
+
 void add_adultospatch_message(int x, int y, int adultos, int sentido);
 m_adultospatch * add_adultospatch_message_internal(void);
 m_adultospatch * get_first_adultospatch_message(void);
@@ -2245,6 +2457,18 @@ m_reproduccionguanacos * add_reproduccionguanacos_message_internal(void);
 m_reproduccionguanacos * get_first_reproduccionguanacos_message(void);
 m_reproduccionguanacos * get_next_reproduccionguanacos_message(m_reproduccionguanacos * current);
 void freereproduccionguanacosmessages(void);
+
+void add_numGuanacos_message(int x, int y);
+m_numGuanacos * add_numGuanacos_message_internal(void);
+m_numGuanacos * get_first_numGuanacos_message(void);
+m_numGuanacos * get_next_numGuanacos_message(m_numGuanacos * current);
+void freenumGuanacosmessages(void);
+
+void add_infoHunter_message(int x, int y, int hunters, int clans[]);
+m_infoHunter * add_infoHunter_message_internal(void);
+m_infoHunter * get_first_infoHunter_message(void);
+m_infoHunter * get_next_infoHunter_message(m_infoHunter * current);
+void freeinfoHuntermessages(void);
 
 
 void set_indvID(int indvID);
@@ -2314,6 +2538,9 @@ void set_cooperation(int cooperation);
 int get_cooperation();
 void set_hunting(int hunting);
 int get_hunting();
+int * get_guanacos_record();
+void set_igrecord(int igrecord);
+int get_igrecord();
 void set_pcalories(int pcalories);
 int get_pcalories();
 void set_gcalories(int gcalories);
@@ -2345,6 +2572,14 @@ int get_isuccess();
 void set_skill_level(int skill_level);
 int get_skill_level();
 int * get_clans();
+int * get_guanacos();
+int * get_destiny();
+void set_arrive(int arrive);
+int get_arrive();
+void set_start(int start);
+int get_start();
+void set_end(int end);
+int get_end();
 int agent_get_id(void);
 double agent_get_x(void);
 double agent_get_y(void);
@@ -2453,11 +2688,27 @@ m_guanacospatch * get_next_message_guanacospatch_in_range(m_guanacospatch * curr
 double guanacospatch_message_extract_x(void *msg_ptr);
 double guanacospatch_message_extract_y(void *msg_ptr);
 
+m_infoGuanacos * get_next_message_infoGuanacos_in_range(m_infoGuanacos * current);
+
+
+
+m_repCal * get_next_message_repCal_in_range(m_repCal * current);
+
+
+
 m_adultospatch * get_next_message_adultospatch_in_range(m_adultospatch * current);
 
 
 
 m_reproduccionguanacos * get_next_message_reproduccionguanacos_in_range(m_reproduccionguanacos * current);
+
+
+
+m_numGuanacos * get_next_message_numGuanacos_in_range(m_numGuanacos * current);
+
+
+
+m_infoHunter * get_next_message_infoHunter_in_range(m_infoHunter * current);
 
 
 
@@ -2471,11 +2722,13 @@ int FLAME_get_environment_variable_forget();
 int FLAME_get_environment_variable_lang_threshold();
 int FLAME_get_environment_variable_genoma();
 int FLAME_get_environment_variable_record_size();
+int FLAME_get_environment_variable_grecord_size();
 int FLAME_get_environment_variable_max_manada();
 int FLAME_get_environment_variable_max_familia();
 int FLAME_get_environment_variable_cal_adulto();
 int FLAME_get_environment_variable_surviveChanceAdult();
 int FLAME_get_environment_variable_surviveChanceChild();
+int FLAME_get_environment_variable_speed();
 
 
 /* rules.c */
@@ -2599,10 +2852,14 @@ int FLAME_filter_patch_guanacos_move_5_6_adultospatch(const void *msg, const voi
 int clans_move(void);
 int FLAME_filter_patch_clans_move_6_7_clanmove(const void *msg, const void *params);
 int reproduccion_guanacos(void);
-int FLAME_condition_patch_reproduccion_guanacos_7_end(xmachine_memory_patch *a);
-int FLAME_filter_patch_reproduccion_guanacos_7_end_reproduccionguanacos(const void *msg, const void *params);
+int FLAME_condition_patch_reproduccion_guanacos_7_8(xmachine_memory_patch *a);
+int FLAME_filter_patch_reproduccion_guanacos_7_8_reproduccionguanacos(const void *msg, const void *params);
 int idle_patch(void);
-int FLAME_condition_patch_idle_patch_7_end(xmachine_memory_patch *a);
+int FLAME_condition_patch_idle_patch_7_8(xmachine_memory_patch *a);
+int info_hunters(void);
+int FLAME_filter_patch_info_hunters_8_9_numGuanacos(const void *msg, const void *params);
+int give_calHunters(void);
+int FLAME_filter_patch_give_calHunters_9_end_infoHunter(const void *msg, const void *params);
 int manadaInfo(void);
 int FLAME_condition_manada_guanacos_manadaInfo_start_1(xmachine_memory_manada_guanacos *a);
 int seasonSwitch(void);
@@ -2621,4 +2878,19 @@ int FLAME_condition_manada_guanacos_surviveGuanacos_3_end(xmachine_memory_manada
 
 int FLAME_condition_manada_guanacos_idle_3_end(xmachine_memory_manada_guanacos *a);
 int get_hunters(void);
+int move_hunters(void);
+int FLAME_condition_hunting_move_hunters_1_2(xmachine_memory_hunting *a);
+int idle_hunting(void);
+int FLAME_condition_hunting_idle_hunting_1_3(xmachine_memory_hunting *a);
+int get_numGuanacos(void);
+int FLAME_filter_hunting_get_numGuanacos_2_3_infoGuanacos(const void *msg, const void *params);
+int hunting(void);
+int FLAME_condition_hunting_hunting_3_4(xmachine_memory_hunting *a);
+int idle_hunting(void);
+int FLAME_condition_hunting_idle_hunting_3_4(xmachine_memory_hunting *a);
+int comprove_end(void);
+int FLAME_condition_hunting_comprove_end_4_end(xmachine_memory_hunting *a);
+int FLAME_filter_hunting_comprove_end_4_end_repCal(const void *msg, const void *params);
+int idle_hunting(void);
+int FLAME_condition_hunting_idle_hunting_4_end(xmachine_memory_hunting *a);
 #endif

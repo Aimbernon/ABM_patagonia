@@ -30,6 +30,11 @@
 </output>
 </outputs>
 <xagent>
+		<name>hunting</name>
+		<x>100000</x>
+        <y>100000</y>
+</xagent>
+<xagent>
 		<name>patch</name>
 		<patchID>0</patchID>
 		<x>0</x>

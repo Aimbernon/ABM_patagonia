@@ -39,6 +39,11 @@
 		<name>record_size</name>
 		<description>cantidad de clanes recordados al intercambiar chicas</description>
 	    </variable> 
+	    <variable>
+		<type>int</type>
+		<name>grecord_size</name>
+		<description>cantidad de guanacos recordados y coordenadas de los ultimos patches pasados por el clan</description>
+	    </variable> 
 	</constants>
     <timeUnits>
         <timeUnit>
@@ -217,6 +222,16 @@
             	    <type>int</type>
             	    <name>hunting</name>
             	    <description></description>
+        		</variable>
+        		<variable>
+            	    <type>int</type>
+            	    <name>guanacos_record[15]</name>
+            	    <description>recuerdo la cantidad de guanacos que habian en los ultimos 5 patches que he pasado, formato: X-Y-count</description>
+        		</variable>	
+        		<variable>
+            	    <type>int</type>
+            	    <name>igrecord</name>
+            	    <description>indice del buffer circular de gunacos_record</description>
         		</variable>	
             </memory>
             <functions>
@@ -744,7 +759,7 @@
                     <name>girlID</name>
                     <description>id chica</description>
                 </variable>
-		<variable>
+				<variable>
                     <type>int</type>
                     <name>clanID</name>
                     <description>clan destino del individuo</description>
@@ -919,6 +934,11 @@
             <variable>
                 <type>int</type>
                 <name>needCooperation</name>
+                <description></description>
+            </variable>
+            <variable>
+                <type>int</type>
+                <name>guanaco_record[15]</name>
                 <description></description>
             </variable>
         </variables>

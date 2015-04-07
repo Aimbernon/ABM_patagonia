@@ -449,24 +449,24 @@ int FLAME_condition_patch_idle_patch_4_5(xmachine_memory_patch *a)
 }
 
 
-/** \fn int FLAME_condition_patch_reproduccion_guanacos_7_end(xmachine_memory_patch *a)
+/** \fn int FLAME_condition_patch_reproduccion_guanacos_7_8(xmachine_memory_patch *a)
  * \brief The condition function for an agent function.
  * \param a The agent memory.
  * \return The success (1) or failure (0) of the condition.
  */
-int FLAME_condition_patch_reproduccion_guanacos_7_end(xmachine_memory_patch *a)
+int FLAME_condition_patch_reproduccion_guanacos_7_8(xmachine_memory_patch *a)
 {
 	if((iteration_loop%360 == 0)) return 1;
 	else return 0;
 }
 
 
-/** \fn int FLAME_condition_patch_idle_patch_7_end(xmachine_memory_patch *a)
+/** \fn int FLAME_condition_patch_idle_patch_7_8(xmachine_memory_patch *a)
  * \brief The condition function for an agent function.
  * \param a The agent memory.
  * \return The success (1) or failure (0) of the condition.
  */
-int FLAME_condition_patch_idle_patch_7_end(xmachine_memory_patch *a)
+int FLAME_condition_patch_idle_patch_7_8(xmachine_memory_patch *a)
 {
 	if(!(iteration_loop%360 == 0)) return 1;
 	else return 0;
@@ -565,6 +565,78 @@ int FLAME_condition_manada_guanacos_surviveGuanacos_3_end(xmachine_memory_manada
 int FLAME_condition_manada_guanacos_idle_3_end(xmachine_memory_manada_guanacos *a)
 {
 	if(!(iteration_loop%7 == 0)) return 1;
+	else return 0;
+}
+
+
+/** \fn int FLAME_condition_hunting_move_hunters_1_2(xmachine_memory_hunting *a)
+ * \brief The condition function for an agent function.
+ * \param a The agent memory.
+ * \return The success (1) or failure (0) of the condition.
+ */
+int FLAME_condition_hunting_move_hunters_1_2(xmachine_memory_hunting *a)
+{
+	if((iteration_loop%30 == 29)) return 1;
+	else return 0;
+}
+
+
+/** \fn int FLAME_condition_hunting_idle_hunting_1_3(xmachine_memory_hunting *a)
+ * \brief The condition function for an agent function.
+ * \param a The agent memory.
+ * \return The success (1) or failure (0) of the condition.
+ */
+int FLAME_condition_hunting_idle_hunting_1_3(xmachine_memory_hunting *a)
+{
+	if(!(iteration_loop%30 == 29)) return 1;
+	else return 0;
+}
+
+
+/** \fn int FLAME_condition_hunting_hunting_3_4(xmachine_memory_hunting *a)
+ * \brief The condition function for an agent function.
+ * \param a The agent memory.
+ * \return The success (1) or failure (0) of the condition.
+ */
+int FLAME_condition_hunting_hunting_3_4(xmachine_memory_hunting *a)
+{
+	if((a->start == 1)) return 1;
+	else return 0;
+}
+
+
+/** \fn int FLAME_condition_hunting_idle_hunting_3_4(xmachine_memory_hunting *a)
+ * \brief The condition function for an agent function.
+ * \param a The agent memory.
+ * \return The success (1) or failure (0) of the condition.
+ */
+int FLAME_condition_hunting_idle_hunting_3_4(xmachine_memory_hunting *a)
+{
+	if(!(a->start == 1)) return 1;
+	else return 0;
+}
+
+
+/** \fn int FLAME_condition_hunting_comprove_end_4_end(xmachine_memory_hunting *a)
+ * \brief The condition function for an agent function.
+ * \param a The agent memory.
+ * \return The success (1) or failure (0) of the condition.
+ */
+int FLAME_condition_hunting_comprove_end_4_end(xmachine_memory_hunting *a)
+{
+	if((a->end == 1)) return 1;
+	else return 0;
+}
+
+
+/** \fn int FLAME_condition_hunting_idle_hunting_4_end(xmachine_memory_hunting *a)
+ * \brief The condition function for an agent function.
+ * \param a The agent memory.
+ * \return The success (1) or failure (0) of the condition.
+ */
+int FLAME_condition_hunting_idle_hunting_4_end(xmachine_memory_hunting *a)
+{
+	if(!(a->end == 1)) return 1;
 	else return 0;
 }
 
@@ -1010,20 +1082,100 @@ int FLAME_filter_patch_clans_move_6_7_clanmove(const void *msg, const void *para
 	else return 0;
 }
 
-/** \fn int FLAME_filter_patch_reproduccion_guanacos_7_end_reproduccionguanacos(const void *msg, const void *params)
+/** \fn int FLAME_filter_patch_reproduccion_guanacos_7_8_reproduccionguanacos(const void *msg, const void *params)
  * \brief The filter function for a message input used in serial for each agent.
  * \param msg The pointer to the message to be filtered.
  * \param params The pointer to the agent memory.
  * \return The success (1) or failure (0) of the filter on the message.
  */
-int FLAME_filter_patch_reproduccion_guanacos_7_end_reproduccionguanacos(const void *msg, const void *params)
+int FLAME_filter_patch_reproduccion_guanacos_7_8_reproduccionguanacos(const void *msg, const void *params)
 {
-	//printf("**** FLAME_filter_patch_reproduccion_guanacos_7_end_reproduccionguanacos(const void *msg, const void *params)\n");
+	//printf("**** FLAME_filter_patch_reproduccion_guanacos_7_8_reproduccionguanacos(const void *msg, const void *params)\n");
 	
 	/* Cast the message pointer to the correct message type */
 	m_reproduccionguanacos *m = (m_reproduccionguanacos*)msg;
 	/* Cast the params pointer to the correct agent type */
 	xmachine_memory_patch *a = (xmachine_memory_patch *)params;
+
+	/* The filter */
+	if(((a->x == m->x) && (a->y == m->y))) return 1;
+	else return 0;
+}
+
+/** \fn int FLAME_filter_patch_info_hunters_8_9_numGuanacos(const void *msg, const void *params)
+ * \brief The filter function for a message input used in serial for each agent.
+ * \param msg The pointer to the message to be filtered.
+ * \param params The pointer to the agent memory.
+ * \return The success (1) or failure (0) of the filter on the message.
+ */
+int FLAME_filter_patch_info_hunters_8_9_numGuanacos(const void *msg, const void *params)
+{
+	//printf("**** FLAME_filter_patch_info_hunters_8_9_numGuanacos(const void *msg, const void *params)\n");
+	
+	/* Cast the message pointer to the correct message type */
+	m_numGuanacos *m = (m_numGuanacos*)msg;
+	/* Cast the params pointer to the correct agent type */
+	xmachine_memory_patch *a = (xmachine_memory_patch *)params;
+
+	/* The filter */
+	if(((a->x == m->x) && (a->y == m->y))) return 1;
+	else return 0;
+}
+
+/** \fn int FLAME_filter_patch_give_calHunters_9_end_infoHunter(const void *msg, const void *params)
+ * \brief The filter function for a message input used in serial for each agent.
+ * \param msg The pointer to the message to be filtered.
+ * \param params The pointer to the agent memory.
+ * \return The success (1) or failure (0) of the filter on the message.
+ */
+int FLAME_filter_patch_give_calHunters_9_end_infoHunter(const void *msg, const void *params)
+{
+	//printf("**** FLAME_filter_patch_give_calHunters_9_end_infoHunter(const void *msg, const void *params)\n");
+	
+	/* Cast the message pointer to the correct message type */
+	m_infoHunter *m = (m_infoHunter*)msg;
+	/* Cast the params pointer to the correct agent type */
+	xmachine_memory_patch *a = (xmachine_memory_patch *)params;
+
+	/* The filter */
+	if(((a->x == m->x) && (a->y == m->y))) return 1;
+	else return 0;
+}
+
+/** \fn int FLAME_filter_hunting_get_numGuanacos_2_3_infoGuanacos(const void *msg, const void *params)
+ * \brief The filter function for a message input used in serial for each agent.
+ * \param msg The pointer to the message to be filtered.
+ * \param params The pointer to the agent memory.
+ * \return The success (1) or failure (0) of the filter on the message.
+ */
+int FLAME_filter_hunting_get_numGuanacos_2_3_infoGuanacos(const void *msg, const void *params)
+{
+	//printf("**** FLAME_filter_hunting_get_numGuanacos_2_3_infoGuanacos(const void *msg, const void *params)\n");
+	
+	/* Cast the message pointer to the correct message type */
+	m_infoGuanacos *m = (m_infoGuanacos*)msg;
+	/* Cast the params pointer to the correct agent type */
+	xmachine_memory_hunting *a = (xmachine_memory_hunting *)params;
+
+	/* The filter */
+	if(((a->x == m->x) && (a->y == m->y))) return 1;
+	else return 0;
+}
+
+/** \fn int FLAME_filter_hunting_comprove_end_4_end_repCal(const void *msg, const void *params)
+ * \brief The filter function for a message input used in serial for each agent.
+ * \param msg The pointer to the message to be filtered.
+ * \param params The pointer to the agent memory.
+ * \return The success (1) or failure (0) of the filter on the message.
+ */
+int FLAME_filter_hunting_comprove_end_4_end_repCal(const void *msg, const void *params)
+{
+	//printf("**** FLAME_filter_hunting_comprove_end_4_end_repCal(const void *msg, const void *params)\n");
+	
+	/* Cast the message pointer to the correct message type */
+	m_repCal *m = (m_repCal*)msg;
+	/* Cast the params pointer to the correct agent type */
+	xmachine_memory_hunting *a = (xmachine_memory_hunting *)params;
 
 	/* The filter */
 	if(((a->x == m->x) && (a->y == m->y))) return 1;

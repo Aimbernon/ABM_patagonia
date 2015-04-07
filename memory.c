@@ -973,11 +973,11 @@ void unittest_clans_move_6_7()
 	//return clans_move();
 }
 
-void unittest_reproduccion_guanacos_7_end()
+void unittest_reproduccion_guanacos_7_8()
 {
 	int rc;
 	
-	rc = MB_Iterator_CreateFiltered(b_reproduccionguanacos, &i_reproduccionguanacos, &FLAME_filter_patch_reproduccion_guanacos_7_end_reproduccionguanacos, current_xmachine_patch);
+	rc = MB_Iterator_CreateFiltered(b_reproduccionguanacos, &i_reproduccionguanacos, &FLAME_filter_patch_reproduccion_guanacos_7_8_reproduccionguanacos, current_xmachine_patch);
 	
 	#ifdef ERRCHECK
 	if (rc != MB_SUCCESS)
@@ -1003,11 +1003,71 @@ void unittest_reproduccion_guanacos_7_end()
 	//return reproduccion_guanacos();
 }
 
-void unittest_idle_patch_7_end()
+void unittest_idle_patch_7_8()
 {
 	
 	
 	//return idle_patch();
+}
+
+void unittest_info_hunters_8_9()
+{
+	int rc;
+	
+	rc = MB_Iterator_CreateFiltered(b_numGuanacos, &i_numGuanacos, &FLAME_filter_patch_info_hunters_8_9_numGuanacos, current_xmachine_patch);
+	
+	#ifdef ERRCHECK
+	if (rc != MB_SUCCESS)
+	{
+	   fprintf(stderr, "ERROR: Could not create Iterator for 'numGuanacos'\n");
+	   switch(rc) {
+	       case MB_ERR_INVALID:
+	           fprintf(stderr, "\t reason: 'numGuanacos' board is invalid\n");
+	           break;
+	       case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'numGuanacos' board is locked\n");
+               break;
+           case MB_ERR_MEMALLOC:
+               fprintf(stderr, "\t reason: out of memory\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	   }
+	}
+	#endif
+	
+	//return info_hunters();
+}
+
+void unittest_give_calHunters_9_end()
+{
+	int rc;
+	
+	rc = MB_Iterator_CreateFiltered(b_infoHunter, &i_infoHunter, &FLAME_filter_patch_give_calHunters_9_end_infoHunter, current_xmachine_patch);
+	
+	#ifdef ERRCHECK
+	if (rc != MB_SUCCESS)
+	{
+	   fprintf(stderr, "ERROR: Could not create Iterator for 'infoHunter'\n");
+	   switch(rc) {
+	       case MB_ERR_INVALID:
+	           fprintf(stderr, "\t reason: 'infoHunter' board is invalid\n");
+	           break;
+	       case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'infoHunter' board is locked\n");
+               break;
+           case MB_ERR_MEMALLOC:
+               fprintf(stderr, "\t reason: out of memory\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	   }
+	}
+	#endif
+	
+	//return give_calHunters();
 }
 
 void unittest_manadaInfo_start_1()
@@ -1089,11 +1149,106 @@ void unittest_idle_3_end()
 	//return idle();
 }
 
-void unittest_get_hunters_start_end()
+void unittest_get_hunters_start_1()
 {
 	
 	
 	//return get_hunters();
+}
+
+void unittest_move_hunters_1_2()
+{
+	
+	
+	//return move_hunters();
+}
+
+void unittest_idle_hunting_1_3()
+{
+	
+	
+	//return idle_hunting();
+}
+
+void unittest_get_numGuanacos_2_3()
+{
+	int rc;
+	
+	rc = MB_Iterator_CreateFiltered(b_infoGuanacos, &i_infoGuanacos, &FLAME_filter_hunting_get_numGuanacos_2_3_infoGuanacos, current_xmachine_hunting);
+	
+	#ifdef ERRCHECK
+	if (rc != MB_SUCCESS)
+	{
+	   fprintf(stderr, "ERROR: Could not create Iterator for 'infoGuanacos'\n");
+	   switch(rc) {
+	       case MB_ERR_INVALID:
+	           fprintf(stderr, "\t reason: 'infoGuanacos' board is invalid\n");
+	           break;
+	       case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'infoGuanacos' board is locked\n");
+               break;
+           case MB_ERR_MEMALLOC:
+               fprintf(stderr, "\t reason: out of memory\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	   }
+	}
+	#endif
+	
+	//return get_numGuanacos();
+}
+
+void unittest_hunting_3_4()
+{
+	
+	
+	//return hunting();
+}
+
+void unittest_idle_hunting_3_4()
+{
+	
+	
+	//return idle_hunting();
+}
+
+void unittest_comprove_end_4_end()
+{
+	int rc;
+	
+	rc = MB_Iterator_CreateFiltered(b_repCal, &i_repCal, &FLAME_filter_hunting_comprove_end_4_end_repCal, current_xmachine_hunting);
+	
+	#ifdef ERRCHECK
+	if (rc != MB_SUCCESS)
+	{
+	   fprintf(stderr, "ERROR: Could not create Iterator for 'repCal'\n");
+	   switch(rc) {
+	       case MB_ERR_INVALID:
+	           fprintf(stderr, "\t reason: 'repCal' board is invalid\n");
+	           break;
+	       case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'repCal' board is locked\n");
+               break;
+           case MB_ERR_MEMALLOC:
+               fprintf(stderr, "\t reason: out of memory\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	   }
+	}
+	#endif
+	
+	//return comprove_end();
+}
+
+void unittest_idle_hunting_4_end()
+{
+	
+	
+	//return idle_hunting();
 }
 
 
@@ -1701,6 +1856,56 @@ void free_messages()
 	    }
 	    #endif
 	
+	    rc = MB_Clear(b_infoGuanacos);
+	    #ifdef ERRCHECK
+	    if (rc != MB_SUCCESS)
+	    {
+	       fprintf(stderr, "ERROR: Could not clear 'infoGuanacos' board\n");
+	       switch(rc) {
+	           case MB_ERR_INVALID:
+	               fprintf(stderr, "\t reason: 'infoGuanacos' board is invalid\n");
+	               break;
+	           case MB_ERR_LOCKED:
+	               fprintf(stderr, "\t reason: 'infoGuanacos' board is locked\n");
+	               break;
+	           case MB_ERR_INTERNAL:
+	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+	               break;
+	           default:
+                   fprintf(stderr, "\t MB_Clear returned error code: %d (see libmboard docs for details)\n", rc);
+                   break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+	    }
+	    #endif
+	
+	    rc = MB_Clear(b_repCal);
+	    #ifdef ERRCHECK
+	    if (rc != MB_SUCCESS)
+	    {
+	       fprintf(stderr, "ERROR: Could not clear 'repCal' board\n");
+	       switch(rc) {
+	           case MB_ERR_INVALID:
+	               fprintf(stderr, "\t reason: 'repCal' board is invalid\n");
+	               break;
+	           case MB_ERR_LOCKED:
+	               fprintf(stderr, "\t reason: 'repCal' board is locked\n");
+	               break;
+	           case MB_ERR_INTERNAL:
+	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+	               break;
+	           default:
+                   fprintf(stderr, "\t MB_Clear returned error code: %d (see libmboard docs for details)\n", rc);
+                   break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+	    }
+	    #endif
+	
 	    rc = MB_Clear(b_adultospatch);
 	    #ifdef ERRCHECK
 	    if (rc != MB_SUCCESS)
@@ -1737,6 +1942,56 @@ void free_messages()
 	               break;
 	           case MB_ERR_LOCKED:
 	               fprintf(stderr, "\t reason: 'reproduccionguanacos' board is locked\n");
+	               break;
+	           case MB_ERR_INTERNAL:
+	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+	               break;
+	           default:
+                   fprintf(stderr, "\t MB_Clear returned error code: %d (see libmboard docs for details)\n", rc);
+                   break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+	    }
+	    #endif
+	
+	    rc = MB_Clear(b_numGuanacos);
+	    #ifdef ERRCHECK
+	    if (rc != MB_SUCCESS)
+	    {
+	       fprintf(stderr, "ERROR: Could not clear 'numGuanacos' board\n");
+	       switch(rc) {
+	           case MB_ERR_INVALID:
+	               fprintf(stderr, "\t reason: 'numGuanacos' board is invalid\n");
+	               break;
+	           case MB_ERR_LOCKED:
+	               fprintf(stderr, "\t reason: 'numGuanacos' board is locked\n");
+	               break;
+	           case MB_ERR_INTERNAL:
+	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+	               break;
+	           default:
+                   fprintf(stderr, "\t MB_Clear returned error code: %d (see libmboard docs for details)\n", rc);
+                   break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+	    }
+	    #endif
+	
+	    rc = MB_Clear(b_infoHunter);
+	    #ifdef ERRCHECK
+	    if (rc != MB_SUCCESS)
+	    {
+	       fprintf(stderr, "ERROR: Could not clear 'infoHunter' board\n");
+	       switch(rc) {
+	           case MB_ERR_INVALID:
+	               fprintf(stderr, "\t reason: 'infoHunter' board is invalid\n");
+	               break;
+	           case MB_ERR_LOCKED:
+	               fprintf(stderr, "\t reason: 'infoHunter' board is locked\n");
 	               break;
 	           case MB_ERR_INTERNAL:
 	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
@@ -2433,6 +2688,62 @@ int rc;
 	    #endif
 	
 	/* Initialise message sync composite params as NULL */
+	FLAME_m_infoGuanacos_composite_params = NULL;
+
+	    rc = MB_Create(&b_infoGuanacos, sizeof(m_infoGuanacos));
+	    #ifdef ERRCHECK
+	    if (rc != MB_SUCCESS)
+	    {
+	       fprintf(stderr, "ERROR: Could not create 'infoGuanacos' board\n");
+	       switch(rc) {
+	           case MB_ERR_INVALID:
+	               fprintf(stderr, "\t reason: Invalid message size\n");
+	               break;
+	           case MB_ERR_MEMALLOC:
+	               fprintf(stderr, "\t reason: out of memory\n");
+	               break;
+	           case MB_ERR_INTERNAL:
+	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+	               break;
+	           default:
+                   fprintf(stderr, "\t MB_Create returned error code: %d (see libmboard docs for details)\n", rc);
+                   break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+	    }
+	    #endif
+	
+	/* Initialise message sync composite params as NULL */
+	FLAME_m_repCal_composite_params = NULL;
+
+	    rc = MB_Create(&b_repCal, sizeof(m_repCal));
+	    #ifdef ERRCHECK
+	    if (rc != MB_SUCCESS)
+	    {
+	       fprintf(stderr, "ERROR: Could not create 'repCal' board\n");
+	       switch(rc) {
+	           case MB_ERR_INVALID:
+	               fprintf(stderr, "\t reason: Invalid message size\n");
+	               break;
+	           case MB_ERR_MEMALLOC:
+	               fprintf(stderr, "\t reason: out of memory\n");
+	               break;
+	           case MB_ERR_INTERNAL:
+	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+	               break;
+	           default:
+                   fprintf(stderr, "\t MB_Create returned error code: %d (see libmboard docs for details)\n", rc);
+                   break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+	    }
+	    #endif
+	
+	/* Initialise message sync composite params as NULL */
 	FLAME_m_adultospatch_composite_params = NULL;
 
 	    rc = MB_Create(&b_adultospatch, sizeof(m_adultospatch));
@@ -2468,6 +2779,62 @@ int rc;
 	    if (rc != MB_SUCCESS)
 	    {
 	       fprintf(stderr, "ERROR: Could not create 'reproduccionguanacos' board\n");
+	       switch(rc) {
+	           case MB_ERR_INVALID:
+	               fprintf(stderr, "\t reason: Invalid message size\n");
+	               break;
+	           case MB_ERR_MEMALLOC:
+	               fprintf(stderr, "\t reason: out of memory\n");
+	               break;
+	           case MB_ERR_INTERNAL:
+	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+	               break;
+	           default:
+                   fprintf(stderr, "\t MB_Create returned error code: %d (see libmboard docs for details)\n", rc);
+                   break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+	    }
+	    #endif
+	
+	/* Initialise message sync composite params as NULL */
+	FLAME_m_numGuanacos_composite_params = NULL;
+
+	    rc = MB_Create(&b_numGuanacos, sizeof(m_numGuanacos));
+	    #ifdef ERRCHECK
+	    if (rc != MB_SUCCESS)
+	    {
+	       fprintf(stderr, "ERROR: Could not create 'numGuanacos' board\n");
+	       switch(rc) {
+	           case MB_ERR_INVALID:
+	               fprintf(stderr, "\t reason: Invalid message size\n");
+	               break;
+	           case MB_ERR_MEMALLOC:
+	               fprintf(stderr, "\t reason: out of memory\n");
+	               break;
+	           case MB_ERR_INTERNAL:
+	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+	               break;
+	           default:
+                   fprintf(stderr, "\t MB_Create returned error code: %d (see libmboard docs for details)\n", rc);
+                   break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+	    }
+	    #endif
+	
+	/* Initialise message sync composite params as NULL */
+	FLAME_m_infoHunter_composite_params = NULL;
+
+	    rc = MB_Create(&b_infoHunter, sizeof(m_infoHunter));
+	    #ifdef ERRCHECK
+	    if (rc != MB_SUCCESS)
+	    {
+	       fprintf(stderr, "ERROR: Could not create 'infoHunter' board\n");
 	       switch(rc) {
 	           case MB_ERR_INVALID:
 	               fprintf(stderr, "\t reason: Invalid message size\n");
@@ -2560,6 +2927,10 @@ int rc;
 
 	patch_end_state = init_patch_state();
 
+	patch_9_state = init_patch_state();
+
+	patch_8_state = init_patch_state();
+
 	patch_7_state = init_patch_state();
 
 	patch_6_state = init_patch_state();
@@ -2587,6 +2958,14 @@ int rc;
 	manada_guanacos_start_state = init_manada_guanacos_state();
 
 	hunting_end_state = init_hunting_state();
+
+	hunting_4_state = init_hunting_state();
+
+	hunting_3_state = init_hunting_state();
+
+	hunting_2_state = init_hunting_state();
+
+	hunting_1_state = init_hunting_state();
 
 	hunting_start_state = init_hunting_state();
 
@@ -3199,6 +3578,8 @@ xmachine_memory_clan * init_clan_agent()
 	current->targetY = 0;
 	current->cooperation = 0;
 	current->hunting = 0;
+	init_int_static_array(current->guanacos_record, 15);
+	current->igrecord = 0;
 
 	return current;
 }
@@ -3241,6 +3622,8 @@ void unittest_init_clan_agent()
 		current_xmachine_clan->targetY = 0;
 		current_xmachine_clan->cooperation = 0;
 		current_xmachine_clan->hunting = 0;
+		init_int_static_array(current_xmachine_clan->guanacos_record, 15);
+		current_xmachine_clan->igrecord = 0;
 	
 }
 
@@ -3456,7 +3839,7 @@ void add_clan_agent_internal(xmachine_memory_clan * agent, xmachine_memory_clan_
     current_node->agent_total++;
 }
 
-/** \fn void add_clan_agent(int cID, int cal_need, int cal_got, int cal_stored, int x, int y, int tcalories, int leaderID, members_needs * mneeds, indv_free * ifree, int indexID, int members, int linguistics[], int exchange_record[], int irecord, int targetX, int targetY, int cooperation, int hunting)
+/** \fn void add_clan_agent(int cID, int cal_need, int cal_got, int cal_stored, int x, int y, int tcalories, int leaderID, members_needs * mneeds, indv_free * ifree, int indexID, int members, int linguistics[], int exchange_record[], int irecord, int targetX, int targetY, int cooperation, int hunting, int guanacos_record[], int igrecord)
  * \brief Add clan X-machine to the current being used X-machine list.
  * \param cID Variable for the X-machine memory.
  * \param cal_need Variable for the X-machine memory.
@@ -3477,8 +3860,10 @@ void add_clan_agent_internal(xmachine_memory_clan * agent, xmachine_memory_clan_
  * \param targetY Variable for the X-machine memory.
  * \param cooperation Variable for the X-machine memory.
  * \param hunting Variable for the X-machine memory.
+ * \param guanacos_record Variable for the X-machine memory.
+ * \param igrecord Variable for the X-machine memory.
  */
-void add_clan_agent(int cID, int cal_need, int cal_got, int cal_stored, int x, int y, int tcalories, int leaderID, members_needs mneeds, indv_free ifree, int indexID, int members, int linguistics[], int exchange_record[], int irecord, int targetX, int targetY, int cooperation, int hunting)
+void add_clan_agent(int cID, int cal_need, int cal_got, int cal_stored, int x, int y, int tcalories, int leaderID, members_needs mneeds, indv_free ifree, int indexID, int members, int linguistics[], int exchange_record[], int irecord, int targetX, int targetY, int cooperation, int hunting, int guanacos_record[], int igrecord)
 {
 	xmachine_memory_clan * current;
 
@@ -3506,6 +3891,8 @@ void add_clan_agent(int cID, int cal_need, int cal_got, int cal_stored, int x, i
 	current->targetY = targetY;
 	current->cooperation = cooperation;
 	current->hunting = hunting;
+	memcpy(current->guanacos_record, guanacos_record, 15*sizeof(int));
+	current->igrecord = igrecord;
 }
 
 xmachine_memory_patch_state * init_patch_state()
@@ -3588,6 +3975,22 @@ void free_patch_agents()
 		current_xmachine_patch_holder = temp_xmachine_patch_holder;
 	}
 	patch_end_state->count = 0;
+	current_xmachine_patch_holder = patch_9_state->agents;
+	while(current_xmachine_patch_holder)
+	{
+		temp_xmachine_patch_holder = current_xmachine_patch_holder->next;
+		free_patch_agent(current_xmachine_patch_holder, patch_9_state);
+		current_xmachine_patch_holder = temp_xmachine_patch_holder;
+	}
+	patch_9_state->count = 0;
+	current_xmachine_patch_holder = patch_8_state->agents;
+	while(current_xmachine_patch_holder)
+	{
+		temp_xmachine_patch_holder = current_xmachine_patch_holder->next;
+		free_patch_agent(current_xmachine_patch_holder, patch_8_state);
+		current_xmachine_patch_holder = temp_xmachine_patch_holder;
+	}
+	patch_8_state->count = 0;
 	current_xmachine_patch_holder = patch_7_state->agents;
 	while(current_xmachine_patch_holder)
 	{
@@ -3657,6 +4060,8 @@ void free_patch_agents()
 void free_patch_states()
 {
 	free(patch_end_state);
+	free(patch_9_state);
+	free(patch_8_state);
 	free(patch_7_state);
 	free(patch_6_state);
 	free(patch_5_state);
@@ -3924,6 +4329,13 @@ xmachine_memory_hunting * init_hunting_agent()
 	current->isuccess = 0;
 	current->skill_level = 0;
 	init_int_static_array(current->clans, 2);
+	current->x = 0;
+	current->y = 0;
+	init_int_static_array(current->guanacos, 30);
+	init_int_static_array(current->destiny, 2);
+	current->arrive = 0;
+	current->start = 0;
+	current->end = 0;
 
 	return current;
 }
@@ -3949,6 +4361,13 @@ void unittest_init_hunting_agent()
 		current_xmachine_hunting->isuccess = 0;
 		current_xmachine_hunting->skill_level = 0;
 		init_int_static_array(current_xmachine_hunting->clans, 2);
+		current_xmachine_hunting->x = 0;
+		current_xmachine_hunting->y = 0;
+		init_int_static_array(current_xmachine_hunting->guanacos, 30);
+		init_int_static_array(current_xmachine_hunting->destiny, 2);
+		current_xmachine_hunting->arrive = 0;
+		current_xmachine_hunting->start = 0;
+		current_xmachine_hunting->end = 0;
 	
 }
 
@@ -3968,6 +4387,38 @@ void free_hunting_agents()
 		current_xmachine_hunting_holder = temp_xmachine_hunting_holder;
 	}
 	hunting_end_state->count = 0;
+	current_xmachine_hunting_holder = hunting_4_state->agents;
+	while(current_xmachine_hunting_holder)
+	{
+		temp_xmachine_hunting_holder = current_xmachine_hunting_holder->next;
+		free_hunting_agent(current_xmachine_hunting_holder, hunting_4_state);
+		current_xmachine_hunting_holder = temp_xmachine_hunting_holder;
+	}
+	hunting_4_state->count = 0;
+	current_xmachine_hunting_holder = hunting_3_state->agents;
+	while(current_xmachine_hunting_holder)
+	{
+		temp_xmachine_hunting_holder = current_xmachine_hunting_holder->next;
+		free_hunting_agent(current_xmachine_hunting_holder, hunting_3_state);
+		current_xmachine_hunting_holder = temp_xmachine_hunting_holder;
+	}
+	hunting_3_state->count = 0;
+	current_xmachine_hunting_holder = hunting_2_state->agents;
+	while(current_xmachine_hunting_holder)
+	{
+		temp_xmachine_hunting_holder = current_xmachine_hunting_holder->next;
+		free_hunting_agent(current_xmachine_hunting_holder, hunting_2_state);
+		current_xmachine_hunting_holder = temp_xmachine_hunting_holder;
+	}
+	hunting_2_state->count = 0;
+	current_xmachine_hunting_holder = hunting_1_state->agents;
+	while(current_xmachine_hunting_holder)
+	{
+		temp_xmachine_hunting_holder = current_xmachine_hunting_holder->next;
+		free_hunting_agent(current_xmachine_hunting_holder, hunting_1_state);
+		current_xmachine_hunting_holder = temp_xmachine_hunting_holder;
+	}
+	hunting_1_state->count = 0;
 	current_xmachine_hunting_holder = hunting_start_state->agents;
 	while(current_xmachine_hunting_holder)
 	{
@@ -3981,6 +4432,10 @@ void free_hunting_agents()
 void free_hunting_states()
 {
 	free(hunting_end_state);
+	free(hunting_4_state);
+	free(hunting_3_state);
+	free(hunting_2_state);
+	free(hunting_1_state);
 	free(hunting_start_state);
 }
 
@@ -4009,14 +4464,21 @@ void add_hunting_agent_internal(xmachine_memory_hunting * agent, xmachine_memory
     current_node->agent_total++;
 }
 
-/** \fn void add_hunting_agent(int calores, int isuccess, int skill_level, int clans[])
+/** \fn void add_hunting_agent(int calores, int isuccess, int skill_level, int clans[], int x, int y, int guanacos[], int destiny[], int arrive, int start, int end)
  * \brief Add hunting X-machine to the current being used X-machine list.
  * \param calores Variable for the X-machine memory.
  * \param isuccess Variable for the X-machine memory.
  * \param skill_level Variable for the X-machine memory.
  * \param clans Variable for the X-machine memory.
+ * \param x Variable for the X-machine memory.
+ * \param y Variable for the X-machine memory.
+ * \param guanacos Variable for the X-machine memory.
+ * \param destiny Variable for the X-machine memory.
+ * \param arrive Variable for the X-machine memory.
+ * \param start Variable for the X-machine memory.
+ * \param end Variable for the X-machine memory.
  */
-void add_hunting_agent(int calores, int isuccess, int skill_level, int clans[])
+void add_hunting_agent(int calores, int isuccess, int skill_level, int clans[], int x, int y, int guanacos[], int destiny[], int arrive, int start, int end)
 {
 	xmachine_memory_hunting * current;
 
@@ -4029,6 +4491,13 @@ void add_hunting_agent(int calores, int isuccess, int skill_level, int clans[])
 	current->isuccess = isuccess;
 	current->skill_level = skill_level;
 	memcpy(current->clans, clans, 2*sizeof(int));
+	current->x = x;
+	current->y = y;
+	memcpy(current->guanacos, guanacos, 30*sizeof(int));
+	memcpy(current->destiny, destiny, 2*sizeof(int));
+	current->arrive = arrive;
+	current->start = start;
+	current->end = end;
 }
 
 
@@ -4517,6 +4986,7 @@ void set_x(int x)
 	if(current_xmachine->xmachine_clan) (*current_xmachine->xmachine_clan).x = x;
 	if(current_xmachine->xmachine_patch) (*current_xmachine->xmachine_patch).x = x;
 	if(current_xmachine->xmachine_manada_guanacos) (*current_xmachine->xmachine_manada_guanacos).x = x;
+	if(current_xmachine->xmachine_hunting) (*current_xmachine->xmachine_hunting).x = x;
 }
 
 /** \fn int get_x()
@@ -4528,6 +4998,7 @@ int get_x()
 	if(current_xmachine->xmachine_clan) return (*current_xmachine->xmachine_clan).x;
 	if(current_xmachine->xmachine_patch) return (*current_xmachine->xmachine_patch).x;
 	if(current_xmachine->xmachine_manada_guanacos) return (*current_xmachine->xmachine_manada_guanacos).x;
+	if(current_xmachine->xmachine_hunting) return (*current_xmachine->xmachine_hunting).x;
 
     // suppress compiler warning by returning dummy value /
     // this statement should rightfully NEVER be reached /
@@ -4543,6 +5014,7 @@ void set_y(int y)
 	if(current_xmachine->xmachine_clan) (*current_xmachine->xmachine_clan).y = y;
 	if(current_xmachine->xmachine_patch) (*current_xmachine->xmachine_patch).y = y;
 	if(current_xmachine->xmachine_manada_guanacos) (*current_xmachine->xmachine_manada_guanacos).y = y;
+	if(current_xmachine->xmachine_hunting) (*current_xmachine->xmachine_hunting).y = y;
 }
 
 /** \fn int get_y()
@@ -4554,6 +5026,7 @@ int get_y()
 	if(current_xmachine->xmachine_clan) return (*current_xmachine->xmachine_clan).y;
 	if(current_xmachine->xmachine_patch) return (*current_xmachine->xmachine_patch).y;
 	if(current_xmachine->xmachine_manada_guanacos) return (*current_xmachine->xmachine_manada_guanacos).y;
+	if(current_xmachine->xmachine_hunting) return (*current_xmachine->xmachine_hunting).y;
 
     // suppress compiler warning by returning dummy value /
     // this statement should rightfully NEVER be reached /
@@ -4808,6 +5281,41 @@ void set_hunting(int hunting)
 int get_hunting()
 {
 	if(current_xmachine->xmachine_clan) return (*current_xmachine->xmachine_clan).hunting;
+
+    // suppress compiler warning by returning dummy value /
+    // this statement should rightfully NEVER be reached /
+    return (int)0;
+}
+
+/** \fn int get_guanacos_record()
+ * \brief Get guanacos_record memory variable from current X-machine.
+ * \return Value for variable.
+ */
+int * get_guanacos_record()
+{
+	if(current_xmachine->xmachine_clan) return (*current_xmachine->xmachine_clan).guanacos_record;
+
+    // suppress compiler warning by returning dummy value /
+    // this statement should rightfully NEVER be reached /
+    return NULL;
+}
+
+/** \fn void set_igrecord(int igrecord)
+ * \brief Set igrecord memory variable for current X-machine.
+ * \param igrecord New value for variable.
+ */
+void set_igrecord(int igrecord)
+{
+	if(current_xmachine->xmachine_clan) (*current_xmachine->xmachine_clan).igrecord = igrecord;
+}
+
+/** \fn int get_igrecord()
+ * \brief Get igrecord memory variable from current X-machine.
+ * \return Value for variable.
+ */
+int get_igrecord()
+{
+	if(current_xmachine->xmachine_clan) return (*current_xmachine->xmachine_clan).igrecord;
 
     // suppress compiler warning by returning dummy value /
     // this statement should rightfully NEVER be reached /
@@ -5161,6 +5669,98 @@ int * get_clans()
     return NULL;
 }
 
+/** \fn int get_guanacos()
+ * \brief Get guanacos memory variable from current X-machine.
+ * \return Value for variable.
+ */
+int * get_guanacos()
+{
+	if(current_xmachine->xmachine_hunting) return (*current_xmachine->xmachine_hunting).guanacos;
+
+    // suppress compiler warning by returning dummy value /
+    // this statement should rightfully NEVER be reached /
+    return NULL;
+}
+
+/** \fn int get_destiny()
+ * \brief Get destiny memory variable from current X-machine.
+ * \return Value for variable.
+ */
+int * get_destiny()
+{
+	if(current_xmachine->xmachine_hunting) return (*current_xmachine->xmachine_hunting).destiny;
+
+    // suppress compiler warning by returning dummy value /
+    // this statement should rightfully NEVER be reached /
+    return NULL;
+}
+
+/** \fn void set_arrive(int arrive)
+ * \brief Set arrive memory variable for current X-machine.
+ * \param arrive New value for variable.
+ */
+void set_arrive(int arrive)
+{
+	if(current_xmachine->xmachine_hunting) (*current_xmachine->xmachine_hunting).arrive = arrive;
+}
+
+/** \fn int get_arrive()
+ * \brief Get arrive memory variable from current X-machine.
+ * \return Value for variable.
+ */
+int get_arrive()
+{
+	if(current_xmachine->xmachine_hunting) return (*current_xmachine->xmachine_hunting).arrive;
+
+    // suppress compiler warning by returning dummy value /
+    // this statement should rightfully NEVER be reached /
+    return (int)0;
+}
+
+/** \fn void set_start(int start)
+ * \brief Set start memory variable for current X-machine.
+ * \param start New value for variable.
+ */
+void set_start(int start)
+{
+	if(current_xmachine->xmachine_hunting) (*current_xmachine->xmachine_hunting).start = start;
+}
+
+/** \fn int get_start()
+ * \brief Get start memory variable from current X-machine.
+ * \return Value for variable.
+ */
+int get_start()
+{
+	if(current_xmachine->xmachine_hunting) return (*current_xmachine->xmachine_hunting).start;
+
+    // suppress compiler warning by returning dummy value /
+    // this statement should rightfully NEVER be reached /
+    return (int)0;
+}
+
+/** \fn void set_end(int end)
+ * \brief Set end memory variable for current X-machine.
+ * \param end New value for variable.
+ */
+void set_end(int end)
+{
+	if(current_xmachine->xmachine_hunting) (*current_xmachine->xmachine_hunting).end = end;
+}
+
+/** \fn int get_end()
+ * \brief Get end memory variable from current X-machine.
+ * \return Value for variable.
+ */
+int get_end()
+{
+	if(current_xmachine->xmachine_hunting) return (*current_xmachine->xmachine_hunting).end;
+
+    // suppress compiler warning by returning dummy value /
+    // this statement should rightfully NEVER be reached /
+    return (int)0;
+}
+
 
 /** \fn double agent_get_range()
  * \brief Fixed routine to get the range from current X-machine
@@ -5205,7 +5805,7 @@ double agent_get_x()
     /*if (current_xmachine->xmachine_clan) value = current_xmachine->xmachine_clan->x;*/
     /*if (current_xmachine->xmachine_patch) value = current_xmachine->xmachine_patch->x;*/
     /*if (current_xmachine->xmachine_manada_guanacos) value = current_xmachine->xmachine_manada_guanacos->x;*/
-    /*if (current_xmachine->xmachine_hunting) value = current_xmachine->xmachine_hunting->0.0;*/
+    /*if (current_xmachine->xmachine_hunting) value = current_xmachine->xmachine_hunting->x;*/
 
     return value;
 }
@@ -5220,7 +5820,7 @@ double agent_get_y()
     /*if (current_xmachine->xmachine_clan) value = current_xmachine->xmachine_clan->y;*/
     /*if (current_xmachine->xmachine_patch) value = current_xmachine->xmachine_patch->y;*/
     /*if (current_xmachine->xmachine_manada_guanacos) value = current_xmachine->xmachine_manada_guanacos->y;*/
-    /*if (current_xmachine->xmachine_hunting) value = current_xmachine->xmachine_hunting->0.0;*/
+    /*if (current_xmachine->xmachine_hunting) value = current_xmachine->xmachine_hunting->y;*/
 
     return value;
 }
@@ -5297,8 +5897,12 @@ void add_node(int node_id, double minx, double maxx, double miny, double maxy, d
 	current->yyy_messages = NULL;
 	current->clanspatch_messages = NULL;
 	current->guanacospatch_messages = NULL;
+	current->infoGuanacos_messages = NULL;
+	current->repCal_messages = NULL;
 	current->adultospatch_messages = NULL;
 	current->reproduccionguanacos_messages = NULL;
+	current->numGuanacos_messages = NULL;
+	current->infoHunter_messages = NULL;
 
 	current->information_message_no = 0;
 	current->indgetcalories_message_no = 0;
@@ -5324,8 +5928,12 @@ void add_node(int node_id, double minx, double maxx, double miny, double maxy, d
 	current->yyy_message_no = 0;
 	current->clanspatch_message_no = 0;
 	current->guanacospatch_message_no = 0;
+	current->infoGuanacos_message_no = 0;
+	current->repCal_message_no = 0;
 	current->adultospatch_message_no = 0;
 	current->reproduccionguanacos_message_no = 0;
+	current->numGuanacos_message_no = 0;
+	current->infoHunter_message_no = 0;
 	current->indv_agents = NULL;
 	current->indv_agent_no = 0;
 	current->clan_agents = NULL;
@@ -5994,6 +6602,56 @@ void clean_up(int code)
     }
     #endif
 
+	rc = MB_Delete(&b_infoGuanacos);
+	#ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not delete 'infoGuanacos' board\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'infoGuanacos' board has not been created?\n");
+               break;
+           case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'infoGuanacos' board is locked\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	       default:
+               fprintf(stderr, "\t MB_Delete returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+    }
+    #endif
+
+	rc = MB_Delete(&b_repCal);
+	#ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not delete 'repCal' board\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'repCal' board has not been created?\n");
+               break;
+           case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'repCal' board is locked\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	       default:
+               fprintf(stderr, "\t MB_Delete returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+    }
+    #endif
+
 	rc = MB_Delete(&b_adultospatch);
 	#ifdef ERRCHECK
     if (rc != MB_SUCCESS)
@@ -6030,6 +6688,56 @@ void clean_up(int code)
                break;
            case MB_ERR_LOCKED:
                fprintf(stderr, "\t reason: 'reproduccionguanacos' board is locked\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	       default:
+               fprintf(stderr, "\t MB_Delete returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+    }
+    #endif
+
+	rc = MB_Delete(&b_numGuanacos);
+	#ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not delete 'numGuanacos' board\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'numGuanacos' board has not been created?\n");
+               break;
+           case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'numGuanacos' board is locked\n");
+               break;
+           case MB_ERR_INTERNAL:
+               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
+               break;
+	       default:
+               fprintf(stderr, "\t MB_Delete returned error code: %d (see libmboard docs for details)\n", rc);
+               break;
+	       }
+
+	       MPI_Abort(MPI_COMM_WORLD, rc);
+       	   exit(rc);
+    }
+    #endif
+
+	rc = MB_Delete(&b_infoHunter);
+	#ifdef ERRCHECK
+    if (rc != MB_SUCCESS)
+    {
+       fprintf(stderr, "ERROR: Could not delete 'infoHunter' board\n");
+       switch(rc) {
+           case MB_ERR_INVALID:
+               fprintf(stderr, "\t reason: 'infoHunter' board has not been created?\n");
+               break;
+           case MB_ERR_LOCKED:
+               fprintf(stderr, "\t reason: 'infoHunter' board is locked\n");
                break;
            case MB_ERR_INTERNAL:
                fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
@@ -6128,9 +6836,17 @@ void clean_up(int code)
         
         /* MPI_Type_free(&messageguanacospatchType); */
         
+        /* MPI_Type_free(&messageinfoGuanacosType); */
+        
+        /* MPI_Type_free(&messagerepCalType); */
+        
         /* MPI_Type_free(&messageadultospatchType); */
         
         /* MPI_Type_free(&messagereproduccionguanacosType); */
+        
+        /* MPI_Type_free(&messagenumGuanacosType); */
+        
+        /* MPI_Type_free(&messageinfoHunterType); */
         
 
 
@@ -6951,6 +7667,10 @@ int FLAME_get_environment_variable_record_size()
 {
 	return FLAME_environment_variable_record_size;
 }
+int FLAME_get_environment_variable_grecord_size()
+{
+	return FLAME_environment_variable_grecord_size;
+}
 int FLAME_get_environment_variable_max_manada()
 {
 	return FLAME_environment_variable_max_manada;
@@ -6970,6 +7690,10 @@ int FLAME_get_environment_variable_surviveChanceAdult()
 int FLAME_get_environment_variable_surviveChanceChild()
 {
 	return FLAME_environment_variable_surviveChanceChild;
+}
+int FLAME_get_environment_variable_speed()
+{
+	return FLAME_environment_variable_speed;
 }
 
 

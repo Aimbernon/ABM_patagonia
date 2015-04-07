@@ -500,6 +500,7 @@
 		<indexID>16</indexID>
 		<members>10</members>
 		<cooperation>0</cooperation>
+		<guanacos_record>{10,1,2,40,2,1,0,1,1,0,1,3,9,2,2}</guanacos_record>
 	</xagent>
 	<xagent>
 		<name>clan</name>
@@ -516,6 +517,7 @@
 		<indexID>16</indexID>
 		<members>10</members>
 		<cooperation>0<cooperation>
+		<guanacos_record>{60,1,2,40,2,1,0,1,1,0,1,3,9,2,200}</guanacos_record>
 	</xagent>
 	<xagent>
 		<name>clan</name>
@@ -532,6 +534,7 @@
 		<indexID>16</indexID>
 		<members>10</members>
 		<cooperation>0</cooperation>
+		<guanacos_record>{90,1,2,40,2,1,0,1,1,0,1,3,9,2,2}</guanacos_record>
 	</xagent>
 </agents>
 

@@ -74,127 +74,125 @@
                     <name>pclans</name>
                     <description>clans in patch</description>
                 </variable>
-
                </memory>
             <functions>
-                <function>
-                 <name>patchtype</name>
-                    <description>the type of patch</description>
-                    <currentState>start</currentState>
-                    <nextState>1</nextState>
-                    <condition>
-                      <not><time>
-                        <period>dias_por_patch</period>
-                        <phase>0</phase>
-                      </time></not>
-                    </condition>
-                 </function>
-                 <function>
-                  
-                  <name>infoClansInPatch</name>
-                  <description>gives clans in patch info to guanacos </description>
-                  <currentState>start</currentState>
-                  <nextState>1</nextState>
-                  <condition>
-                    <time>
-                      <period>dias_por_patch</period>
-                      <phase>0</phase>
-                    </time>
-                  </condition>
-                  <outputs>
-                    <output>
-                      <messageName>clanspatch</messageName>
-                    </output>
-                  </outputs>
-                 </function>
-                 <function>
-                      <name>idle_patch</name>
-                      <description>idle patch</description>
-                      <currentState>1</currentState>
-                      <nextState>2</nextState>
-                      <condition><not>
-                        <time>
-                          <period>clan_dias_por_patch</period>
-                          <phase>0</phase>
-                        </time>
-                      </not></condition>
-                 </function>
-                 <function>
-                      <name>infoGuanacosPatch</name>
-                      <description>gives guanacos in patch info to clans</description>
-                      <currentState>1</currentState>
-                      <nextState>2</nextState>
-                      <condition>
-                        <time>
-                          <period>clan_dias_por_patch</period>
-                          <phase>0</phase>
-                        </time>
-                      </condition>
-                      <outputs>
-                        <output>
-                          <messageName>guanacospatch</messageName>
-                        </output>
-                      </outputs>
-                 </function>
-                 <function>
-                 <name>patchcalories</name>
-                    <description>patch sends available calories</description>
-                    <currentState>2</currentState>
-                    <nextState>3</nextState>
-                   <inputs>
-		                  <input>
-                        <messageName>clan_info</messageName>
-                          <filter>
-				                    <lhs>
-                                <lhs><value>a.x</value></lhs>
-                                <op>EQ</op>
-                                <rhs><value>m.px</value></rhs>
-				                    </lhs>
-                                <op>AND</op>
-				                    <rhs>
-                                <lhs><value>a.y</value></lhs>
-                                <op>EQ</op>
-                                <rhs><value>m.py</value></rhs>
-				                    </rhs>
-                          </filter>
-                      </input>
-                  </inputs>
-                  <outputs>
-                    <output>
-                      <messageName>clangetcalories</messageName>
-                    </output>
-                  </outputs>
-                </function>
+              <function>
+                <name>patchtype</name>
+                <description>the type of patch</description>
+                <currentState>start</currentState>
+                <nextState>1</nextState>
+                <condition>
+                  <not><time>
+                  <period>dias_por_patch</period>
+                  <phase>0</phase>
+                  </time></not>
+                </condition>
+              </function>
+              <function>
+                <name>infoClansInPatch</name>
+                <description>gives clans in patch info to guanacos </description>
+                <currentState>start</currentState>
+                <nextState>1</nextState>
+                <condition>
+                <time>
+                  <period>dias_por_patch</period>
+                  <phase>0</phase>
+                </time>
+                </condition>
+                <outputs>
+                  <output>
+                    <messageName>clanspatch</messageName>
+                  </output>
+                </outputs>
+              </function>
+              <function>
+                <name>idle_patch</name>
+                <description>idle patch</description>
+                <currentState>1</currentState>
+                <nextState>2</nextState>
+                <condition><not>
+                  <time>
+                    <period>clan_dias_por_patch</period>
+                    <phase>0</phase>
+                  </time>
+                </not></condition>
+              </function>
+              <function>
+                <name>infoGuanacosPatch</name>
+                <description>gives guanacos in patch info to clans</description>
+                <currentState>1</currentState>
+                <nextState>2</nextState>
+                <condition>
+                  <time>
+                    <period>clan_dias_por_patch</period>
+                    <phase>0</phase>
+                  </time>
+                </condition>
+                <outputs>
+                  <output>
+                    <messageName>guanacospatch</messageName>
+                  </output>
+                </outputs>
+              </function>
+              <function>
+                <name>patchcalories</name>
+                <description>patch sends available calories</description>
+                <currentState>2</currentState>
+                <nextState>3</nextState>
+                <inputs>
+		              <input>
+                    <messageName>clan_info</messageName>
+                    <filter>
+				              <lhs>
+                        <lhs><value>a.x</value></lhs>
+                        <op>EQ</op>
+                        <rhs><value>m.px</value></rhs>
+				              </lhs>
+                      <op>AND</op>
+				              <rhs>
+                        <lhs><value>a.y</value></lhs>
+                        <op>EQ</op>
+                        <rhs><value>m.py</value></rhs>
+				              </rhs>
+                    </filter>
+                  </input>
+                </inputs>
+                <outputs>
+                  <output>
+                    <messageName>clangetcalories</messageName>
+                  </output>
+                </outputs>
+              </function>
 
-		            <function>
-                  <name>regenerate</name>
-		              <description>patch generates some new calories each week</description>
-		              <currentState>3</currentState>
-		              <nextState>4</nextState>
-  		            <condition>
-			             <time>
-				            <period>weekly</period>
-				            <phase>6</phase>
-			             </time>
-		              </condition>
-            </function>
+		          <function>
+                <name>regenerate</name>
+		            <description>patch generates some new calories each week</description>
+		            <currentState>3</currentState>
+		            <nextState>4</nextState>
+  		          <condition>
+			           <time>
+				          <period>weekly</period>
+				          <phase>6</phase>
+			           </time>
+		            </condition>
+              </function>
 
-            <function>
-              <name>idle_patch</name>
-              <description>the days the patch does not generate new calories this function should be executed instead of regenerate</description>
-              <currentState>3</currentState>
-              <nextState>4</nextState>
-              <condition><not><time>
-                <period>weekly</period>
-                <phase>6</phase>
-              </time></not></condition>
-            </function>
+              <function>
+                <name>idle_patch</name>
+                <description>the days the patch does not generate new calories this function should be executed instead of regenerate</description>
+                <currentState>3</currentState>
+                <nextState>4</nextState>
+                <condition><not><time>
+                  <period>weekly</period>
+                  <phase>6</phase>
+                </time></not></condition>
+              </function>
 
-            <function>
-              <name>snregenerate</name>
-              <description>status of new regenaration based on reposition rate</description>
-              <currentState>4</currentState>
-              <nextState>5</nextState>
+              <function>
+                <name>snregenerate</name>
+                <description>status of new regenaration based on reposition rate</description>
+                <currentState>4</currentState>
+                <nextState>5</nextState>
                 <condition><time>
                   <period>season</period>
                   <phase>0</phase>
@@ -212,7 +210,7 @@
               </function>
 
               <function>
-            <name>guanacos_move</name>
+                <name>guanacos_move</name>
                 <description>entrada y salida de guanacos al patch</description>
                 <currentState>5</currentState>
                 <nextState>6</nextState>
@@ -232,7 +230,7 @@
                         </rhs></filter>
                     </input>
                 </inputs>
-		</function>
+		          </function>
 	      <!--  <function>
 		    <name>idle_patch</name>
            <description>the days the patch does not generate new calories this function should be executed instead of regenerate
@@ -249,73 +247,127 @@
 		    </condition>
 		</function>
   -->
-        <function>
-          <name>clans_move</name>
-          <description>entrada salida de clanes al patch</description>
-          <currentState>6</currentState>
-          <nextState>7</nextState>
-          <inputs>
-            <input>
-              <messageName>clanmove</messageName>
-              <filter><lhs>
-                <lhs><value>a.x</value></lhs>
-                <op>EQ</op>
-                <rhs><value>m.x</value></rhs>
-                </lhs>
-                <op>AND</op>
-                <rhs>
-                <lhs><value>a.y</value></lhs>
-                <op>EQ</op>
-                <rhs><value>m.y</value></rhs>
-              </rhs></filter>
-            </input>
-          </inputs>
-        </function>
+              <function>
+                <name>clans_move</name>
+                <description>entrada salida de clanes al patch</description>
+                <currentState>6</currentState>
+                <nextState>7</nextState>
+                <inputs>
+                  <input>
+                    <messageName>clanmove</messageName>
+                    <filter><lhs>
+                      <lhs><value>a.x</value></lhs>
+                      <op>EQ</op>
+                      <rhs><value>m.x</value></rhs>
+                    </lhs>
+                    <op>AND</op>
+                    <rhs>
+                      <lhs><value>a.y</value></lhs>
+                      <op>EQ</op>
+                      <rhs><value>m.y</value></rhs>
+                    </rhs></filter>
+                  </input>
+                </inputs>
+              </function>
 
-        <function>
-		    <name>reproduccion_guanacos</name>
-		    <description>reproduccion de guanacos</description>
-		    <currentState>7</currentState>
-		    <nextState>end</nextState>
-		    <condition>
-			<time>
-                           <period>yearly</period>
-                           <phase>0</phase>
-			</time>
-		    </condition>
-        <inputs>
-                    <input>
-                        <messageName>reproduccionguanacos</messageName>
-                        <filter><lhs>
-                            <lhs><value>a.x</value></lhs>
-                            <op>EQ</op>
-                            <rhs><value>m.x</value></rhs>
-                        </lhs>
-                            <op>AND</op>
-                        <rhs>
-                            <lhs><value>a.y</value></lhs>
-                            <op>EQ</op>
-                            <rhs><value>m.y</value></rhs>
-                        </rhs></filter>
-                    </input>
-        </inputs>
-  		   </function>
-             <function>
-		    <name>idle_patch</name>
-		    <description>the time the patch does not generate new calories this function should be executed instead of regenerate 
+              <function>
+		            <name>reproduccion_guanacos</name>
+		            <description>reproduccion de guanacos</description>
+		            <currentState>7</currentState>
+		            <nextState>8</nextState>
+		            <condition>
+			           <time>
+                  <period>yearly</period>
+                  <phase>0</phase>
+			           </time>
+		            </condition>
+                <inputs>
+                  <input>
+                    <messageName>reproduccionguanacos</messageName>
+                    <filter><lhs>
+                      <lhs><value>a.x</value></lhs>
+                      <op>EQ</op>
+                      <rhs><value>m.x</value></rhs>
+                    </lhs>
+                    <op>AND</op>
+                    <rhs>
+                      <lhs><value>a.y</value></lhs>
+                      <op>EQ</op>
+                      <rhs><value>m.y</value></rhs>
+                    </rhs></filter>
+                  </input>
+                </inputs>
+  		        </function>
+              <function>
+		            <name>idle_patch</name>
+		            <description>the time the patch does not generate new calories this function should be executed instead of regenerate 
                 </description>
-                    <currentState>7</currentState>
-                    <nextState>end</nextState>
-		    <condition>
-			<not>
-			   <time>	
-                              <period>yearly</period>
-                              <phase>0</phase>
-			    </time>
-			</not>
-		    </condition>
-		</function>
-            </functions>
+                <currentState>7</currentState>
+                <nextState>8</nextState>
+		            <condition>
+			           <not>
+			           <time>	
+                  <period>yearly</period>
+                  <phase>0</phase>
+			           </time>
+			           </not>
+		            </condition>
+		          </function>
+    			    <function>
+            	 <name>info_hunters</name>
+            	 <description>Informa a las partidas de caza los guanacos que hay en su zona </description>
+            	 <currentState>8</currentState>
+            	 <nextState>9</nextState>
+					     <inputs>
+						    <input>
+                  <messageName>numGuanacos</messageName>
+							    <filter>
+								  <lhs>
+									 <lhs><value>a.x</value></lhs>
+									 <op>EQ</op>
+									 <rhs><value>m.x</value></rhs>
+								  </lhs>
+								  <op>AND</op>
+								  <rhs>
+									 <lhs><value>a.y</value></lhs>
+									 <op>EQ</op>
+									 <rhs><value>m.y</value></rhs>
+								  </rhs>
+							    </filter> 
+                </input>
+					     </inputs>
+					     <output>
+						    <messageName>infoGuanacos</messageName>
+					     </output>
+				      </function>
+				      <function>
+            	 <name>give_calHunters</name>
+            	 <description>Reparte las calorias de los guanacos a las partidas </description>
+            	 <currentState>9</currentState>
+            	 <nextState>end</nextState>
+					     <inputs>
+						    <input>
+                  <messageName>infoHunter</messageName>
+							    <filter>
+								  <lhs>
+									 <lhs><value>a.x</value></lhs>
+									 <op>EQ</op>
+									 <rhs><value>m.x</value></rhs>
+								  </lhs>
+								  <op>AND</op>
+								  <rhs>
+									 <lhs><value>a.y</value></lhs>
+									 <op>EQ</op>
+									 <rhs><value>m.y</value></rhs>
+								  </rhs>
+							    </filter> 
+                </input>
+					     </inputs>
+					     <output>
+						    <messageName>repCal</messageName>
+					     </output>
+				      </function>
+          </functions>
         </xagent>
     </agents>
 <messages>
@@ -363,6 +415,48 @@
         <type>int</type>
         <name>season</name>
         <description>season of the year</description>
+      </variable>
+    </variables>
+  </message>
+  <message>
+    <name>infoGuanacos</name>
+    <description>send amount guanacos to the hunters </description>
+    <variables>
+      <variable>
+        <type>int</type>
+        <name>x</name>
+        <description>coordinate x of the patch</description>
+      </variable>
+      <variable>
+        <type>int</type>
+        <name>y</name>
+        <description>coordinate y of the patch</description>
+      </variable>
+      <variable>
+        <type>int</type>
+        <name>amount</name>
+        <description>number of guanacos in patch</description>
+      </variable>
+    </variables>
+  </message>
+    <message>
+    <name>repCal</name>
+    <description>send amount cal to the hunters </description>
+    <variables>
+      <variable>
+        <type>int</type>
+        <name>x</name>
+        <description>coordinate x of the patch</description>
+      </variable>
+      <variable>
+        <type>int</type>
+        <name>y</name>
+        <description>coordinate y of the patch</description>
+      </variable>
+      <variable>
+        <type>int</type>
+        <name>cal_per</name>
+        <description>number of cal per individual</description>
       </variable>
     </variables>
   </message>

@@ -11,4 +11,5 @@
 	<cal_adulto>1</cal_adulto>
 	<surviveChanceAdult>100</surviveChanceAdult>
 	<surviveChanceChild>100</surviveChanceChild>
+	<grecord_size>15</grecord_size><!--Format: (Num_guanacos|coord x|coord y)-->
 </environment>

@@ -243,3 +243,46 @@ int clans_move(){
 
 	return 0;
 }
+
+int info_hunters()
+{
+	int message =0;
+	START_NUMGUANACOS_MESSAGE_LOOP
+		message ++;
+	FINISH_NUMGUANACOS_MESSAGE_LOOP
+	if (message >0)
+	// envio de cuantos guanacos hay en el patch
+		add_infoGuanacos_message (get_x(),get_y(),get_adultos());
+
+	return 0;
+}
+
+int give_calHunters()
+{
+	int message = 0, cal = 0, hunters=0, hero=-1,cal_per=0;
+	int_array clan_list;
+	init_int_array (&clan_list);
+
+	// Recivir partida de cazadores
+	START_INFOHUNTER_MESSAGE_LOOP
+		hunters += infoHunter_message->hunters;
+		add_int(&clan_list,infoHunter_message->clans[0]);
+		add_int(&clan_list,infoHunter_message->clans[1]);
+		message ++;
+	FINISH_INFOHUNTER_MESSAGE_LOOP
+	if (message > 0)
+	{
+		// Calcular cuantos guanacos son cazados
+		cal =60000 *(rand()%get_adultos());
+		// Eliminar a los guanacos cazados
+		// Determinar quien acaba con mas guanacos de forma aleatoria
+		hero = rand()%clan_list.size;
+		// Repartir calorias obtenidas por personas. Despues cada partida
+		// calcula segun su num de miembros, las cal que les coresponden
+		cal_per = cal / hunters;
+		add_repCal_message(get_x(),get_y(),cal_per);
+	}
+	
+	free_int_array (&clan_list);
+	return 0;
+}
