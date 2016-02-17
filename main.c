@@ -8047,7 +8047,7 @@ if(FLAME_infoGuanacos_message_board_read == 0)
 	{
 		temp_xmachine_hunting_holder = current_xmachine_hunting_holder->next;
 		current_xmachine_hunting = current_xmachine_hunting_holder->agent;
-		current_xmachine_hunting_next_state = hunting_4_state;
+		current_xmachine_hunting_next_state = hunting_end_state;
 		/* For backwards compatibility set current_xmachine */
 		current_xmachine->xmachine_indv = NULL;
 		current_xmachine->xmachine_clan = NULL;
@@ -8056,7 +8056,7 @@ if(FLAME_infoGuanacos_message_board_read == 0)
 		current_xmachine->xmachine_hunting = NULL;
 		current_xmachine->xmachine_hunting = current_xmachine_hunting;
 
-		if(FLAME_condition_hunting_idle_hunting_3_4(current_xmachine_hunting)==1)
+		if(FLAME_condition_hunting_idle_hunting_3_end(current_xmachine_hunting)==1)
 		{
 
 		
@@ -8071,7 +8071,7 @@ if(FLAME_infoGuanacos_message_board_read == 0)
 			}
 			else
 			{
-				transition_hunting_agent(current_xmachine_hunting_holder, hunting_3_state, hunting_4_state);
+				transition_hunting_agent(current_xmachine_hunting_holder, hunting_3_state, hunting_end_state);
 			}
 		}
 

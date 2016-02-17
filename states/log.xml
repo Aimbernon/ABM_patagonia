@@ -3,9 +3,9 @@
 <nodes>1</nodes>
 <!-- <time> unit: milliseconds -->
 <!-- <time> timer resolution: 1.00e-03 ms)-->
-<!-- <time> timer overhead: ~9.54e-04 ms)-->
-<iteration><no>1</no><time>16</time></iteration>
-<iteration><no>2</no><time>15</time></iteration>
+<!-- <time> timer overhead: ~1.19e-03 ms)-->
+<iteration><no>1</no><time>15</time></iteration>
+<iteration><no>2</no><time>14</time></iteration>
 <!-- <totaltime> unit: seconds -->
-<totaltime>0.032</totaltime>
+<totaltime>0.031</totaltime>
 </model_run>

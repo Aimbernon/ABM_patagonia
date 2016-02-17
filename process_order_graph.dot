@@ -120,10 +120,10 @@ digraph communication_graph {
 	layer_13 ->hunting_get_numGuanacos_2_3;
 	hunting_hunting_3_4 [ shape = rect label="hunting_hunting_3_4 [-3]" ];
 	hunting_hunting_3_4 -> layer_13;
-	hunting_idle_hunting_3_4 [ shape = rect label="hunting_idle_hunting_3_4 [0]" ];
-	hunting_idle_hunting_3_4 -> hunting_hunting_3_4;
+	hunting_idle_hunting_3_end [ shape = rect label="hunting_idle_hunting_3_end [0]" ];
+	hunting_idle_hunting_3_end -> hunting_hunting_3_4;
 	clan_recive_conf_11_12 [ shape = rect label="clan_recive_conf_11_12 [0]" ];
-	clan_recive_conf_11_12 -> hunting_idle_hunting_3_4;
+	clan_recive_conf_11_12 -> hunting_idle_hunting_3_end;
 	layer_14 [ color="#ff0000" label="layer 14"];
 	layer_14 ->clan_recive_conf_11_12;
 	indv_casamiento_male_04_06 [ shape = rect label="indv_casamiento_male_04_06 [-4]" ];

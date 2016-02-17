@@ -7,8 +7,8 @@ int get_hunters()
 {
 	int i,target[2]={get_x(),get_y()};
 	float alpha = 1.0,max=0.0;
-	//printf ("partida de caza de %d y su creador %d\n",get_clans()[0],get_clans()[1]);
-	//printf("cantidad del clan 1 %d y del 2 %d\n",get_guanacos()[0],get_guanacos()[15]);
+	printf ("partida de caza de %d y su creador %d\n",get_clans()[0],get_clans()[1]);
+	printf("cantidad del clan 1 %d y del 2 %d\n",get_guanacos()[0],get_guanacos()[15]);
 
 	// obtain the best hunting route of guanacos
 	for (i=0;i<10;i++)
@@ -24,7 +24,8 @@ int get_hunters()
 	}
 	DESTINY[0]=target[0];
 	DESTINY[1]=target[1];
-	printf ("maxima cantidad %f\n",max);
+	//printf ("maxima cantidad %f\n",max);
+	printf("creada\n");
 	return 0;
 }
 
@@ -61,6 +62,7 @@ int move_hunters ()
 		set_end(1);*/
 	set_x(x);
 	set_y(y);
+	printf("movido\n");
 	return 0;
 }
 
@@ -68,6 +70,7 @@ int get_numGuanacos()
 {
 	int guanacos =0;
 	// Recive num of guanacos
+	printf("preguntando\n");
 	START_INFOGUANACOS_MESSAGE_LOOP
 		guanacos = infoGuanacos_message->amount;
 	FINISH_INFOGUANACOS_MESSAGE_LOOP
@@ -84,6 +87,7 @@ int get_numGuanacos()
 // Al llegar al destino se informa al pacth para que comienze la caza
 int hunting ()
 {
+	printf("cazando\n");
 	// Indicar al patch que voy a cazar en el
 	add_infoHunter_message (get_x(),get_y(),10,get_clans());
 	set_end(1);
@@ -93,6 +97,7 @@ int hunting ()
 
 int comprove_end ()
 {
+	printf("acabando ? soy %d\n",get_x());
 	int cal,cal_per,message =0;
 	// obtener calorias/personas ganadas en la caceria
 	START_REPCAL_MESSAGE_LOOP

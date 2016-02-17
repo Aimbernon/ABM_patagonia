@@ -712,16 +712,17 @@ int send_proposal ()
 	{
 		while ( prop <nproposals && find ==0)
 		{
+			rep =0;
 			for (i=0;i<GENOMA;i++)
-				if (get_linguistics()[i] == linguistics_list.array[i])
+				if (get_linguistics()[i] == linguistics_list.array[i+(prop*GENOMA)])
 					rep ++;
 			// if clan understands to the other clan, verifies their relationship
-			if (rep > LANG_THRESHOLD)
+			if (rep >= LANG_THRESHOLD)
 			{
 				cooperation = 1;
-				//default: clan chosens in order FIFO
-				id_clan = clanID_list.array[0];
-				coop = ncooperation_list.array[0];
+				//default: clan chosens the last clan
+				id_clan = clanID_list.array[prop];
+				coop = ncooperation_list.array[prop];
 				for (j =0; j<RECORD_SIZE; j++)
 					if (get_exchange_record()[j] == clanID_list.array[prop]){
 						find = 1;

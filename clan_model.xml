@@ -221,7 +221,7 @@
         		<variable>
             	    <type>int</type>
             	    <name>hunting</name>
-            	    <description></description>
+            	    <description>indica si se esta cazando</description>
         		</variable>
         		<variable>
             	    <type>int</type>

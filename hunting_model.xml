@@ -8,13 +8,20 @@
         <functionFiles>
             <file>hunting.c</file>
         </functionFiles>
-	<constants>
+	   <constants>
 		<variable>
 			<type>int</type>
 			<name>speed</name>
 			<description>Velocidad de la partida</description>
 	    </variable>
-	</constants>
+	   </constants>
+        <timeUnits>
+            <timeUnit>
+                <name>speed_hunters</name>
+                <unit>iteration</unit>
+                <period>2</period>
+            </timeUnit>
+        </timeUnits>
     </environment>
     <agents>
         <xagent>
@@ -91,8 +98,8 @@
             	    <nextState>2</nextState>
 					<condition>
                     <time>
-                    	<period>monthly</period>
-                    	<phase>29</phase>
+                    	<period>speed_hunters</period>
+                    	<phase>0</phase>
                     </time>
                     </condition>
 					<output>
@@ -106,8 +113,8 @@
             	    <nextState>3</nextState>
 					<condition><not>
                     <time><!--revisar !!!!!!!!!!!!!!!-->
-                    	<period>monthly</period>
-                    	<phase>29</phase>
+                    	<period>speed_hunters</period>
+                    	<phase>0</phase>
                     </time>
                     </not></condition>
 				</function>
@@ -151,7 +158,7 @@
             	    <name>idle_hunting</name>
             	    <description></description>
             	    <currentState>3</currentState>
-            	    <nextState>4</nextState>
+            	    <nextState>end</nextState>
 					<condition><not>
 						<lhs><value>a.start</value></lhs>
 						<op>EQ</op>

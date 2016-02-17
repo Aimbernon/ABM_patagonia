@@ -576,7 +576,7 @@ int FLAME_condition_manada_guanacos_idle_3_end(xmachine_memory_manada_guanacos *
  */
 int FLAME_condition_hunting_move_hunters_1_2(xmachine_memory_hunting *a)
 {
-	if((iteration_loop%30 == 29)) return 1;
+	if((iteration_loop%2 == 0)) return 1;
 	else return 0;
 }
 
@@ -588,7 +588,7 @@ int FLAME_condition_hunting_move_hunters_1_2(xmachine_memory_hunting *a)
  */
 int FLAME_condition_hunting_idle_hunting_1_3(xmachine_memory_hunting *a)
 {
-	if(!(iteration_loop%30 == 29)) return 1;
+	if(!(iteration_loop%2 == 0)) return 1;
 	else return 0;
 }
 
@@ -605,12 +605,12 @@ int FLAME_condition_hunting_hunting_3_4(xmachine_memory_hunting *a)
 }
 
 
-/** \fn int FLAME_condition_hunting_idle_hunting_3_4(xmachine_memory_hunting *a)
+/** \fn int FLAME_condition_hunting_idle_hunting_3_end(xmachine_memory_hunting *a)
  * \brief The condition function for an agent function.
  * \param a The agent memory.
  * \return The success (1) or failure (0) of the condition.
  */
-int FLAME_condition_hunting_idle_hunting_3_4(xmachine_memory_hunting *a)
+int FLAME_condition_hunting_idle_hunting_3_end(xmachine_memory_hunting *a)
 {
 	if(!(a->start == 1)) return 1;
 	else return 0;

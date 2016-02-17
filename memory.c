@@ -1207,7 +1207,7 @@ void unittest_hunting_3_4()
 	//return hunting();
 }
 
-void unittest_idle_hunting_3_4()
+void unittest_idle_hunting_3_end()
 {
 	
 	

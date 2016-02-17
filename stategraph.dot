@@ -304,7 +304,7 @@ digraph state_graph {
 	hunting_idle_hunting_1_3 [label = "idle_hunting", shape = rect]
 	hunting_get_numGuanacos_2_3 [label = "get_numGuanacos", shape = rect]
 	hunting_hunting_3_4 [label = "hunting", shape = rect]
-	hunting_idle_hunting_3_4 [label = "idle_hunting", shape = rect]
+	hunting_idle_hunting_3_end [label = "idle_hunting", shape = rect]
 	hunting_comprove_end_4_end [label = "comprove_end", shape = rect]
 	hunting_idle_hunting_4_end [label = "idle_hunting", shape = rect]
 	
@@ -630,16 +630,16 @@ digraph state_graph {
 	manada_guanacos_idle_3_end -> manada_guanacos_end;
 	hunting_start -> hunting_get_hunters_start_1;
 	hunting_get_hunters_start_1 -> hunting_1;
-	hunting_1 -> hunting_move_hunters_1_2 [ label = "Periodicity: monthly\nPhase: 29"];
+	hunting_1 -> hunting_move_hunters_1_2 [ label = "Periodicity: speed_hunters\nPhase: 0"];
 	hunting_move_hunters_1_2 -> hunting_2;
-	hunting_1 -> hunting_idle_hunting_1_3 [ label = "not ( Periodicity: monthly\nPhase: 29 )"];
+	hunting_1 -> hunting_idle_hunting_1_3 [ label = "not ( Periodicity: speed_hunters\nPhase: 0 )"];
 	hunting_idle_hunting_1_3 -> hunting_3;
 	hunting_2 -> hunting_get_numGuanacos_2_3;
 	hunting_get_numGuanacos_2_3 -> hunting_3;
 	hunting_3 -> hunting_hunting_3_4 [ label = "a.start EQ 1"];
 	hunting_hunting_3_4 -> hunting_4;
-	hunting_3 -> hunting_idle_hunting_3_4 [ label = "not ( a.start EQ 1 )"];
-	hunting_idle_hunting_3_4 -> hunting_4;
+	hunting_3 -> hunting_idle_hunting_3_end [ label = "not ( a.start EQ 1 )"];
+	hunting_idle_hunting_3_end -> hunting_end;
 	hunting_4 -> hunting_comprove_end_4_end [ label = "a.end EQ 1"];
 	hunting_comprove_end_4_end -> hunting_end;
 	hunting_4 -> hunting_idle_hunting_4_end [ label = "not ( a.end EQ 1 )"];
@@ -715,7 +715,7 @@ digraph state_graph {
 	{ rank=same; layer_12;  clan_aceptar_prop_10_11;  hunting_get_numGuanacos_2_3; }
 	{ rank=same; layer_12_b; propuesta_message_end_0; infoGuanacos_message_end_0; }
 	{ rank=same; layer_12_a; confirProp_message_start_0; }
-	{ rank=same; layer_13;  clan_recive_conf_11_12;  hunting_hunting_3_4;  hunting_idle_hunting_3_4; }
+	{ rank=same; layer_13;  clan_recive_conf_11_12;  hunting_hunting_3_4;  hunting_idle_hunting_3_end; }
 	{ rank=same; layer_13_b; confirProp_message_end_0; }
 	{ rank=same; layer_13_a; marriage_message_start_0; infoHunter_message_start_0; }
 	{ rank=same; layer_14;  indv_casamiento_female_04_05;  indv_casamiento_male_04_06;  patch_give_calHunters_9_end;  hunting_idle_hunting_4_end; }

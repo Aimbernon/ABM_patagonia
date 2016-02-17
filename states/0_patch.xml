@@ -31,6 +31,7 @@
 </outputs>
 <xagent>
 		<name>hunting</name>
+		<clans>{-1,-1}</clans>
 		<x>100000</x>
         <y>100000</y>
 </xagent>

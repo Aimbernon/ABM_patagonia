@@ -272,7 +272,7 @@ int give_calHunters()
 	FINISH_INFOHUNTER_MESSAGE_LOOP
 	if (message > 0)
 	{
-		// Calcular cuantos guanacos son cazados
+		// Calcular las calorias obtenidas segun la cantidad de guanacos cazados
 		cal =60000 *(rand()%get_adultos());
 		// Eliminar a los guanacos cazados
 		// Determinar quien acaba con mas guanacos de forma aleatoria

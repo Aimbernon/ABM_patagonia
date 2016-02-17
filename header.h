@@ -2887,7 +2887,7 @@ int FLAME_filter_hunting_get_numGuanacos_2_3_infoGuanacos(const void *msg, const
 int hunting(void);
 int FLAME_condition_hunting_hunting_3_4(xmachine_memory_hunting *a);
 int idle_hunting(void);
-int FLAME_condition_hunting_idle_hunting_3_4(xmachine_memory_hunting *a);
+int FLAME_condition_hunting_idle_hunting_3_end(xmachine_memory_hunting *a);
 int comprove_end(void);
 int FLAME_condition_hunting_comprove_end_4_end(xmachine_memory_hunting *a);
 int FLAME_filter_hunting_comprove_end_4_end_repCal(const void *msg, const void *params);
